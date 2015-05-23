@@ -1,5 +1,3 @@
-require "http"
-
 module Amethyst
   module Http
       require "./**"
