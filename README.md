@@ -15,11 +15,11 @@ end
 ## Usage
 
 ```crystal
-require "..src/amethyst"
+require "amethyst"
 include Amethyst::Http
 
 app = Amethyst::Application.new
-app.port = 8000 
+app.port = 8000
 app.serve       #simple Amethyst application. No routing for now
 ```
 
