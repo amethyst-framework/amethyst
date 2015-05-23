@@ -19,7 +19,8 @@ require "..src/amethyst"
 include Amethyst::Http
 
 app = Amethyst::Application.new
-app.serve   #simple Amethyst application. No routing for now
+app.port = 8000 
+app.serve       #simple Amethyst application. No routing for now
 ```
 
 
