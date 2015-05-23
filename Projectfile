@@ -1,2 +1,3 @@
 deps do
+  github "manastech/webmock.cr"
 end
