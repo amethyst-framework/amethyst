@@ -1,4 +1,1 @@
-require "http"
-module Amethyst
-  require "./amethyst/**"
-end
+require "./amethyst/http"
