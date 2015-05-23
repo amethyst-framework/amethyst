@@ -1,4 +1,4 @@
-# Amethyst
+# Amethyst [![Build Status](https://travis-ci.org/Codcore/Amethyst.svg)](https://travis-ci.org/Codcore/Amethyst)
 
 Amethyst is a experimental web-framework written in [Crystal](https://github.com/manastech/crystal) language. Project currently is under construction. Partially inspired by [Moonshine](https://github.com/dhruvrajvanshi/Moonshine)
 
