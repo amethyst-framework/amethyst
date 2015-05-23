@@ -7,4 +7,5 @@ install: |
   sudo apt-get install crystal
 
 script:
+  - crystal deps
   - crystal spec
