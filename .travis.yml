@@ -8,4 +8,5 @@ install: |
   crystal deps
 
 script:
+  - crystal deps
   - crystal spec
