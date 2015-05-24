@@ -3,7 +3,8 @@ include Amethyst::Http
 module Amethyst
 	module Core
 		require "./application"
-		require "./middleware_stack"
 		require "./middleware"
+		include Middleware
 	end
 end
+

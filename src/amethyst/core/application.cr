@@ -9,7 +9,7 @@ class Application
     @middleware_stack = MiddlewareStack.new 
   end
 
-  def add_middleware(middleware : Middleware)
+  def add_middleware(middleware : BaseMiddleware)
     @middleware_stack.add(middleware)
   end
 

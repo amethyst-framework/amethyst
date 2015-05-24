@@ -1,0 +1,3 @@
+ module Middleware
+    require "./*"
+ end

@@ -3,11 +3,11 @@ struct MiddlewareStack
   getter response_middlewares
   
   def initialize()
-    @request_middlewares   = [] of Middleware
-    @response_middlewares  = [] of Middleware
+    @request_middlewares   = [] of BaseMiddleware
+    @response_middlewares  = [] of BaseMiddleware
   end
 
-  def add(middleware : Middleware)
+  def add(middleware : BaseMiddleware)
     @request_middlewares << middleware
   end
 end

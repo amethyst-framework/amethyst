@@ -1,4 +1,4 @@
-class Middleware
+class BaseMiddleware
 
   def call()
     p self
