@@ -1,7 +1,8 @@
 require "../../spec_helper"
 
-request = Request.new(HTTP::Request.new("GET", "/"))
-bsmware = BaseMiddleware.new
+request  = Request.new(HTTP::Request.new("GET", "/"))
+response = Response.new(200, "OK")
+bsmware  = BaseMiddleware.new
 
 describe BaseMiddleware do
 
@@ -10,6 +11,6 @@ describe BaseMiddleware do
   end
 
   it "works" do
-  	bsmware.call(request).should be_a HTTP::Response
+  	bsmware.call(request, response).should be_a HTTP::Response
   end
 end

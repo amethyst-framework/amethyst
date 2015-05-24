@@ -1,13 +1,13 @@
 class Response
   property headers
   property body
+  property status
 
   # wraps http enviroment 
-  def initialize
-    @body = nil
+  def initialize(@status = nil, @body= nil)
   end
 
   def build
-    HTTP::Response.new(200, @body)
+    HTTP::Response.new(@status, @body)
   end
 end
