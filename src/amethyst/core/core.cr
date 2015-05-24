@@ -2,6 +2,8 @@ include Amethyst::Http
 
 module Amethyst
 	module Core
-		require "./application.cr"
+		require "./application"
+		require "./middleware_stack"
+		require "./middleware"
 	end
 end
