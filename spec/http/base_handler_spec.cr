@@ -1,5 +1,4 @@
 require "../spec_helper"
-include Amethyst::Http
 
 handler = BaseHandler.new
 request = HTTP::Request.new("GET", "/")

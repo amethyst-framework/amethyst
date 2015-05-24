@@ -1,6 +1,7 @@
 require "http"
+
 module Amethyst
   module Http
-      require "./**"
+    require "./**"
   end
 end

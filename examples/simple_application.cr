@@ -1,5 +1,5 @@
 require "../src/amethyst"
-include Amethyst::Http
 
-app = Amethyst::Application.new
+app = Application.new
+app.add_middleware
 app.serve

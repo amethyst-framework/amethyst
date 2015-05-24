@@ -1,3 +1,4 @@
 deps do
   github "manastech/webmock.cr"
+  github "ysbaddaden/minitest.cr"
 end

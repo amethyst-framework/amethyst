@@ -1,2 +1,4 @@
 require "./amethyst/http"
-require "./amethyst/application"
+require "./amethyst/core"
+
+include Amethyst::Core

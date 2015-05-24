@@ -1,7 +1,6 @@
-require "./spec_helper"
-include Amethyst
+require "../spec_helper"
 
-app = Amethyst::Application.new()
+app = Application.new()
 app.port = 8000
 
 describe Application do

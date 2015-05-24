@@ -5,6 +5,7 @@ before_install: |
 
 install: |
   sudo apt-get install crystal
+  crystal deps
 
 script:
   - crystal spec
