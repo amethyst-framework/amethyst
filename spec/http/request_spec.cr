@@ -1,25 +1,17 @@
 require "../spec_helper"
 
-class AssertionsTest < Minitest::Test
-  
-  describe Request do
-    property! request
-    property! base_request
-    property! headers
+headers = HTTP::Headers.new
+headers["Accept"] = ["text/plain"]
+base_request = HTTP::Request.new("GET", "/", headers, "Test")
+req = Request.new(base_request)
 
-    before do
-      @headers = HTTP::Headers.new
-      @headers["Content-type"] = ["text/plain"]
-      @base_request = HTTP::Request.new("GET", "/", @headers)
-      @request = Request.new(@base_request)
-    end
+describe Request do
 
-    it "should be initialized properly" do
-      assert_equal request.method,  base_request.method
-      assert_equal request.path,	  base_request.path
-      assert_equal request.headers, base_request.headers
-      assert_equal request.body,		base_request.body
-      assert_equal request.version,	base_request.version
-    end
+  it "instantiates properly" do
+    req.method.should             eq "GET"
+    req.path.should               eq "/"
+    req.headers["Accept"].should  eq "text/plain"
+    req.body.should               eq "Test"
+    req.version.should            eq "HTTP/1.1"
   end
 end

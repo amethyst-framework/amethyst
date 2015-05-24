@@ -1,6 +1,11 @@
 class Request
+  property method
+  property path
+  property headers
+  property body
+  getter   version
 
-# wraps http enviroment 
+  # wraps http enviroment 
   def initialize(base_request : HTTP::Request)
     @method  = base_request.method
     @path 	 = base_request.path

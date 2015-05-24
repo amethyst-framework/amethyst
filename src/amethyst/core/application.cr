@@ -9,12 +9,12 @@ class Application
     @middleware_stack = MiddlewareStack.new 
   end
 
-  def add_middleware(middleware : BaseMiddleware)
+  def use(middleware : BaseMiddleware)
     @middleware_stack.add(middleware)
   end
 
   def serve()
-    puts @run_string if @verbose
+    puts @run_string
     server = HTTP::Server.new @port, BaseHandler.new(@middleware_stack)
     server.listen
   end

@@ -16,11 +16,20 @@ end
 
 ```crystal
 require "amethyst"
-include Amethyst::Http
 
-app = Amethyst::Application.new
-app.port = 8000
-app.serve       #simple Amethyst application. No routing for now
+class HelloMiddleware < BaseMiddleware    #very simple middleware impemented for now
+                                          #response for now has only body property
+  def initialize(@msg)
+  end
+
+  def call(request, response)
+    response.body = "Hello, #{@msg} \n Request headers is #{request.headers}"
+  end
+end
+
+app = Application.new
+app.use(HelloMiddleware.new("Amethyst"))
+app.serve
 ```
 
 
