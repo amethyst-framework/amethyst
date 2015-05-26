@@ -10,4 +10,8 @@ class BaseMiddleware
 	def call(request : Request, response : Response)
 		response
 	end
+
+	def track 
+		puts self
+	end
 end

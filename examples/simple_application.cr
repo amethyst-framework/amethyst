@@ -8,11 +8,11 @@ class TimeMiddleware < BaseMiddleware
     @t_res = Time.new
   end
 
-  def call(request, env)
+  def call(request)
     @t_req = Time.now
   end
 
-	def call(request, response, env)
+	def call(request, response)
     @t_res = Time.now
     response.body = "Time elapsed: #{(@t_req-@t_res)}"
   end

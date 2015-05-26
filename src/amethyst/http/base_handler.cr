@@ -7,7 +7,7 @@ class BaseHandler < HTTP::Handler
     request  = Request.new(base_request)
 
     @middleware_stack.process_request(request)
-    response = Response.new(200, "Welcome to Amethyst")                             # emulates Response returned by controller
+    response = Response.new(200, "Welcome to Amethyst")    # emulates Response returned by controller
     @middleware_stack.process_response(request, response)
     response.build
   end
