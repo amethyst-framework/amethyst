@@ -5,10 +5,10 @@ class BaseHandler < HTTP::Handler
 
   def call(base_request : HTTP::Request)
     request  = Request.new(base_request)
-    response = Response.new
-    @middleware_stack.request_middleware.each do |middleware|
-       middleware.call(request, response)
-    end
+
+    @middleware_stack.process_request(request)
+    response = Response.new(200, "Welcome to Amethyst")                             # emulates Response returned by controller
+    @middleware_stack.process_response(request, response)
     response.build
   end
 end

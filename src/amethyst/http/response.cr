@@ -3,10 +3,10 @@ class Response
   property body
   property status
 
-  # wraps http enviroment 
   def initialize(@status = nil, @body= nil)
   end
 
+  # "builds" an HTTP::Response from self
   def build
     HTTP::Response.new(@status, @body)
   end

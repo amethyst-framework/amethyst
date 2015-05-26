@@ -1,13 +1,22 @@
-struct MiddlewareStack
-  getter request_middleware
-  getter response_middleware
+class MiddlewareStack
   
   def initialize()
-    @request_middleware   = [] of BaseMiddleware
-    @response_middleware  = [] of BaseMiddleware
+    @middleware   = [] of BaseMiddleware
+  end
+
+  def process_request(request : Http::Request)
+    @middleware.each do |middleware|
+      middleware.call(request)
+    end
+  end
+
+  def process_response(request : Http::Request, response : Http::Response)
+    @middleware.reverse.each do |middleware| 
+      middleware.call(request, response)
+    end
   end
 
   def add(middleware : BaseMiddleware)
-    @request_middleware << middleware
+    @middleware << middleware
   end
 end
