@@ -1,9 +1,9 @@
 class Request
-  property method
-  property path
-  property headers
-  property body
-  getter   version
+  property :method
+  property :path
+  property :headers
+  property :body
+  getter   :version
 
   # wraps http enviroment 
   def initialize(base_request : HTTP::Request)

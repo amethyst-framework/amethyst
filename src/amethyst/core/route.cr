@@ -1,14 +1,17 @@
 class Route
+  getter :pattern
+  getter :controller
+  getter :action
 
-  def initialize(@pattern)
+  def initialize(@pattern, @controller, @action)
     @pattern = @pattern.gsub(/\/$/, "") unless @pattern == "/"
     @length = @pattern.split("/").length
   end
 
   def matches?(path)
-    false if route.split("/").length != @length
+    false if path.split("/").length != @length
     regex = Regex.new(@pattern.to_s.gsub(/(:\w*)/, ".*"))
-    route.match(regex) ? true : false
+    path.match(regex) ? true : false
   end
 
   def get_params(path)
