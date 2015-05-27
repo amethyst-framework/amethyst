@@ -1,10 +1,20 @@
 class Router
   getter :routes
+  getter :controllers
+
+  macro add_to_hash(klass_name)
+      @controllers[{{klass_name}}.to_s] = {{klass_name.id}}
+  end
 
   def initialize()
     @routes = [] of Core::Route
-    @controllers = { "IndexController" => IndexController} #of String => Class
+    @controllers = {} of String => Class
   end
+
+  def register(controller)
+    
+    add_to_hash controller
+  end 
 
   def draw(&block)
     with self yield

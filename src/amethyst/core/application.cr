@@ -15,7 +15,7 @@ class Application
   def routes
     @router
   end
-    
+
   def use(middleware : BaseMiddleware)
     @middleware_stack.add(middleware)
   end
