@@ -6,14 +6,17 @@ class Router
       @controllers[{{klass_name}}.to_s] = {{klass_name.id}}
   end
 
+  macro call_action(action)
+
   def initialize()
     @routes = [] of Core::Route
     @controllers = {} of String => Class
+    @methods = {} of String => Symbols
   end
 
-  def register(controller)
-    
+  def register(controller, *controller_actions)
     add_to_hash controller
+
   end 
 
   def draw(&block)
@@ -31,8 +34,8 @@ class Router
     @routes.each do |route|
       if route.matches?(path)
         puts "works"
-        controller_instanse = @controllers.fetch(route.controller).new
-        p controller_instanse
+        controller_instanse = @controllers.fetch(route.controller).new(route.action)
+        controller_instanse
       end
     end
   end
