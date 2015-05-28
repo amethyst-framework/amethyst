@@ -3,11 +3,11 @@ class BaseMiddleware
 	def initialize()
 	end
 
-	def call(request : Request)
+	def call(request : Http::Request)
 		request
 	end
 
-	def call(request : Request, response : Response)
+	def call(request : Http::Request, response : Http::Response)
 		response
 	end
 

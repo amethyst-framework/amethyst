@@ -10,6 +10,7 @@ class Router
     @routes      = [] of Core::Route
     @controllers = {} of String => Class
     @methods     = {} of String => Symbol
+    @response = Http::Response.new(404, "Not found")
   end
 
   # Adds controller to hash @controllers
@@ -34,13 +35,14 @@ class Router
 
   def call(request : Http::Request)
     path  = request.path
-    response = Http::Response.new(404, "Not found")
     @routes.each do |route|
       if route.matches?(path)
         controller_instanse = @controllers.fetch(route.controller).new
-        response = controller_instanse.call_action(route.action, "request")
+        if controller_instanse.call_action(route.action, "request")
+          @response = controller_instanse.call_action(route.action, "request")
+        end
       end
     end
-    return response
+    return @response
   end
 end
