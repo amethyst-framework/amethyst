@@ -34,18 +34,13 @@ class Router
 
   def call(request : Http::Request)
     path  = request.path
-    response = nil
+    response = Http::Response.new(404, "Not found")
     @routes.each do |route|
       if route.matches?(path)
-        puts "works"
         controller_instanse = @controllers.fetch(route.controller).new
-        contr_response = controller_instanse.call_action(route.action, "request")
-        response = contr_response
-        puts "2.Router#call each Response is ---> #{response}"
-        break
+        response = controller_instanse.call_action(route.action, "request")
       end
     end
-    puts "3.Router#call Response is ---> #{response}"
     return response
   end
 end
