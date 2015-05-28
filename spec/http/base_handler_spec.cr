@@ -2,6 +2,7 @@ require "../spec_helper"
 
 request = HTTP::Request.new("GET", "/")
 mdwstck = MiddlewareStack.new
+router  = Router.new
 handler = BaseHandler.new(mdwstck)
 
 describe BaseHandler do

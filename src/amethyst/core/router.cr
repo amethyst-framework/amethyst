@@ -2,41 +2,50 @@ class Router
   getter :routes
   getter :controllers
 
-  macro add_to_hash(klass_name)
+  macro register_controller(klass_name)
       @controllers[{{klass_name}}.to_s] = {{klass_name.id}}
   end
 
-  macro call_action(action)
-
   def initialize()
-    @routes = [] of Core::Route
+    @routes      = [] of Core::Route
     @controllers = {} of String => Class
-    @methods = {} of String => Symbols
+    @methods     = {} of String => Symbol
   end
 
-  def register(controller, *controller_actions)
-    add_to_hash controller
-
+  # Adds controller to hash @controllers
+  def register(controller)
+    register_controller controller
   end 
 
+  # It allows to 'draw' routes like you can do in Rails routes.rb
   def draw(&block)
     with self yield
   end
 
+  # Sets a route that should respond to GET HTTP method
+  # The synopsis of arguments receive is Rails-like:
+  # get "/products/:id", "products#show"
+  # where 'products' is a controller named ProductsController, and "show" is it's action
   def get(pattern, controller_action)
     controller, action = controller_action.split("#")
     controller = controller.capitalize+"Controller"
     @routes << Route.new(pattern, controller, action)
   end
 
-  def call(request)
+  def call(request : Http::Request)
     path  = request.path
+    response = nil
     @routes.each do |route|
       if route.matches?(path)
         puts "works"
-        controller_instanse = @controllers.fetch(route.controller).new(route.action)
-        controller_instanse
+        controller_instanse = @controllers.fetch(route.controller).new
+        contr_response = controller_instanse.call_action(route.action, "request")
+        response = contr_response
+        puts "2.Router#call each Response is ---> #{response}"
+        break
       end
     end
+    puts "3.Router#call Response is ---> #{response}"
+    return response
   end
 end

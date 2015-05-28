@@ -1,13 +1,20 @@
 require "../src/all"
 
-class IndexController
-	def hello
+class IndexController < BaseController
+	def hello(request)
+		puts "hello"
+	    HTTP::Response.new(200, "Hello!Welcome to Amethyst")    # emulates Response returned by controller
+	end
+
+	def actions
+		add :hello
 	end
 end
 
 app = Application.new
 app.routes.draw do |routes|
-	get "/index", "index#new"
+	get "/index", "index#hello"
+	p app.routes
 end
 app.routes.register(IndexController)
 app.serve

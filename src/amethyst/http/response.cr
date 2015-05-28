@@ -1,5 +1,4 @@
 class Response
-  property headers
   property body
   property status
 
