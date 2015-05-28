@@ -1,4 +1,4 @@
-class BaseController
+abstract class BaseController
   getter :actions_hash
   
   def initialize()

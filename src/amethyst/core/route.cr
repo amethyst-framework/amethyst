@@ -10,7 +10,7 @@ class Route
   end
 
   def matches?(path)
-    return false unless path.gsub(/\/$/, "").split("/").length == @length
+    return false unless path.split("/").length == @length
     regex = Regex.new(@pattern.to_s.gsub(/(:\w*)/, ".*"))
     path.match(regex) ? true : false
   end

@@ -1,15 +1,5 @@
 require "../spec_helper"
 
-class IndexController < BaseController
-  def hello(request)
-    HTTP::Response.new(200, "Hello")
-  end
-
-  def actions
-    add :hello
-  end
-end
-
 router     = Router.new
 controller = IndexController.new
 request    = Request.new(HTTP::Request.new("GET", "/index"))
@@ -36,8 +26,7 @@ describe Router do
     route.pattern.should eq "/index"
   end
 
-  it "can be called properly" do
+  it "returns HTTP::Response" do
     router.call(request).should be_a HTTP::Response
   end
-    
 end

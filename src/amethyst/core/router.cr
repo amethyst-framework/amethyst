@@ -2,18 +2,19 @@ class Router
   getter :routes
   getter :controllers
 
+  # This macro is a hack that allows to instansiate controllers through 
+  # @controllers.fetch("ControllerName")
   macro register_controller(klass_name)
-      @controllers[{{klass_name}}.to_s] = {{klass_name.id}}
+    @controllers[{{klass_name}}.to_s] = {{klass_name.id}}
   end
 
   def initialize()
     @routes      = [] of Core::Route
     @controllers = {} of String => Class
     @methods     = {} of String => Symbol
-    @response = Http::Response.new(404, "Not found")
   end
 
-  # Adds controller to hash @controllers
+  # Adds controller to hash @controllers and make it available for app
   def register(controller)
     register_controller controller
   end 
@@ -33,16 +34,21 @@ class Router
     @routes << Route.new(pattern, controller, action)
   end
 
+  # Actually, performs a routing 
   def call(request : Http::Request)
     path  = request.path
+    response    = Http::Response.new(404, "Not found")
     @routes.each do |route|
       if route.matches?(path)
-        controller_instanse = @controllers.fetch(route.controller).new
-        if controller_instanse.call_action(route.action, "request")
-          @response = controller_instanse.call_action(route.action, "request")
+        controller = path.capitalize+"Controller"
+        p controller 
+        controller_instanse = @controllers[controller].new
+        p controller_instanse
+        unless controller_instanse == Nil
+          response = controller_instanse.call_action(route.action, "request")
         end
       end
     end
-    return @response
+    return response
   end
 end

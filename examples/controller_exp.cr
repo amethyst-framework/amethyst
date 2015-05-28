@@ -13,7 +13,7 @@ end
 
 app = Application.new
 app.routes.draw do |routes|
-	get "/index", "index#hello"
+	get "/index/", "index#hello"
 	#p app.routes
 end
 app.routes.register(IndexController)
