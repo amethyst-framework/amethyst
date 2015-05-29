@@ -1,12 +1,21 @@
 require "../../spec_helper"
 
 mdwstack = MiddlewareStack.new
-bsmdware = BaseMiddleware.new
+bsmdware = TestMiddleware.new
 request  = Request.new(HTTP::Request.new("GET", "/"))
+response = Response.new(200, "OK")
+
 describe MiddlewareStack do
 
-  it "add method adds middleware" do
-    mdwstack.add(bsmdware)
+  mdwstack.add(bsmdware)
+
+  it "processes request" do
     mdwstack.process_request(request)
+    request.body.should eq "Request is being processed" 
+  end
+
+  it "processes response" do
+    mdwstack.process_response(request, response)
+    response.body.should eq "Response is being processed"
   end
 end

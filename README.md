@@ -70,7 +70,7 @@ class TimeMiddleware < Core::Middleware::BaseMiddleware
   # Http::Request and Http::Response
   def call(request, response)
     @t_res = Time.now
-    response.body += "\n Time elapsed: #{(@t_res-@t_req) seconds}"
+    response.body += "\n Time elapsed: #{(@t_res-@t_req)} seconds"
   end
 
 end
@@ -94,6 +94,8 @@ end
 # of your controller.
 app.routes.register(IndexController)
 # Standart port which application will be served on, is 8080
+# You can set port with:
+# app.port = 3000
 app.serve
 ```
 

@@ -1,15 +1,14 @@
 class Application
   property :port
   property :name
-  property :verbose
-  property :routes
-  property :controllers
+  getter   :routes
 
   def initialize(name= __FILE__, @port=8080)
-    @name ||= File.basename(name).gsub(/.\w+\Z/, "")
-    @run_string = "[Amethyst #{Time.now}] serving application \"#{@name}\" at http://127.0.0.1:#{port}" #TODO move to Logger class
-    @middleware_stack = MiddlewareStack.new
-    @router = Router.new
+    @name          = File.basename(name).gsub(/.\w+\Z/, "")
+    @run_string    = "[Amethyst #{Time.now}] serving application \"#{@name}\" at http://127.0.0.1:#{port}" #TODO move to Logger class
+    @midware_stack = MiddlewareStack.new
+    @router        = Router.new
+    @http_handler  = BaseHandler.new(@middleware_stack, @router)
   end
 
   def routes
@@ -17,12 +16,16 @@ class Application
   end
 
   def use(middleware : BaseMiddleware)
-    @middleware_stack.add(middleware)
+    @midware_stack.add middleware
   end
 
   def serve()
     puts @run_string
-    server = HTTP::Server.new @port, BaseHandler.new(@middleware_stack, @router)
+    server = HTTP::Server.new @port, @http_handler
     server.listen
   end
 end
+
+#TODO: Implement enviroments(production, development)
+#TODO: Implement configuring app.configure(&block)
+#TODO: Implement tracer module

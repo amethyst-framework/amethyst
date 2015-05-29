@@ -14,3 +14,5 @@ class Request
     @version = base_request.version
   end
 end
+
+# TODO: Improve Request class, add @env like in Rails

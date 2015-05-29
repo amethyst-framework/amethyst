@@ -14,7 +14,7 @@ describe Route do
 
   it "instantiates with path with params" do
     route2.pattern.should eq "/users/show/:id"
-    route2.get_params("/users/show/5").should eq ({"id" => "5"})
+    route2.params("/users/show/5").should eq ({"id" => "5"})
     route2.length.should eq 4
   end
 

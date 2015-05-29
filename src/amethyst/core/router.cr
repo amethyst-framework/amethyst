@@ -40,7 +40,7 @@ class Router
     response    = Http::Response.new(404, "Not found")
     @routes.each do |route|
       if route.matches?(path)
-        controller = path.capitalize+"Controller"
+        controller = route.action.capitalize+"Controller"
         p controller 
         controller_instanse = @controllers[controller].new
         p controller_instanse
@@ -52,3 +52,5 @@ class Router
     return response
   end
 end
+
+# TODO: Fix call issues with instantiating controller
