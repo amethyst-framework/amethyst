@@ -12,11 +12,12 @@ class IndexController < Core::BaseController
 	# Controller action. It gets request of Http::Requst as an argument.
 	# For now, each controller should return Http::Response by itself.
 	def hello
-  	html "Hello, you're asked a #{request.method} #{request.path}"
+  	html "<p>Hello, you're asked a #{request.method} #{request.path}</p> \n
+          <a href='/bye'>Visit <b>bye</b> action</a>"
 	end
 
 	def bye
-		puts "bye"
+    html "<p>Bye!We hope you will come back</p>"
 	end
 
 	# Method "actions" must be provided by each controller of your application.
@@ -49,7 +50,7 @@ class TimeMiddleware < Core::Middleware::BaseMiddleware
   # Http::Request and Http::Response
 	def call(request, response)
     @t_res = Time.now
-    response.body += "\n Time elapsed: #{(@t_res-@t_req)} seconds"
+    response.body += "<hr> Time elapsed: #{(@t_res-@t_req)} seconds"
   end
 
 end

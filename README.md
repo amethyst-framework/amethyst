@@ -1,58 +1,78 @@
 # Amethyst [![Build Status](https://travis-ci.org/Codcore/Amethyst.svg)](https://travis-ci.org/Codcore/Amethyst)
 
-Amethyst is a experimental web-framework written in [Crystal](https://github.com/manastech/crystal) language. Project currently is under construction. You can 
-find an example of simple web-application written with Amethyst below. Note, Amethyst is in very early stage, so a lot of base features are missing yet. However, it
-works :). Would be glad for any help with contributing.
+Amethyst is a web framework written in [Crystal](https://github.com/manastech/crystal) language. The goals of Amethyst are to be fast and user-friendly as Rails. Note, Amethyst is in very early stage, so a lot of base features are missing yet. However, it works :). For now, next things are implemented:
+- class-based controllers with actions
+- middleware support
+- simple routing
+For details, see docs below.
+
+Would be glad for any help with contributing.
 
 ## Installation
 
-Add it to `Projectfile`
+Suggested that you installed Crystal 0.7.1 or higher.
+```
+git clone https://github.com/Codcore/Amethyst.git
+```
+
+Or add it to `Projectfile` of your Crystal project
 
 ```crystal
 deps do
   github "Codcore/amethyst"
 end
 ```
-
+You can play with example of simple web-application written with Amethyst at ```examples``` directory:
+```
+crystal examples/simple_application.cr
+```
 ## Usage
 
+If you want to load Amethyst in global namespace to be able not to prepend classes with name of modules they are in (for example, ```Core::BaseController```),you can load all modules into global namespace next way:
 ```crystal
-# If you want to load Amethyst in global namespace to be able not to prepend
-# classes with name of modules they are in (for example, Core::BaseController),
-# you can load all modules into global namespace with next code:
-# require "amethyst/all" (i.e. Application.new instead of Core::Application.new, etc.)
+require "amethyst/all"
+```
+From that moment, you can type ```Application.new``` instead of ```Core::Application.new```, ```BaseController``` instead ```Core::BaseController```, etc.)
 
+# Controllers
+Amethyst controllers are classes, the name of controller must be ```NameController```,
+and it needs to be inherited from ```BaseController```. Here is an example of simple controller:
+
+```crystal
 require "../src/amethyst"
 
-# Controller class. The name of controller must be "NameController",
-# and it needs to be inherited from BaseController
 class IndexController < Core::BaseController
 
-  # Controller action. It gets request of Http::Requst as an argument.
-  # For now, each controller should return Http::Response by itself.
-  def hello(request)
-    puts "hello"
-    Http::Response.new(200, "Hello!Welcome to Amethyst!")
+  def hello
+    html "<p>Hello, you're asked a #{request.method} #{request.path}</p> \n
+          <a href='/bye'>Visit <b>bye</b> action</a>"
   end
 
-  def bye(request)
-    puts "bye"
-    Http::Response.new(200, "Bye!Amethyst will miss you...")
+  def bye
+    html "<p>Bye!We hope you will come back</p>"
   end
 
-  # Method "actions" must be provided by each controller of your application.
-  # It lets app to know which methods of your contoller are actions.
-  # The synopsys is add :action_name
   def actions
     add :hello
     add :bye
   end
 end
+```
+Controllers describe actions as a methods. Actions have direct access to request and response objects, and other helpers, such as a ```html``` . Controller method ```actions``` is special method that must be provided by each controller of your application.It lets app to know which methods of your contoller are actions, and which aren't. The synopsys is ```add :action_name```. 
 
-# Middleware are implemented as classes. Middleware class inherits from
-# Core::Middleware::BaseMiddleware (or, just type "BaseMiddleware" if you  are
-# using "amethyst/all"), and should have the "call" method.
-# Actually, there are two call methods with different signatures.
+
+# Middleware
+Middleware are implemented as classes. Middleware class inherits from ```Core::Middleware::BaseMiddleware``` (or, just type ```BaseMiddleware`` if you prefer ```require amethyst/all```), and should have the ```call``` method. Actually, there are two call methods with different signatures:
+```crystal
+def call(request)
+end
+
+def call(request, response)
+end
+```
+The first one will be called when app gets request from server. It accepts ```Amethyst::Http::Request``` as an argument. Last one will be invoked when controller returned response(this happens automatically). It gets ```Amethyst::Http::Request``` and ```Amethyst::Http::Response``` as arguments. Here is an example of middleware that calculates time elapsed between request and response.
+
+```crystal
 class TimeMiddleware < Core::Middleware::BaseMiddleware
 
   # All instance variables have to be initialized here to use them in call methods
@@ -61,7 +81,6 @@ class TimeMiddleware < Core::Middleware::BaseMiddleware
     @t_res = Time.new
   end
 
-  # This one will be called when app gets request. It accepts Http::Request
   def call(request)
     @t_req = Time.now
   end
@@ -70,29 +89,53 @@ class TimeMiddleware < Core::Middleware::BaseMiddleware
   # Http::Request and Http::Response
   def call(request, response)
     @t_res = Time.now
-    response.body += "\n Time elapsed: #{(@t_res-@t_req)} seconds"
+    response.body += "<hr> Time elapsed: #{(@t_res-@t_req)} seconds"
   end
-
 end
+```
 
 # Application creating
+
+```crystal
 app = Core::Application.new
+
 # Middleware registering
 app.use(TimeMiddleware.new)
+```
+You can set a port and app name (defaul port is ```8080```, default name is name of file application is in):
+```crystal
+app.port = 8080
+app.name = "example"
+```
 
-# Rails-like approach to describe routes. For now, only get() supported.
-# It consists of path and string "controller_name#action_name"
-# You can specify params to be captured:
-# get "/users/:id", "users#show" (not works yet)
+#Routing
+
+Amethyst has Rails-like approach to describe routes. For now, only ```get()``` supported. 
+It consists of path and string ```controller_name#action_name```
+
+```crystal 
 app.routes.draw do |routes|
+  # map GET "/" to "hello" action of IndexController
   get "/",    "index#hello"
+  map GET "/bye" to "bye" action of IndexController
   get "/bye", "index#bye"
 end
+```
 
-# After you defined a controller, you have to register it in app with
-# app.routes.register(NameController) where NameController is the class name
-# of your controller.
+Note, ```/bye``` and ```/bye/``` work slightly different. First matches ```/bye, /bye/, /bye_something```, second is "strict",
+and matches only ```/bye``` and ```/bye/```. Both not matches ```/bye/something```.
+
+You can specify params to be captured:
+```crystal 
+get "/users/:id", "users#show" #(params not works yet)
+```
+
+After you defined a controller, you have to register it in app with ```app.routes.register(NameController)``` where ```NameController```(CamelCase) is the classname of your controller:
+```crystal
 app.routes.register(IndexController)
+```
+#Running application
+```crystal
 app.serve
 ```
 
