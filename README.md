@@ -4,6 +4,7 @@ Amethyst is a web framework written in [Crystal](https://github.com/manastech/cr
 - class-based controllers with actions
 - middleware support
 - simple routing
+
 For details, see docs below.
 
 Would be glad for any help with contributing.
