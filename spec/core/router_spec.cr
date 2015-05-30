@@ -1,8 +1,8 @@
 require "../spec_helper"
 
 router     = Router.new
-controller = IndexController.new
 request    = Request.new(HTTP::Request.new("GET", "/index"))
+controller = IndexController.new(request)
 
 describe Router do
 

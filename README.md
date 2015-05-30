@@ -49,13 +49,13 @@ class IndexController < Core::BaseController
   end
 end
 
-# Middleware is implemented as classes. Middleware class inherits from
+# Middleware are implemented as classes. Middleware class inherits from
 # Core::Middleware::BaseMiddleware (or, just type "BaseMiddleware" if you  are
 # using "amethyst/all"), and should have the "call" method.
 # Actually, there are two call methods with different signatures.
 class TimeMiddleware < Core::Middleware::BaseMiddleware
 
-  # All istance variables have to be initialized here to use them in call methods
+  # All instance variables have to be initialized here to use them in call methods
   def initialize
     @t_req = Time.new 
     @t_res = Time.new
@@ -85,17 +85,14 @@ app.use(TimeMiddleware.new)
 # You can specify params to be captured:
 # get "/users/:id", "users#show" (not works yet)
 app.routes.draw do |routes|
-  get "/index",     "index#hello"
-  get "/index/bye", "index#bye"
+  get "/",    "index#hello"
+  get "/bye", "index#bye"
 end
 
 # After you defined a controller, you have to register it in app with
 # app.routes.register(NameController) where NameController is the class name
 # of your controller.
 app.routes.register(IndexController)
-# Standart port which application will be served on, is 8080
-# You can set port with:
-# app.port = 3000
 app.serve
 ```
 

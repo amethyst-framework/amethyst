@@ -11,12 +11,12 @@ class IndexController < Core::BaseController
 
 	# Controller action. It gets request of Http::Requst as an argument.
 	# For now, each controller should return Http::Response by itself.
-	def hello(request)
+	def hello
 		puts "hello"
-	  Http::Response.new(200, "Hello!Welcome to Amethyst!")
+	  	Http::Response.new(200, "Hello!Welcome to Amethyst!")
 	end
 
-	def bye(request)
+	def bye
 		puts "bye"
 		Http::Response.new(200, "Bye!Amethyst will miss you...")
 	end
@@ -36,7 +36,7 @@ end
 # Actually, there are two call methods with different signatures.
 class TimeMiddleware < Core::Middleware::BaseMiddleware
 
-  # All istance variables have to be initialized here to use them in call methods
+  # All instance variables have to be initialized here to use them in call methods
   def initialize
     @t_req = Time.new 
     @t_res = Time.new
@@ -67,7 +67,7 @@ app.use(TimeMiddleware.new)
 # get "/users/:id", "users#show" (not works yet)
 app.routes.draw do |routes|
 	get "/", 	  "index#hello"
-	get "/index/bye", "index#bye"
+	get "/bye", "index#bye"
 end
 
 # After you defined a controller, you have to register it in app with

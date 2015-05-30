@@ -5,13 +5,17 @@ require "spec"
 require "../src/all"
 
 class IndexController < BaseController
-
-  def hello(request)
+  def hello
     HTTP::Response.new(200, "Hello")
+  end
+
+  def bye
+    HTTP::Response.new(200, "Bye")
   end
 
   def actions
     add :hello
+    add :bye
   end
 end
 

@@ -1,21 +1,10 @@
 require "../spec_helper"
 
-class IndexController < BaseController
-  def hello(request)
-    HTTP::Response.new(200, "Hello")
-  end
-
-  def bye(request)
-    HTTP::Response.new(200, "Bye")
-  end
-
-  def actions
-    add :hello
-    add :bye
-  end
-end
-
-controller = IndexController.new
+headers = HTTP::Headers.new
+headers["Accept"] = ["text/plain"]
+base_request = HTTP::Request.new("GET", "/", headers, "Test")
+request = Request.new(base_request)
+controller = IndexController.new(request)
 
 describe IndexController do
 
@@ -25,12 +14,12 @@ describe IndexController do
   end
 
   it "actions method captures actions properly" do
-    controller.actions_hash["hello"].should eq ->controller.hello(String)
+    controller.actions_hash["hello"].should eq ->controller.hello
     controller.actions_hash["bye"].should be_a Proc
   end
 
   it "actions return HTTP::Response" do
-    response = controller.call_action("bye", "request")
+    response = controller.call_action("bye")
     response.should be_a HTTP::Response
     response.status_code.should eq 200
     response.body.should eq "Bye"

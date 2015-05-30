@@ -42,8 +42,8 @@ class Router
     @routes.each do |route|
       if route.matches?(path)
         controller = route.controller.capitalize+"Controller"
-        controller_instance = @controllers[controller].new
-        response = controller_instance.call_action(route.action, "request")
+        controller_instance = @controllers[controller].new(request)
+        response = controller_instance.call_action(route.action)
       end
     end
     return response
