@@ -41,9 +41,11 @@ class Router
     response = Http::Response.new(404, "Not found")
     @routes.each do |route|
       if route.matches?(path)
+        response = Http::Response.new(200, "#{path} of application")
         controller = route.controller.capitalize+"Controller"
-        controller_instance = @controllers[controller].new(request)
+        controller_instance = @controllers[controller].new(request, response)
         response = controller_instance.call_action(route.action)
+        break
       end
     end
     return response

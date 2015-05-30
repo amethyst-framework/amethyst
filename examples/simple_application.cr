@@ -12,13 +12,11 @@ class IndexController < Core::BaseController
 	# Controller action. It gets request of Http::Requst as an argument.
 	# For now, each controller should return Http::Response by itself.
 	def hello
-		puts "hello"
-	  	Http::Response.new(200, "Hello!Welcome to Amethyst!")
+  	html "Hello, you're asked a #{request.method} #{request.path}"
 	end
 
 	def bye
 		puts "bye"
-		Http::Response.new(200, "Bye!Amethyst will miss you...")
 	end
 
 	# Method "actions" must be provided by each controller of your application.

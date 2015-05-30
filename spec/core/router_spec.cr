@@ -1,8 +1,10 @@
 require "../spec_helper"
+include Amethyst::Http
 
 router     = Router.new
-request    = Request.new(HTTP::Request.new("GET", "/index"))
-controller = IndexController.new(request)
+request    = Amethyst::Http::Request.new(HTTP::Request.new("GET", "/index"))
+response   = Amethyst::Http::Response.new(200, "Ok")
+controller = IndexController.new(request, response)
 
 describe Router do
 
@@ -27,6 +29,6 @@ describe Router do
   end
 
   it "returns HTTP::Response" do
-    router.call(request).should be_a HTTP::Response
+    router.call(request).should be_a Amethyst::Http::Response
   end
 end

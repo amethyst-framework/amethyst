@@ -6,11 +6,11 @@ require "../src/all"
 
 class IndexController < BaseController
   def hello
-    HTTP::Response.new(200, "Hello")
+    html "Hello"
   end
 
   def bye
-    HTTP::Response.new(200, "Bye")
+    html "Bye"
   end
 
   def actions
