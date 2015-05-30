@@ -8,7 +8,8 @@ class Application
     @run_string    = "[Amethyst #{Time.now}] serving application \"#{@name}\" at http://127.0.0.1:#{port}" #TODO move to Logger class
     @midware_stack = MiddlewareStack.new
     @router        = Router.new
-    @http_handler  = BaseHandler.new(@middleware_stack, @router)
+    @http_handler  = BaseHandler.new(@midware_stack, @router)
+    $app = self
   end
 
   def routes

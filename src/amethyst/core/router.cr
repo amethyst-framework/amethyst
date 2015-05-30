@@ -29,6 +29,7 @@ class Router
   # get "/products/:id", "products#show"
   # where 'products' is a controller named ProductsController, and "show" is it's action
   def get(pattern, controller_action)
+    pattern.gsub(/\$/, "\$") unless pattern == "/"
     controller, action = controller_action.split("#")
     controller = controller.capitalize+"Controller"
     @routes << Route.new(pattern, controller, action)
@@ -36,17 +37,13 @@ class Router
 
   # Actually, performs a routing 
   def call(request : Http::Request)
-    path  = request.path
-    response    = Http::Response.new(404, "Not found")
+    path     = request.path
+    response = Http::Response.new(404, "Not found")
     @routes.each do |route|
       if route.matches?(path)
-        controller = route.action.capitalize+"Controller"
-        p controller 
-        controller_instanse = @controllers[controller].new
-        p controller_instanse
-        unless controller_instanse == Nil
-          response = controller_instanse.call_action(route.action, "request")
-        end
+        controller = route.controller.capitalize+"Controller"
+        controller_instance = @controllers[controller].new
+        response = controller_instance.call_action(route.action, "request")
       end
     end
     return response

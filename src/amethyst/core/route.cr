@@ -6,13 +6,14 @@ class Route
   getter :params
 
   def initialize(@pattern, @controller, @action)
-    @pattern = @pattern.gsub(/\/$/, "") unless @pattern == "/"
+    @pattern = @pattern.gsub(/\/$/, "\$") unless @pattern == "/"
     @length  = @pattern.split("/").length
   end
 
   # Partially, stolen from Moonshine
   # Cheks whether path matches a route pattern
   def matches?(path)
+    path = path.gsub(/\/$/, "") unless path == "/"
     return false unless path.split("/").length == @length
     regex = Regex.new(@pattern.to_s.gsub(/(:\w*)/, ".*"))
     path.match(regex) ? true : false
@@ -31,3 +32,4 @@ class Route
     return params
   end
 end
+

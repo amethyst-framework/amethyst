@@ -66,7 +66,7 @@ app.use(TimeMiddleware.new)
 # You can specify params to be captured:
 # get "/users/:id", "users#show" (not works yet)
 app.routes.draw do |routes|
-	get "/index", 	  "index#hello"
+	get "/", 	  "index#hello"
 	get "/index/bye", "index#bye"
 end
 

@@ -23,7 +23,7 @@ describe Router do
     route = router.routes[0]
     route.controller.should eq "IndexController"
     route.action.should eq "hello"
-    route.pattern.should eq "/index"
+    route.pattern.should eq "/index$"
   end
 
   it "returns HTTP::Response" do
