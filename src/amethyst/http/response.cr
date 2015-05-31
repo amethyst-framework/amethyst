@@ -15,5 +15,4 @@ class Response
   def build
     return HTTP::Response.new(@status_code, @body, headers = @headers, version = @version)
   end
-
 end

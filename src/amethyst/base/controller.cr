@@ -1,11 +1,11 @@
-abstract class BaseController
+abstract class Controller
   getter   :actions_hash
   getter   :request
   property :response
   property :body
   # Creates a hash for controller actions
   # Then, invokes actions method to add actions to the hash
-  def initialize(@request : Amethyst::Http::Request, @response : Amethyst::Http::Response)
+  def initialize(@request : Http::Request, @response : Http::Response)
     @actions_hash = {} of String => Proc
     actions
   end

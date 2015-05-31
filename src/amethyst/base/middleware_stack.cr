@@ -1,7 +1,7 @@
 class MiddlewareStack
   
   def initialize()
-    @middleware   = [] of Core::Middleware::BaseMiddleware
+    @middleware   = [] of Base::Middleware
   end
 
   # This method is invoked when the application receives a request
@@ -21,7 +21,7 @@ class MiddlewareStack
   end
 
   # Adds middleware instance to the @middleware array
-  def add(middleware : Core::Middleware::BaseMiddleware)
+  def add(middleware : Base::Middleware)
     @middleware << middleware
   end
 end

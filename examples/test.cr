@@ -1,6 +1,6 @@
 require "../src/amethyst"
 
-class TestController < BaseController
+class TestController < Base::Controller
 
 	def index
 		html "Hello world!"
@@ -12,11 +12,11 @@ class TestController < BaseController
 end
 
 
-App.settings.configure do |conf| 
+Base::App.settings.configure do |conf| 
   conf.environment 7 
 end
 
-app = App.new
+app = Base::App.new
 
 app.routes.draw do
   get "/", "test#index"

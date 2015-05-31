@@ -9,7 +9,7 @@ class Router
   end
 
   def initialize()
-    @routes      = [] of Core::Route
+    @routes      = [] of Dispatch::Route
     @controllers = {} of String => Class
     @methods     = {} of String => Symbol
   end
@@ -32,7 +32,7 @@ class Router
     pattern.gsub(/\$/, "\$") unless pattern == "/"
     controller, action = controller_action.split("#")
     controller = controller.capitalize+"Controller"
-    @routes << Route.new(pattern, controller, action)
+    @routes << Dispatch::Route.new(pattern, controller, action)
   end
 
   # Actually, performs a routing 

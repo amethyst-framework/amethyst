@@ -27,6 +27,4 @@ class Config
   def configure(&block)
     yield self
   end
-  
-  
 end

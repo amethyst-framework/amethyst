@@ -1,4 +1,4 @@
-class BaseMiddleware
+class Middleware
 	
 	def initialize()
 	end

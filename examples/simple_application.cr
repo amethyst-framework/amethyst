@@ -7,7 +7,7 @@ require "../src/amethyst"
 
 # Controller class. The name of controller must be "NameController",
 # and it needs to be inherited from BaseController
-class IndexController < Core::BaseController
+class IndexController < Base::Controller
 
 	# Controller action. It gets request of Http::Requst as an argument.
 	# For now, each controller should return Http::Response by itself.
@@ -33,7 +33,7 @@ end
 # Core::Middleware::BaseMiddleware (or, just type "BaseMiddleware" if you  are
 # using "amethyst/all"), and should have the "call" method.
 # Actually, there are two call methods with different signatures.
-class TimeMiddleware < Core::Middleware::BaseMiddleware
+class TimeMiddleware < Base::Middleware
 
   # All instance variables have to be initialized here to use them in call methods
   def initialize
@@ -57,7 +57,7 @@ class TimeMiddleware < Core::Middleware::BaseMiddleware
 end
 
 # App creating
-app = Core::App.new
+app = Base::App.new
 # Middleware registering
 app.use(TimeMiddleware.new)
 

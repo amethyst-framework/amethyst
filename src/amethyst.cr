@@ -1,4 +1,2 @@
-require "./amethyst/http"
-require "./amethyst/core"
-
+require "./amethyst/base"
 include Amethyst

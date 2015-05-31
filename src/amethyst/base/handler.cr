@@ -1,4 +1,4 @@
-class BaseHandler < HTTP::Handler
+class Handler
 
   def initialize(@middleware_stack, @router)
   end
