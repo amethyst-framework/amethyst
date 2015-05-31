@@ -11,14 +11,17 @@ class TestController < BaseController
   end
 end
 
-Application.configure do |conf|
+
+Application.settings.configure do |conf| 
   conf.environment 7 
 end
 
 app = Application.new
+
 app.routes.draw do
   get "/", "test#index"
   register TestController
 end
+
 
 app.serve

@@ -11,7 +11,6 @@ class Config
     @config = {} of Symbol => String
   end
 
-  
   macro method_missing(name, args, block)
     {% if args[0] == nil %}
       begin
@@ -24,4 +23,10 @@ class Config
         @config[:{{name.id}}] = {{args[0]}}.to_s
     {% end %}
   end
+
+  def configure(&block)
+    yield self
+  end
+  
+  
 end
