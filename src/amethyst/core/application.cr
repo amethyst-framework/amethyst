@@ -1,4 +1,4 @@
-class Application
+class App
   property :port
   property :name
   getter   :routes

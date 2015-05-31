@@ -1,7 +1,7 @@
 # If you want to load Amethyst in global namespace to be able not to prepend
 # classes with name of modules they are in (for example, Core::BaseController),
 # you can load all modules into global namespace with next code:
-# require "amethyst/all" (i.e. Application.new instead of Core::Application.new, etc.)
+# require "amethyst/all" (i.e. App.new instead of Core::App.new, etc.)
 
 require "../src/amethyst"
 
@@ -56,8 +56,8 @@ class TimeMiddleware < Core::Middleware::BaseMiddleware
 
 end
 
-# Application creating
-app = Core::Application.new
+# App creating
+app = Core::App.new
 # Middleware registering
 app.use(TimeMiddleware.new)
 
