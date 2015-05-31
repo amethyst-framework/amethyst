@@ -13,6 +13,9 @@ abstract class BaseController
   # Works like Ruby's send(:method) to invoke controller action:
   # NameController.call_action("show")
   def call_action(action)
+    #if $app.env == :development
+      #puts "Action #{action} invoked"
+    #end
     @actions_hash.fetch(action).call()
     return @response
   end
@@ -34,6 +37,4 @@ abstract class BaseController
   end
 end
 
-# TODO: !!!Make actions not to accept anything at all, instead make private
-# request method in the controller. Request must be instance variable of controller
 # TODO: Separate module for html, answer etc. (mixin module)

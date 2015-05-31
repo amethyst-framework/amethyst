@@ -63,7 +63,7 @@ Controllers describe actions as a methods. Actions have direct access to request
 
 
 # Middleware
-Middleware are implemented as classes. Middleware class inherits from ```Core::Middleware::BaseMiddleware``` (or, just type ```BaseMiddleware`` if you prefer ```require amethyst/all```), and should have the ```call``` method. Actually, there are two call methods with different signatures:
+Middleware are implemented as classes. Middleware class inherits from ```Core::Middleware::BaseMiddleware``` (or, just type ```BaseMiddleware``` if you prefer ```require amethyst/all```), and should have the ```call``` method. Actually, there are two call methods with different signatures:
 ```crystal
 def call(request)
 end

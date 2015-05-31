@@ -9,7 +9,11 @@ class Application
     @midware_stack = MiddlewareStack.new
     @router        = Router.new
     @http_handler  = BaseHandler.new(@midware_stack, @router)
-    $app = self
+    @config        = Config.get
+  end
+
+  def self.configure(&block)
+    yield(Config.get)
   end
 
   def routes

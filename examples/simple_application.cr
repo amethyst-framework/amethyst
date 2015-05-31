@@ -49,8 +49,9 @@ class TimeMiddleware < Core::Middleware::BaseMiddleware
   # This one will be called when response returned from controller. It accepts both
   # Http::Request and Http::Response
 	def call(request, response)
-    @t_res = Time.now
-    response.body += "<hr> Time elapsed: #{(@t_res-@t_req)} seconds"
+    @t_res  = Time.now
+    elapsed = (@t_res - @t_req).to_f*1000
+    response.body +=  "<hr> Time elapsed:  %.4f ms" % elapsed
   end
 
 end
