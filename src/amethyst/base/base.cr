@@ -1,4 +1,4 @@
-# dependencies
+# Dependencies
 require "http"
 
 # Amethyst dependencies
@@ -7,9 +7,9 @@ require "../middleware"
 require "../dispatch"
 require "../sugar"
 
-# load files into module namespace
+# Load files into module namespace
 module Amethyst
 	module Base
-    require "./*"
-  end
+		require "./*"
+	end
 end

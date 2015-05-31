@@ -1,10 +1,11 @@
 require "spec"
+require "../src/all"
+
 #require "minitest/autorun"
 #require "webmock"
 
-require "../src/all"
 
-class IndexController < BaseController
+class IndexController < Base::Controller
   def hello
     html "Hello"
   end
@@ -19,7 +20,7 @@ class IndexController < BaseController
   end
 end
 
-class TestMiddleware < BaseMiddleware
+class TestMiddleware < Base::Middleware
 
   def call(request, response)
     response.body = "Response is being processed"

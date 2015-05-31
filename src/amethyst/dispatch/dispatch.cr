@@ -1,10 +1,10 @@
-# dependencies
+# Dependencies
 require "http"
 
 # Amethyst dependencies
 require "../http"
 
-# load files into module namespace
+# Load files into module namespace
 module Amethyst
 	module Dispatch 
   	require "./*"

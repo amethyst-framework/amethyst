@@ -1,11 +1,11 @@
-require "../spec_helper"
-
-headers = HTTP::Headers.new
-headers["Accept"] = ["text/plain"]
-base_request = HTTP::Request.new("GET", "/", headers, "Test")
-req = Request.new(base_request)
+require "./spec_helper"
 
 describe Request do
+
+  headers = HTTP::Headers.new
+  headers["Accept"] = ["text/plain"]
+  base_request = HTTP::Request.new("GET", "/", headers, "Test")
+  req = Request.new(base_request)
 
   it "instantiates properly" do
     req.method.should             eq "GET"

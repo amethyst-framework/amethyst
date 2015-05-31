@@ -1,4 +1,4 @@
-#dependencies
+# Dependencies
 require "http"
 
 module Amethyst
