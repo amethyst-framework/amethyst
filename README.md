@@ -1,17 +1,17 @@
 # Amethyst [![Build Status](https://travis-ci.org/Codcore/Amethyst.svg)](https://travis-ci.org/Codcore/Amethyst)
 
-Amethyst is a web framework written in [Crystal](https://github.com/manastech/crystal) language. The goals of Amethyst are to be fast and user-friendly as Rails. Note, Amethyst is in very early stage, so a lot of base features are missing yet. However, it works :). For now, next things are implemented:
+Amethyst is a web framework written in [Crystal](https://github.com/manastech/crystal) language. The goals of Amethyst are to be fast and user-friendly as Rails. Note, Amethyst is at early stage of developing, so a lot of features are missing yet. However, it works :). Why "Amethyst"? Because Crystal at GitHub has a light putple color as an [Amethyst](http://en.wikipedia.org/wiki/Amethyst)
+
+For now, next things are implemented:
 - class-based controllers with actions
 - middleware support
 - simple routing
 
 For details, see docs below.
 
-Would be glad for any help with contributing.
-
 ## Installation
 
-Suggested that you installed Crystal 0.7.1 or higher.
+Suggested that you have installed [Crystal](https://github.com/manastech/crystal) 0.7.1 or higher.
 ```
 git clone https://github.com/Codcore/Amethyst.git
 ```
@@ -29,20 +29,20 @@ crystal examples/simple_application.cr
 ```
 ## Usage
 
-If you want to load Amethyst in global namespace to be able not to prepend classes with name of modules they are in (for example, ```Core::BaseController```),you can load all modules into global namespace next way:
+If you want to load Amethyst in global namespace to be able not to prepend classes with name of modules they are in (for example, ```Base::Controller```),you can load all modules into global namespace next way:
 ```crystal
 require "amethyst/all"
 ```
-From that moment, you can type ```Application.new``` instead of ```Core::Application.new```, ```BaseController``` instead ```Core::BaseController```, etc.)
+From that moment, you can type ```App.new``` instead of ```Base::App.new```, ```Base::Controller``` instead ```Base::Controller```, etc.)
 
 # Controllers
-Amethyst controllers are classes, the name of controller must be ```NameController```,
-and it needs to be inherited from ```BaseController```. Here is an example of simple controller:
+Amethyst controllers are classes with method-actions. The name of any controller must be like ```NameController```,
+and it needs to be inherited from ```Base::Controller```. Here is an example of simple controller:
 
 ```crystal
 require "../src/amethyst"
 
-class IndexController < Core::BaseController
+class IndexController < Base::Controller
 
   def hello
     html "<p>Hello, you're asked a #{request.method} #{request.path}</p> \n
@@ -63,7 +63,7 @@ Controllers describe actions as a methods. Actions have direct access to request
 
 
 # Middleware
-Middleware are implemented as classes. Middleware class inherits from ```Core::Middleware::BaseMiddleware``` (or, just type ```BaseMiddleware``` if you prefer ```require amethyst/all```), and should have the ```call``` method. Actually, there are two call methods with different signatures:
+Middleware are implemented as classes. Middleware class inherits from ```Base::Middleware``` (or, just type ```Middleware``` if you prefer ```require amethyst/all```), and should have the ```call``` method. Actually, there are two call methods with different signatures:
 ```crystal
 def call(request)
 end
@@ -74,7 +74,7 @@ end
 The first one will be called when app gets request from server. It accepts ```Amethyst::Http::Request``` as an argument. Last one will be invoked when controller returned response(this happens automatically). It gets ```Amethyst::Http::Request``` and ```Amethyst::Http::Response``` as arguments. Here is an example of middleware that calculates time elapsed between request and response.
 
 ```crystal
-class TimeMiddleware < Core::Middleware::BaseMiddleware
+class TimeMiddleware < Base::Middleware
 
   # All instance variables have to be initialized here to use them in call methods
   def initialize
@@ -98,7 +98,7 @@ end
 # Application creating
 
 ```crystal
-app = Core::Application.new
+app = Base::Application.new
 
 # Middleware registering
 app.use(TimeMiddleware.new)
@@ -116,9 +116,9 @@ It consists of path and string ```controller_name#action_name```
 
 ```crystal 
 app.routes.draw do |routes|
-  # map GET "/" to "hello" action of IndexController
+  # maps GET "/" to "hello" action of IndexController
   get "/",    "index#hello"
-  map GET "/bye" to "bye" action of IndexController
+  # maps GET "/bye" to "bye" action of IndexController
   get "/bye", "index#bye"
 end
 ```
@@ -128,7 +128,7 @@ and matches only ```/bye``` and ```/bye/```. Both not matches ```/bye/something`
 
 You can specify params to be captured:
 ```crystal 
-get "/users/:id", "users#show" #(params not works yet)
+get "/users/:id", "users#show" #(params doesn't work yet)
 ```
 
 After you defined a controller, you have to register it in app with ```app.routes.register(NameController)``` where ```NameController```(CamelCase) is the classname of your controller:
@@ -140,37 +140,39 @@ app.routes.register(IndexController)
 app.serve
 ```
 
-
 ## Development
 
 Feel free to fork project and make pull-requests. Stick to standart project structure and name conventions:
 
     src/
       amethyst/
-        module1/       #module1 files
+        module1/       # module1 files
           class1.cr
           ...
-          module1.cr   #loads all module1 files into namespace Amethyst::Module1
+          module1.cr   # loads all module1 files into namespace Amethyst::Module1
         module2/
-          class1.cr    #describe class Class1 (module, struct, i.e)
+          class1.cr    # describe class Class1 (module, struct, i.e)
           ...
-          module2.cr   #loads all module2 files into namespace Amethyst::Module2
-        file_module.cr #module that consists of one file
-      amethyst.cr      #requires module1.cr, module2.cr, file_module.cr
+          module2.cr   # loads all module2 files into namespace Amethyst::Module2
+        file_module.cr # module that consists of one file
+      amethyst.cr      # requires module1.cr, module2.cr, file_module.cr
 
     spec/
       module1/
-        class1_spec.cr #specs for Module1::Class
+        class1_spec.cr # specs for Module1::Class
+        spec_helper.cr # loads main spec_helper
       module2/
         class2_spec.cr
-      spec_helper      #loads amethyst.cr
+      spec_helper      # loads "amethyst/all"
 
-    examples/          #examples to play with
-                       #don't forget to require "..src/amethyst"
+    examples/          # examples to play with
+                       # don't forget to require "..src/amethyst" or "..src/all"
 
 
 
 ## Contributing
+
+I would be glad for any help with contributing.
 
 1. Fork it ( https://github.com/Codcore/amethyst/fork )
 2. Create your feature branch (git checkout -b my-new-feature)
@@ -178,6 +180,7 @@ Feel free to fork project and make pull-requests. Stick to standart project stru
 4. Push to the branch (git push origin my-new-feature)
 5. Create a new Pull Request
 
+
 ## Contributors
 
-- [Codcore](https://github.com/[your-github-name]) codcore - creator, maintainer
+- [Andrew Yaroshuk](https://github.com/[your-github-name]) Codcore - creator, maintainer
