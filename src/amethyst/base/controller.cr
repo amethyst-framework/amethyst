@@ -6,7 +6,7 @@ abstract class Controller
   # Creates a hash for controller actions
   # Then, invokes actions method to add actions to the hash
   def initialize(@request : Http::Request, @response : Http::Response)
-    @actions_hash = {} of String => Proc
+    @actions_hash = {} of String => ->
     actions
   end
   

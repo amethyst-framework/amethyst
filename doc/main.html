@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <link href="css/style.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<h1>Amethyst <a href="https://travis-ci.org/Codcore/Amethyst" target="_blank"><img src="https://travis-ci.org/Codcore/Amethyst.svg" alt="Build Status"/></a></h1>
+
+<p>Amethyst is a web framework written in <a href="https://github.com/manastech/crystal" target="_blank">Crystal</a> language. The goals of Amethyst are to be fast and user-friendly as Rails. Note, Amethyst is at early stage of developing, so a lot of features are missing yet. However, it works :). Why I named my web framework "Amethyst" ? Because Crystal at GitHub has a light purple color as an <a href="http://en.wikipedia.org/wiki/Amethyst" target="_blank">amethyst gemstone</a>.</p>
+
+<p>For now, next things are implemented:
+- class-based controllers with actions
+- middleware support
+- simple routing</p>
+
+<p>For details, see docs below.</p>
+
+<h2>Installation</h2>
+
+<p>Suggested that you have installed <a href="https://github.com/manastech/crystal" target="_blank">Crystal</a> 0.7.1 or higher.</p>
+
+<pre><code>git clone https<span class="n">:/</span><span class="s">/github.com/</span><span class="t">Codcore</span><span class="s">/Amethyst.git</code></pre>
+
+<p>Or add it to <code>Projectfile</code> of your Crystal project</p>
+
+<pre><code>deps <span class="k">do</span>
+  github <span class="s">"Codcore/amethyst"</span>
+<span class="k">end</span></code></pre>
+
+<p>You can play with example of simple web-application written with Amethyst at <code></code><code>examples</code><code></code> directory:</p>
+
+<pre><code>crystal examples<span class="s">/simple_application.cr</code></pre>
+
+<h2>Usage</h2>
+
+<p>If you want to load Amethyst in global namespace to be able not to prepend classes with name of modules they are in (for example, <code></code><code><a href="Amethyst/Base/Controller.html">Base::Controller</a></code><code></code>),you can load all modules into global namespace next way:</p>
+
+<pre><code><span class="k">require</span> <span class="s">"amethyst/all"</span></code></pre>
+
+<p>From that moment, you can type <code></code><code><a href="Amethyst/Base/App.html">App</a>.new</code><code></code> instead of <code></code><code><a href="Amethyst/Base/App.html">Base::App</a>.new</code><code></code>, <code></code><code><a href="Amethyst/Base/Controller.html">Base::Controller</a></code><code></code> instead <code></code><code><a href="Amethyst/Base/Controller.html">Base::Controller</a></code><code></code>, etc.)</p>
+
+<h1>Controllers</h1>
+
+<p>Amethyst controllers are classes with method-actions. The name of any controller must be like <code></code><code>NameController</code><code></code>,
+and it needs to be inherited from <code></code><code><a href="Amethyst/Base/Controller.html">Base::Controller</a></code><code></code>. Here is an example of simple controller:</p>
+
+<pre><code><span class="k">require</span> <span class="s">"../src/amethyst"</span>
+
+<span class="k">class</span> <span class="t">IndexController</span> <span class="o"><</span> <span class="t">Base</span><span class="t">::</span><span class="t">Controller</span>
+
+  <span class="k">def</span> <span class="m">hello</span>
+    html <span class="s">"<p>Hello, you're asked a </span><span class="i">#{</span></span>request.method<span class="s"><span class="i">}</span> </span><span class="i">#{</span></span>request.path<span class="s"><span class="i">}</span></p> 
+
+          <a href='/bye'>Visit <b>bye</b> action</a>"</span>
+  <span class="k">end</span>
+
+  <span class="k">def</span> <span class="m">bye</span>
+    html <span class="s">"<p>Bye!We hope you will come back</p>"</span>
+  <span class="k">end</span>
+
+  <span class="k">def</span> <span class="m">actions</span>
+    add <span class="n">:hello</span>
+    add <span class="n">:bye</span>
+  <span class="k">end</span>
+<span class="k">end</span></code></pre>
+
+<p>Controllers describe actions as a methods. Actions have direct access to request and response objects, and other helpers, such as a <code></code><code>html</code><code></code> . Controller method <code></code><code>actions</code><code></code> is special method that must be provided by each controller of your application.It lets app to know which methods of your contoller are actions, and which aren't. The synopsys is <code></code><code>add :action_name</code><code></code>. </p>
+
+<h1>Middleware</h1>
+
+<p>Middleware are implemented as classes. Middleware class inherits from <code></code><code><a href="Amethyst/Base/Middleware.html">Base::Middleware</a></code><code></code> (or, just type <code></code><code><a href="Amethyst/Base/Middleware.html">Middleware</a></code><code></code> if you prefer <code></code><code>require amethyst/all</code><code></code>), and should have the <code></code><code>call</code><code></code> method. Actually, there are two call methods with different signatures:</p>
+
+<pre><code><span class="k">def</span> <span class="m">call</span>(request)
+<span class="k">end</span>
+
+<span class="k">def</span> <span class="m">call</span>(request, response)
+<span class="k">end</span></code></pre>
+
+<p>The first one will be called when app gets request from server. It accepts <code></code><code><a href="Amethyst/Http.html">Amethyst::Http</a>::<a href="Amethyst/Http/Request.html">Request</a></code><code></code> as an argument. Last one will be invoked when controller returned response(this happens automatically). It gets <code></code><code><a href="Amethyst/Http.html">Amethyst::Http</a>::<a href="Amethyst/Http/Request.html">Request</a></code><code></code> and <code></code><code><a href="Amethyst/Http.html">Amethyst::Http</a>::<a href="Amethyst/Http/Response.html">Response</a></code><code></code> as arguments. Here is an example of middleware that calculates time elapsed between request and response.</p>
+
+<pre><code><span class="k">class</span> <span class="t">TimeMiddleware</span> <span class="o"><</span> <span class="t">Base</span><span class="t">::</span><span class="t">Middleware</span>
+
+  <span class="c"># All instance variables have to be initialized here to use them in call methods</span>
+  <span class="k">def</span> <span class="m">initialize</span>
+    @t_req <span class="o">=</span> <span class="t">Time</span>.<span class="k">new</span> 
+    @t_res <span class="o">=</span> <span class="t">Time</span>.<span class="k">new</span>
+  <span class="k">end</span>
+
+  <span class="k">def</span> <span class="m">call</span>(request)
+    @t_req <span class="o">=</span> <span class="t">Time</span>.now
+  <span class="k">end</span>
+
+  <span class="c"># This one will be called when response returned from controller. It accepts both</span>
+  <span class="c"># Http::Request and Http::Response</span>
+  <span class="k">def</span> <span class="m">call</span>(request, response)
+    @t_res <span class="o">=</span> <span class="t">Time</span>.now
+    response.body += <span class="s">"<hr> Time elapsed: </span><span class="i">#{</span></span>(@t_res<span class="o">-</span>@t_req)<span class="s"><span class="i">}</span> seconds"</span>
+  <span class="k">end</span>
+<span class="k">end</span></code></pre>
+
+<h1>Application creating</h1>
+
+<pre><code>app <span class="o">=</span> <span class="t">Base</span><span class="t">::</span><span class="t">Application</span>.<span class="k">new</span>
+
+<span class="c"># Middleware registering</span>
+app.use(<span class="t">TimeMiddleware</span>.<span class="k">new</span>)</code></pre>
+
+<p>You can set a port and app name (defaul port is <code></code><code>8080</code><code></code>, default name is name of file application is in):</p>
+
+<pre><code>app.port <span class="o">=</span> <span class="n">8080</span>
+app.name <span class="o">=</span> <span class="s">"example"</span></code></pre>
+
+<h1>Routing</h1>
+
+<p>Amethyst has Rails-like approach to describe routes. For now, only <code></code><code>get()</code><code></code> supported. 
+It consists of path and string <code></code><code>controller_name#action_name</code><code></code></p>
+
+<pre><code>app.routes.draw <span class="k">do</span> <span class="o">|</span>routes<span class="o">|</span>
+  <span class="c"># maps GET "/" to "hello" action of IndexController</span>
+  get <span class="s">"/"</span>,    <span class="s">"index#hello"</span>
+  <span class="c"># maps GET "/bye" to "bye" action of IndexController</span>
+  get <span class="s">"/bye"</span>, <span class="s">"index#bye"</span>
+<span class="k">end</span></code></pre>
+
+<p>Note, <code></code><code>/bye</code><code></code> and <code></code><code>/bye/</code><code></code> work slightly different. First matches <code></code><code>/bye, /bye/, /bye_something</code><code></code>, second is "strict",
+and matches only <code></code><code>/bye</code><code></code> and <code></code><code>/bye/</code><code></code>. Both not matches <code></code><code>/bye/something</code><code></code>.</p>
+
+<p>You can specify params to be captured:</p>
+
+<pre><code>get <span class="s">"/users/:id"</span>, <span class="s">"users#show"</span> <span class="c">#(params doesn't work yet)</span></code></pre>
+
+<p>After you defined a controller, you have to register it in app with <code></code><code>app.routes.register(NameController)</code><code></code> where <code></code><code>NameController</code><code></code>(CamelCase) is the classname of your controller:</p>
+
+<pre><code>app.routes.register(<span class="t">IndexController</span>)</code></pre>
+
+<h1>Running application</h1>
+
+<pre><code>app.serve</code></pre>
+
+<h2>Development</h2>
+
+<p>Feel free to fork project and make pull-requests. Stick to standart project structure and name conventions:</p>
+
+<pre><code>src<span class="o">/</span>
+  amethyst<span class="o">/</span>
+    module1<span class="o">/</span>       <span class="c"># module1 files</span>
+      class1.cr
+      ...
+      module1.cr   <span class="c"># loads all module1 files into namespace Amethyst::Module1</span>
+    module2<span class="o">/</span>
+      class1.cr    <span class="c"># describe class Class1 (module, struct, i.e)</span>
+      ...
+      module2.cr   <span class="c"># loads all module2 files into namespace Amethyst::Module2</span>
+    file_module.cr <span class="c"># module that consists of one file</span>
+  amethyst.cr      <span class="c"># requires module1.cr, module2.cr, file_module.cr</span>
+
+spec<span class="o">/</span>
+  module1<span class="o">/</span>
+    class1_spec.cr <span class="c"># specs for Module1::Class</span>
+    spec_helper.cr <span class="c"># loads main spec_helper</span>
+  module2<span class="o">/</span>
+    class2_spec.cr
+  spec_helper      <span class="c"># loads "amethyst/all"</span>
+
+examples<span class="o">/</span>          <span class="c"># examples to play with</span>
+                   <span class="c"># don't forget to require "..src/amethyst" or "..src/all"</span></code></pre>
+
+<h2>Contributing</h2>
+
+<p>I would be glad for any help with contributing.</p>
+
+<p>1. Fork it ( https://github.com/Codcore/amethyst/fork )
+2. Create your feature branch (git checkout -b my-new-feature)
+3. Commit your changes (git commit -am 'Add some feature')
+4. Push to the branch (git push origin my-new-feature)
+5. Create a new Pull Request</p>
+
+<h2>Contributors</h2>
+
+<p>- <a href="https://github.com/[your-github-name]" target="_blank">Andrew Yaroshuk</a> Codcore - creator, maintainer</p>
+</body>
+</html>

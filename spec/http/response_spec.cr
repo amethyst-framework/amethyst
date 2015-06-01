@@ -1,8 +1,8 @@
-require "../spec_helper"
-response = Response.new(404, "Not Found")
-#p response
+require "./spec_helper"
 
 describe Response do
+  
+	response = Response.new(404, "Not Found")
 
   it "set's header" do
     response.header("Content-Type", "text/html")

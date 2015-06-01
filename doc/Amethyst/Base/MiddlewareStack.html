@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <link href="../../css/style.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+
+
+  <h1>class Amethyst::Base::MiddlewareStack</h1>
+
+
+
+
+
+
+
+  <h2>Superclass hierarchy</h2>
+  <div style="padding-left: 0px">Object</div><div style="padding-left: 20px">Reference</div><div style="padding-left: 40px"><a href="../../Amethyst/Base/MiddlewareStack.html">Amethyst::Base::MiddlewareStack</a></div>
+
+
+
+
+
+
+
+
+
+
+
+
+  <h2>Defined in:</h2>
+  
+    
+      <a href="https://github.com/Codcore/Amethyst/blob/95b018dc2b200add7715f84cd1f670884a29f22b/src/amethyst/base/middleware_stack.cr">amethyst/base/middleware_stack.cr</a>
+    
+    <br/>
+  
+
+
+
+
+
+  <h2>Class Method Summary</h2>
+  <ul>
+    
+      <li class="entry-summary">
+        <a href="#new-class-method" class="signature"><strong>.new</strong></a>
+        
+      </li>
+    
+  </ul>
+
+
+
+  <h2>Instance Method Summary</h2>
+  <ul>
+    
+      <li class="entry-summary">
+        <a href="#add%28middleware%20%3A%20Base%3A%3AMiddleware%29-instance-method" class="signature"><strong>#add</strong>(middleware : Base::Middleware)</a>
+        
+          <div class="summary"><p>Adds middleware instance to the @middleware array</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#process_request%28request%20%3A%20Http%3A%3ARequest%29-instance-method" class="signature"><strong>#process_request</strong>(request : Http::Request)</a>
+        
+          <div class="summary"><p>This method is invoked when the application receives a request Invokes call(Http::Request) of each middleware</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#process_response%28request%20%3A%20Http%3A%3ARequest%2C%20response%20%3A%20Http%3A%3AResponse%29-instance-method" class="signature"><strong>#process_response</strong>(request : Http::Request, response : Http::Response)</a>
+        
+          <div class="summary"><p>This method is invoked when the application handler returns a response Invokes call(Http::Request, Http::Response) of each middleware in reverse order</p></div>
+        
+      </li>
+    
+  </ul>
+
+
+
+
+
+
+  <h2>Class Method Detail</h2>
+  
+    <div class="entry-detail">
+      <div class="signature" id="new-class-method">
+        
+        def self.<strong>new</strong>
+      </div>
+      
+      
+        <br/>
+        <div>[<a href="https://github.com/Codcore/Amethyst/blob/95b018dc2b200add7715f84cd1f670884a29f22b/src/amethyst/base/middleware_stack.cr#L3" target="_blank">View source</a>]</div>
+      
+    </div>
+    <hr/>
+  
+
+
+
+  <h2>Instance Method Detail</h2>
+  
+    <div class="entry-detail">
+      <div class="signature" id="add%28middleware%20%3A%20Base%3A%3AMiddleware%29-instance-method">
+        
+        def <strong>add</strong>(middleware : <a href="../../Amethyst/Base/Middleware.html">Base::Middleware</a>)
+      </div>
+      
+        <div class="doc"><p>Adds middleware instance to the @middleware array</p></div>
+      
+      
+        <br/>
+        <div>[<a href="https://github.com/Codcore/Amethyst/blob/95b018dc2b200add7715f84cd1f670884a29f22b/src/amethyst/base/middleware_stack.cr#L24" target="_blank">View source</a>]</div>
+      
+    </div>
+    <hr/>
+  
+    <div class="entry-detail">
+      <div class="signature" id="process_request%28request%20%3A%20Http%3A%3ARequest%29-instance-method">
+        
+        def <strong>process_request</strong>(request : <a href="../../Amethyst/Http/Request.html">Http::Request</a>)
+      </div>
+      
+        <div class="doc"><p>This method is invoked when the application receives a request
+Invokes call(Http::Request) of each middleware</p></div>
+      
+      
+        <br/>
+        <div>[<a href="https://github.com/Codcore/Amethyst/blob/95b018dc2b200add7715f84cd1f670884a29f22b/src/amethyst/base/middleware_stack.cr#L9" target="_blank">View source</a>]</div>
+      
+    </div>
+    <hr/>
+  
+    <div class="entry-detail">
+      <div class="signature" id="process_response%28request%20%3A%20Http%3A%3ARequest%2C%20response%20%3A%20Http%3A%3AResponse%29-instance-method">
+        
+        def <strong>process_response</strong>(request : <a href="../../Amethyst/Http/Request.html">Http::Request</a>, response : <a href="../../Amethyst/Http/Response.html">Http::Response</a>)
+      </div>
+      
+        <div class="doc"><p>This method is invoked when the application handler returns a response
+Invokes call(Http::Request, Http::Response) of each middleware in reverse order</p></div>
+      
+      
+        <br/>
+        <div>[<a href="https://github.com/Codcore/Amethyst/blob/95b018dc2b200add7715f84cd1f670884a29f22b/src/amethyst/base/middleware_stack.cr#L17" target="_blank">View source</a>]</div>
+      
+    </div>
+    <hr/>
+  
+
+
+
+
+
+</body>
+</html>

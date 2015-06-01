@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <link href="../../css/style.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+
+
+  <h1>abstract class Amethyst::Base::Controller</h1>
+
+
+
+
+
+
+
+  <h2>Superclass hierarchy</h2>
+  <div style="padding-left: 0px">Object</div><div style="padding-left: 20px">Reference</div><div style="padding-left: 40px"><a href="../../Amethyst/Base/Controller.html">Amethyst::Base::Controller</a></div>
+
+
+
+
+
+
+
+
+
+
+
+
+  <h2>Defined in:</h2>
+  
+    
+      <a href="https://github.com/Codcore/Amethyst/blob/95b018dc2b200add7715f84cd1f670884a29f22b/src/amethyst/base/controller.cr">amethyst/base/controller.cr</a>
+    
+    <br/>
+  
+
+
+
+
+
+  <h2>Class Method Summary</h2>
+  <ul>
+    
+      <li class="entry-summary">
+        <a href="#new%28request%20%3A%20Http%3A%3ARequest%2C%20response%20%3A%20Http%3A%3AResponse%29-class-method" class="signature"><strong>.new</strong>(request : Http::Request, response : Http::Response)</a>
+        
+          <div class="summary"><p>Creates a hash for controller actions Then, invokes actions method to add actions to the hash</p></div>
+        
+      </li>
+    
+  </ul>
+
+
+
+  <h2>Instance Method Summary</h2>
+  <ul>
+    
+      <li class="entry-summary">
+        <a href="#actions-instance-method" class="signature"><strong>#actions</strong></a>
+        
+          <div class="summary"><p>Adds all actions defined by user to @actions hash</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#actions_hash-instance-method" class="signature"><strong>#actions_hash</strong></a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#body-instance-method" class="signature"><strong>#body</strong></a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#body%3D%28body%29-instance-method" class="signature"><strong>#body=</strong>(body)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#call_action%28action%29-instance-method" class="signature"><strong>#call_action</strong>(action)</a>
+        
+          <div class="summary"><p>Works like Ruby's send(:method) to invoke controller action: NameController.call_action("show")</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#html%28body%20%3A%20String%29-instance-method" class="signature"><strong>#html</strong>(body : String)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#request-instance-method" class="signature"><strong>#request</strong></a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#response-instance-method" class="signature"><strong>#response</strong></a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#response%3D%28response%29-instance-method" class="signature"><strong>#response=</strong>(response)</a>
+        
+      </li>
+    
+  </ul>
+
+
+
+  <h2>Macro Summary</h2>
+  <ul>
+    
+      <li class="entry-summary">
+        <a href="#add%28action%29-macro" class="signature"><strong>add</strong>(action)</a>
+        
+          <div class="summary"><p>This hack creates procs from controller actions, and adds it to the @actions_hash</p></div>
+        
+      </li>
+    
+  </ul>
+
+
+
+
+  <h2>Class Method Detail</h2>
+  
+    <div class="entry-detail">
+      <div class="signature" id="new%28request%20%3A%20Http%3A%3ARequest%2C%20response%20%3A%20Http%3A%3AResponse%29-class-method">
+        
+        def self.<strong>new</strong>(request : <a href="../../Amethyst/Http/Request.html">Http::Request</a>, response : <a href="../../Amethyst/Http/Response.html">Http::Response</a>)
+      </div>
+      
+        <div class="doc"><p>Creates a hash for controller actions
+Then, invokes actions method to add actions to the hash</p></div>
+      
+      
+        <br/>
+        <div>[<a href="https://github.com/Codcore/Amethyst/blob/95b018dc2b200add7715f84cd1f670884a29f22b/src/amethyst/base/controller.cr#L8" target="_blank">View source</a>]</div>
+      
+    </div>
+    <hr/>
+  
+
+
+
+  <h2>Instance Method Detail</h2>
+  
+    <div class="entry-detail">
+      <div class="signature" id="actions-instance-method">
+        
+        def <strong>actions</strong>
+      </div>
+      
+        <div class="doc"><p>Adds all actions defined by user to @actions hash</p></div>
+      
+      
+        <br/>
+        <div>[<a href="https://github.com/Codcore/Amethyst/blob/95b018dc2b200add7715f84cd1f670884a29f22b/src/amethyst/base/controller.cr#L34" target="_blank">View source</a>]</div>
+      
+    </div>
+    <hr/>
+  
+    <div class="entry-detail">
+      <div class="signature" id="actions_hash-instance-method">
+        
+        def <strong>actions_hash</strong>
+      </div>
+      
+      
+        <br/>
+        <div>[<a href="https://github.com/Codcore/Amethyst/blob/95b018dc2b200add7715f84cd1f670884a29f22b/src/amethyst/base/controller.cr#L2" target="_blank">View source</a>]</div>
+      
+    </div>
+    <hr/>
+  
+    <div class="entry-detail">
+      <div class="signature" id="body-instance-method">
+        
+        def <strong>body</strong>
+      </div>
+      
+      
+    </div>
+    <hr/>
+  
+    <div class="entry-detail">
+      <div class="signature" id="body%3D%28body%29-instance-method">
+        
+        def <strong>body=</strong>(body)
+      </div>
+      
+      
+    </div>
+    <hr/>
+  
+    <div class="entry-detail">
+      <div class="signature" id="call_action%28action%29-instance-method">
+        
+        def <strong>call_action</strong>(action)
+      </div>
+      
+        <div class="doc"><p>Works like Ruby's send(:method) to invoke controller action:
+NameController.call_action("show")</p></div>
+      
+      
+        <br/>
+        <div>[<a href="https://github.com/Codcore/Amethyst/blob/95b018dc2b200add7715f84cd1f670884a29f22b/src/amethyst/base/controller.cr#L15" target="_blank">View source</a>]</div>
+      
+    </div>
+    <hr/>
+  
+    <div class="entry-detail">
+      <div class="signature" id="html%28body%20%3A%20String%29-instance-method">
+        
+        def <strong>html</strong>(body : String)
+      </div>
+      
+      
+        <br/>
+        <div>[<a href="https://github.com/Codcore/Amethyst/blob/95b018dc2b200add7715f84cd1f670884a29f22b/src/amethyst/base/controller.cr#L23" target="_blank">View source</a>]</div>
+      
+    </div>
+    <hr/>
+  
+    <div class="entry-detail">
+      <div class="signature" id="request-instance-method">
+        
+        def <strong>request</strong>
+      </div>
+      
+      
+        <br/>
+        <div>[<a href="https://github.com/Codcore/Amethyst/blob/95b018dc2b200add7715f84cd1f670884a29f22b/src/amethyst/base/controller.cr#L3" target="_blank">View source</a>]</div>
+      
+    </div>
+    <hr/>
+  
+    <div class="entry-detail">
+      <div class="signature" id="response-instance-method">
+        
+        def <strong>response</strong>
+      </div>
+      
+      
+    </div>
+    <hr/>
+  
+    <div class="entry-detail">
+      <div class="signature" id="response%3D%28response%29-instance-method">
+        
+        def <strong>response=</strong>(response)
+      </div>
+      
+      
+    </div>
+    <hr/>
+  
+
+
+
+  <h2>Macro Detail</h2>
+  
+    <div class="entry-detail">
+      <div class="signature" id="add%28action%29-macro">
+        
+        macro <strong>add</strong>(action)
+      </div>
+      
+        <div class="doc"><p>This hack creates procs from controller actions, and adds it to the @actions_hash</p></div>
+      
+      
+        <br/>
+        <div>[<a href="https://github.com/Codcore/Amethyst/blob/95b018dc2b200add7715f84cd1f670884a29f22b/src/amethyst/base/controller.cr#L29" target="_blank">View source</a>]</div>
+      
+    </div>
+    <hr/>
+  
+
+
+
+</body>
+</html>

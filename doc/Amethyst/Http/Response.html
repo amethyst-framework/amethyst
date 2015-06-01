@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <link href="../../css/style.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+
+
+  <h1>class Amethyst::Http::Response</h1>
+
+
+
+
+
+
+
+  <h2>Superclass hierarchy</h2>
+  <div style="padding-left: 0px">Object</div><div style="padding-left: 20px">Reference</div><div style="padding-left: 40px"><a href="../../Amethyst/Http/Response.html">Amethyst::Http::Response</a></div>
+
+
+
+
+
+
+
+
+
+
+
+
+  <h2>Defined in:</h2>
+  
+    
+      <a href="https://github.com/Codcore/Amethyst/blob/95b018dc2b200add7715f84cd1f670884a29f22b/src/amethyst/http/response.cr">amethyst/http/response.cr</a>
+    
+    <br/>
+  
+
+
+
+
+
+  <h2>Class Method Summary</h2>
+  <ul>
+    
+      <li class="entry-summary">
+        <a href="#new%28status_code%20%3D%20nil%2C%20body%20%3D%20nil%2C%20headers%20%3D%20HTTP%3A%3AHeaders.new%2C%20version%20%3D%20%22HTTP%2F1.1%22%29-class-method" class="signature"><strong>.new</strong>(status_code = nil, body = nil, headers = HTTP::Headers.new, version = "HTTP/1.1")</a>
+        
+      </li>
+    
+  </ul>
+
+
+
+  <h2>Instance Method Summary</h2>
+  <ul>
+    
+      <li class="entry-summary">
+        <a href="#body-instance-method" class="signature"><strong>#body</strong></a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#body%3D%28body%29-instance-method" class="signature"><strong>#body=</strong>(body)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#build-instance-method" class="signature"><strong>#build</strong></a>
+        
+          <div class="summary"><p>"builds" an HTTP::Response from self</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#header%28key%2C%20value%29-instance-method" class="signature"><strong>#header</strong>(key, value)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#headers-instance-method" class="signature"><strong>#headers</strong></a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#headers%3D%28headers%29-instance-method" class="signature"><strong>#headers=</strong>(headers)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#status_code-instance-method" class="signature"><strong>#status_code</strong></a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#status_code%3D%28status_code%29-instance-method" class="signature"><strong>#status_code=</strong>(status_code)</a>
+        
+      </li>
+    
+  </ul>
+
+
+
+
+
+
+  <h2>Class Method Detail</h2>
+  
+    <div class="entry-detail">
+      <div class="signature" id="new%28status_code%20%3D%20nil%2C%20body%20%3D%20nil%2C%20headers%20%3D%20HTTP%3A%3AHeaders.new%2C%20version%20%3D%20%22HTTP%2F1.1%22%29-class-method">
+        
+        def self.<strong>new</strong>(status_code = <span class="n">nil</span>, body = <span class="n">nil</span>, headers = <span class="t">HTTP</span><span class="t">::</span><span class="t">Headers</span>.<span class="k">new</span>, version = <span class="s">"HTTP/1.1"</span>)
+      </div>
+      
+      
+        <br/>
+        <div>[<a href="https://github.com/Codcore/Amethyst/blob/95b018dc2b200add7715f84cd1f670884a29f22b/src/amethyst/http/response.cr#L7" target="_blank">View source</a>]</div>
+      
+    </div>
+    <hr/>
+  
+
+
+
+  <h2>Instance Method Detail</h2>
+  
+    <div class="entry-detail">
+      <div class="signature" id="body-instance-method">
+        
+        def <strong>body</strong>
+      </div>
+      
+      
+    </div>
+    <hr/>
+  
+    <div class="entry-detail">
+      <div class="signature" id="body%3D%28body%29-instance-method">
+        
+        def <strong>body=</strong>(body)
+      </div>
+      
+      
+    </div>
+    <hr/>
+  
+    <div class="entry-detail">
+      <div class="signature" id="build-instance-method">
+        
+        def <strong>build</strong>
+      </div>
+      
+        <div class="doc"><p>"builds" an HTTP::Response from self</p></div>
+      
+      
+        <br/>
+        <div>[<a href="https://github.com/Codcore/Amethyst/blob/95b018dc2b200add7715f84cd1f670884a29f22b/src/amethyst/http/response.cr#L15" target="_blank">View source</a>]</div>
+      
+    </div>
+    <hr/>
+  
+    <div class="entry-detail">
+      <div class="signature" id="header%28key%2C%20value%29-instance-method">
+        
+        def <strong>header</strong>(key, value)
+      </div>
+      
+      
+        <br/>
+        <div>[<a href="https://github.com/Codcore/Amethyst/blob/95b018dc2b200add7715f84cd1f670884a29f22b/src/amethyst/http/response.cr#L10" target="_blank">View source</a>]</div>
+      
+    </div>
+    <hr/>
+  
+    <div class="entry-detail">
+      <div class="signature" id="headers-instance-method">
+        
+        def <strong>headers</strong>
+      </div>
+      
+      
+    </div>
+    <hr/>
+  
+    <div class="entry-detail">
+      <div class="signature" id="headers%3D%28headers%29-instance-method">
+        
+        def <strong>headers=</strong>(headers)
+      </div>
+      
+      
+    </div>
+    <hr/>
+  
+    <div class="entry-detail">
+      <div class="signature" id="status_code-instance-method">
+        
+        def <strong>status_code</strong>
+      </div>
+      
+      
+    </div>
+    <hr/>
+  
+    <div class="entry-detail">
+      <div class="signature" id="status_code%3D%28status_code%29-instance-method">
+        
+        def <strong>status_code=</strong>(status_code)
+      </div>
+      
+      
+    </div>
+    <hr/>
+  
+
+
+
+
+
+</body>
+</html>

@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <link href="../../css/style.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+
+
+  <h1>class Amethyst::Dispatch::Router</h1>
+
+
+
+
+
+
+
+  <h2>Superclass hierarchy</h2>
+  <div style="padding-left: 0px">Object</div><div style="padding-left: 20px">Reference</div><div style="padding-left: 40px"><a href="../../Amethyst/Dispatch/Router.html">Amethyst::Dispatch::Router</a></div>
+
+
+
+
+
+
+
+
+
+
+
+
+  <h2>Defined in:</h2>
+  
+    
+      <a href="https://github.com/Codcore/Amethyst/blob/95b018dc2b200add7715f84cd1f670884a29f22b/src/amethyst/dispatch/router.cr">amethyst/dispatch/router.cr</a>
+    
+    <br/>
+  
+
+
+
+
+
+  <h2>Class Method Summary</h2>
+  <ul>
+    
+      <li class="entry-summary">
+        <a href="#new-class-method" class="signature"><strong>.new</strong></a>
+        
+      </li>
+    
+  </ul>
+
+
+
+  <h2>Instance Method Summary</h2>
+  <ul>
+    
+      <li class="entry-summary">
+        <a href="#call%28request%20%3A%20Http%3A%3ARequest%29-instance-method" class="signature"><strong>#call</strong>(request : Http::Request)</a>
+        
+          <div class="summary"><p>Actually, performs a routing </p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#controllers-instance-method" class="signature"><strong>#controllers</strong></a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#draw%28%26block%29-instance-method" class="signature"><strong>#draw</strong>(&block)</a>
+        
+          <div class="summary"><p>It allows to 'draw' routes like you can do in Rails routes.rb</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#get%28pattern%2C%20controller_action%29-instance-method" class="signature"><strong>#get</strong>(pattern, controller_action)</a>
+        
+          <div class="summary"><p>Sets a route that should respond to GET HTTP method The synopsis of arguments receive is Rails-like: get "/products/:id", "products#show" where 'products' is a controller named ProductsController, and "show" is it's action</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#register%28controller%29-instance-method" class="signature"><strong>#register</strong>(controller)</a>
+        
+          <div class="summary"><p>Adds controller to hash @controllers and make it available for app</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#routes-instance-method" class="signature"><strong>#routes</strong></a>
+        
+      </li>
+    
+  </ul>
+
+
+
+  <h2>Macro Summary</h2>
+  <ul>
+    
+      <li class="entry-summary">
+        <a href="#register_controller%28klass_name%29-macro" class="signature"><strong>register_controller</strong>(klass_name)</a>
+        
+          <div class="summary"><p>This macro is a hack that allows to instansiate controllers through  @controllers.fetch("ControllerName")</p></div>
+        
+      </li>
+    
+  </ul>
+
+
+
+
+  <h2>Class Method Detail</h2>
+  
+    <div class="entry-detail">
+      <div class="signature" id="new-class-method">
+        
+        def self.<strong>new</strong>
+      </div>
+      
+      
+        <br/>
+        <div>[<a href="https://github.com/Codcore/Amethyst/blob/95b018dc2b200add7715f84cd1f670884a29f22b/src/amethyst/dispatch/router.cr#L11" target="_blank">View source</a>]</div>
+      
+    </div>
+    <hr/>
+  
+
+
+
+  <h2>Instance Method Detail</h2>
+  
+    <div class="entry-detail">
+      <div class="signature" id="call%28request%20%3A%20Http%3A%3ARequest%29-instance-method">
+        
+        def <strong>call</strong>(request : <a href="../../Amethyst/Http/Request.html">Http::Request</a>)
+      </div>
+      
+        <div class="doc"><p>Actually, performs a routing </p></div>
+      
+      
+        <br/>
+        <div>[<a href="https://github.com/Codcore/Amethyst/blob/95b018dc2b200add7715f84cd1f670884a29f22b/src/amethyst/dispatch/router.cr#L39" target="_blank">View source</a>]</div>
+      
+    </div>
+    <hr/>
+  
+    <div class="entry-detail">
+      <div class="signature" id="controllers-instance-method">
+        
+        def <strong>controllers</strong>
+      </div>
+      
+      
+        <br/>
+        <div>[<a href="https://github.com/Codcore/Amethyst/blob/95b018dc2b200add7715f84cd1f670884a29f22b/src/amethyst/dispatch/router.cr#L3" target="_blank">View source</a>]</div>
+      
+    </div>
+    <hr/>
+  
+    <div class="entry-detail">
+      <div class="signature" id="draw%28%26block%29-instance-method">
+        
+        def <strong>draw</strong>(&block)
+      </div>
+      
+        <div class="doc"><p>It allows to 'draw' routes like you can do in Rails routes.rb</p></div>
+      
+      
+        <br/>
+        <div>[<a href="https://github.com/Codcore/Amethyst/blob/95b018dc2b200add7715f84cd1f670884a29f22b/src/amethyst/dispatch/router.cr#L23" target="_blank">View source</a>]</div>
+      
+    </div>
+    <hr/>
+  
+    <div class="entry-detail">
+      <div class="signature" id="get%28pattern%2C%20controller_action%29-instance-method">
+        
+        def <strong>get</strong>(pattern, controller_action)
+      </div>
+      
+        <div class="doc"><p>Sets a route that should respond to GET HTTP method
+The synopsis of arguments receive is Rails-like:
+get "/products/:id", "products#show"
+where 'products' is a controller named ProductsController, and "show" is it's action</p></div>
+      
+      
+        <br/>
+        <div>[<a href="https://github.com/Codcore/Amethyst/blob/95b018dc2b200add7715f84cd1f670884a29f22b/src/amethyst/dispatch/router.cr#L31" target="_blank">View source</a>]</div>
+      
+    </div>
+    <hr/>
+  
+    <div class="entry-detail">
+      <div class="signature" id="register%28controller%29-instance-method">
+        
+        def <strong>register</strong>(controller)
+      </div>
+      
+        <div class="doc"><p>Adds controller to hash @controllers and make it available for app</p></div>
+      
+      
+        <br/>
+        <div>[<a href="https://github.com/Codcore/Amethyst/blob/95b018dc2b200add7715f84cd1f670884a29f22b/src/amethyst/dispatch/router.cr#L18" target="_blank">View source</a>]</div>
+      
+    </div>
+    <hr/>
+  
+    <div class="entry-detail">
+      <div class="signature" id="routes-instance-method">
+        
+        def <strong>routes</strong>
+      </div>
+      
+      
+        <br/>
+        <div>[<a href="https://github.com/Codcore/Amethyst/blob/95b018dc2b200add7715f84cd1f670884a29f22b/src/amethyst/dispatch/router.cr#L2" target="_blank">View source</a>]</div>
+      
+    </div>
+    <hr/>
+  
+
+
+
+  <h2>Macro Detail</h2>
+  
+    <div class="entry-detail">
+      <div class="signature" id="register_controller%28klass_name%29-macro">
+        
+        macro <strong>register_controller</strong>(klass_name)
+      </div>
+      
+        <div class="doc"><p>This macro is a hack that allows to instansiate controllers through 
+@controllers.fetch("ControllerName")</p></div>
+      
+      
+        <br/>
+        <div>[<a href="https://github.com/Codcore/Amethyst/blob/95b018dc2b200add7715f84cd1f670884a29f22b/src/amethyst/dispatch/router.cr#L7" target="_blank">View source</a>]</div>
+      
+    </div>
+    <hr/>
+  
+
+
+
+</body>
+</html>
