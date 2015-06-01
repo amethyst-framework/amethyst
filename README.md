@@ -1,6 +1,6 @@
 # Amethyst [![Build Status](https://travis-ci.org/Codcore/Amethyst.svg)](https://travis-ci.org/Codcore/Amethyst)
 
-Amethyst is a web framework written in [Crystal](https://github.com/manastech/crystal) language. The goals of Amethyst are to be fast and user-friendly as Rails. Note, Amethyst is at early stage of developing, so a lot of features are missing yet. However, it works :). Why I named my web framework "Amethyst" ? Because Crystal at GitHub has a light purple color as an [amethyst gemstone](http://en.wikipedia.org/wiki/Amethyst).
+Amethyst is a web framework written in [Crystal](https://github.com/manastech/crystal) language. The goals of Amethyst are to be fast and user-friendly as Rails. Note, Amethyst is at early stage of developing, so a lot of features are missing yet. However, it works :). Why I called my web framework "Amethyst" ? Because Crystal  has a light purple color at GitHub like [amethyst gemstone](http://en.wikipedia.org/wiki/Amethyst).
 
 For now, next things are implemented:
 - class-based controllers with actions
@@ -11,7 +11,7 @@ For details, see docs below.
 
 ## Installation
 
-Suggested that you have installed [Crystal](https://github.com/manastech/crystal) 0.7.1 or higher.
+Suggested that you have installed [Crystal](https://github.com/manastech/crystal) 0.7.2. **Code may not work properly with earliers version of 0.7.* branch**
 ```
 git clone https://github.com/Codcore/Amethyst.git
 ```
