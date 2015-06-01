@@ -14,4 +14,26 @@ describe Request do
     req.body.should               eq "Test"
     req.version.should            eq "HTTP/1.1"
   end
+
+  it "checks http methods" do
+     base_request = HTTP::Request.new("GET", "/", headers, "Test")
+     req = Request.new(base_request)
+     req.get?.should eq true
+
+     base_request = HTTP::Request.new("POST", "/", headers, "Test")
+     req = Request.new(base_request)
+     req.post?.should eq true
+
+     base_request = HTTP::Request.new("PUT", "/", headers, "Test")
+     req = Request.new(base_request)
+     req.put?.should eq true
+
+     base_request = HTTP::Request.new("DELETE", "/", headers, "Test")
+     req = Request.new(base_request)
+     req.delete?.should eq true
+
+     base_request = HTTP::Request.new("PUT", "/", headers, "Test")
+     req = Request.new(base_request)
+     req.get?.should eq false
+  end
 end

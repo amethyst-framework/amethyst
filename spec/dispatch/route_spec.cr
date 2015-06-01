@@ -5,9 +5,13 @@ require "./spec_helper"
 describe Route do
 
   route_strict  = Route.new("/index/", "IndexController", "hello")
+  route_strict.add_respond_method("GET")
   root_route    = Route.new("/", "IndexController", "show")
+  root_route.add_respond_method("POST")
   route_params  = Route.new("/users/show/:id", "UsersController", "show")
+  route_params.add_respond_method("PUT")
   route_match   = Route.new("/index", "IndexController", "all")
+  route_match.add_respond_method("DELETE")
 
   it "instantiates with simple path properly" do
     route_strict.pattern.should eq "/index$"
@@ -23,29 +27,39 @@ describe Route do
   end
 
   it "matches a given path with stict route" do
-    route_strict.matches?("/index").should eq true
-    route_strict.matches?("/indexsd").should eq false
-    route_strict.matches?("/index/").should eq true
-    route_strict.matches?("/index/1/ddd/").should eq false
+    route_strict.matches?("/index", "GET").should eq true
+    route_strict.matches?("/index", "PUT").should eq false
+    route_strict.matches?("/indexsd", "GET").should eq false
+    route_strict.matches?("/index/", "GET").should eq true
+    route_strict.matches?("/index/1/ddd/", "GET").should eq false
   end
 
   it "mathes a given path with a matching route" do
-    route_match.matches?("/index").should eq true
-    route_match.matches?("/indexsd").should eq true
-    route_match.matches?("/index/").should eq true
-    route_match.matches?("/index/1/ddd/").should eq false
+    route_match.matches?("/index", "DELETE").should eq true
+    route_match.matches?("/index", "PUT").should eq false
+    route_match.matches?("/indexsd", "DELETE").should eq true
+    route_match.matches?("/index/", "DELETE").should eq true
+    route_match.matches?("/index/1/ddd/", "DELETE").should eq false
   end
 
   it "mathes a given path with a params route" do
-    route_params.matches?("/users/show/10").should eq true
-    route_params.matches?("/users/show/10/").should eq true
-    route_params.matches?("users/show/10/you").should eq false
-    route_params.matches?("users/show").should eq false
-    route_params.matches?("users/show/").should eq false
+    route_params.matches?("/users/show/10", "PUT").should eq true
+    route_params.matches?("/users/show/10/", "PUT").should eq true
+    route_params.matches?("users/show/10/you", "PUT").should eq false
+    route_params.matches?("users/show", "PUT").should eq false
+    route_params.matches?("users/show/", "PUT").should eq false
+    route_params.matches?("users/show/10", "DELETE").should eq false
   end
 
   it "mathes root route" do
-    root_route.matches?("/").should eq true
-    root_route.matches?("/d").should eq false
+    root_route.matches?("/", "POST").should eq true
+    root_route.matches?("/d", "POST").should eq false
+  end
+
+  it "raises an exception if unsupported method given" do
+    route = Route.new("/", "IndexController", "hello")
+    expect_raises Exception, "Method 'SOME' not supported" do
+      route.add_respond_method("SOME")
+    end
   end
 end

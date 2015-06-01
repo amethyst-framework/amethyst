@@ -65,7 +65,8 @@ app.use(TimeMiddleware.new)
 # It consists of path and string "controller_name#action_name"
 # You can specify params to be captured:
 # get "/users/:id", "users#show" (not works yet)
-app.routes.draw do |routes|
+app.routes.draw do
+  all "/all", "index#hello" 
 	get "/", 	  "index#hello"
 	get "/bye", "index#bye"
 end

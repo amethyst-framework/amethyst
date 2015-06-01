@@ -2,6 +2,8 @@ class Router
   getter :routes
   getter :controllers
 
+  include Support::RoutesPainter
+
   # This macro is a hack that allows to instansiate controllers through 
   # @controllers.fetch("ControllerName")
   macro register_controller(klass_name)
@@ -24,23 +26,12 @@ class Router
     with self yield
   end
 
-  # Sets a route that should respond to GET HTTP method
-  # The synopsis of arguments receive is Rails-like:
-  # get "/products/:id", "products#show"
-  # where 'products' is a controller named ProductsController, and "show" is it's action
-  def get(pattern, controller_action)
-    pattern.gsub(/\$/, "\$") unless pattern == "/"
-    controller, action = controller_action.split("#")
-    controller = controller.capitalize+"Controller"
-    @routes << Dispatch::Route.new(pattern, controller, action)
-  end
-
   # Actually, performs a routing 
   def call(request : Http::Request)
     path     = request.path
     response = Http::Response.new(404, "Not found")
     @routes.each do |route|
-      if route.matches?(path)
+      if route.matches?(path, request.method)
         response = Http::Response.new(200, "#{path} of application")
         controller = route.controller.capitalize+"Controller"
         controller_instance = @controllers[controller].new(request, response)

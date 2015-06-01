@@ -8,11 +8,18 @@ class Route
   def initialize(@pattern, @controller, @action)
     @pattern = @pattern.gsub(/\/$/, "\$") unless @pattern == "/"
     @length  = @pattern.split("/").length
+    @methods = [] of String
+  end
+
+  def add_respond_method(method : String)
+    raise "Method '#{method}' not supported" unless Http::METHODS.includes?(method) 
+    @methods << method
   end
 
   # Partially, stolen from Moonshine
   # Cheks whether path matches a route pattern
-  def matches?(path)
+  def matches?(path, method)
+    return false unless @methods.includes?(method) 
     path = path.gsub(/\/$/, "") unless path == "/"
     return false unless path.split("/").length == @length
     regex = Regex.new(@pattern.to_s.gsub(/(:\w*)/, ".*"))
@@ -33,3 +40,4 @@ class Route
   end
 end
 
+# TODO: Create separate module for Exceptions
