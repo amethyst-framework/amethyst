@@ -10,7 +10,7 @@ class Router
 
   def initialize()
     @routes      = [] of Dispatch::Route
-    @controllers = {} of String => Class
+    @controllers = {} of String => Base::Controller.class 
     @methods     = {} of String => Symbol
   end
 
