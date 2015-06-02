@@ -29,7 +29,7 @@ class App
   end
 
   def self.set_default_middleware
-    self.use Middleware::Logger
+    self.use Middleware::RequestLogger
   end
 
   set_default_middleware

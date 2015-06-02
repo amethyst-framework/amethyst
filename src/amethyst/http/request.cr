@@ -43,6 +43,18 @@ class Request
   def port
     URI.parse(@path).port
   end
+
+  def log 
+    {
+      "http method"  => @method,
+      "path"         : path,
+      "query string" : query_string,
+      "protocol"     : protocol,
+      "host"         : host,
+      "port"         : port,
+      "version"      : @version,
+    }
+  end
 end
 
 # TODO: Improve Request class, add @env like in Rails

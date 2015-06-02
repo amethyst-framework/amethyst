@@ -15,4 +15,12 @@ class Response
   def build
     return HTTP::Response.new(@status_code, @body, headers = @headers, version = @version)
   end
+
+  def log
+    {
+      "status"   :  @status_code,
+      "response" :  @body,
+      "version"  :  @version,
+    }
+  end
 end
