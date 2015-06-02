@@ -1,4 +1,5 @@
 # Dependencies
+require "uri"
 require "http"
 
 module Amethyst

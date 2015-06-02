@@ -16,24 +16,41 @@ describe Request do
   end
 
   it "checks http methods" do
-     base_request = HTTP::Request.new("GET", "/", headers, "Test")
-     req = Request.new(base_request)
-     req.get?.should eq true
+    base_request = HTTP::Request.new("GET", "/", headers, "Test")
+    req = Request.new(base_request)
+    req.get?.should eq true
 
-     base_request = HTTP::Request.new("POST", "/", headers, "Test")
-     req = Request.new(base_request)
-     req.post?.should eq true
+    base_request = HTTP::Request.new("POST", "/", headers, "Test")
+    req = Request.new(base_request)
+    req.post?.should eq true
 
-     base_request = HTTP::Request.new("PUT", "/", headers, "Test")
-     req = Request.new(base_request)
-     req.put?.should eq true
+    base_request = HTTP::Request.new("PUT", "/", headers, "Test")
+    req = Request.new(base_request)
+    req.put?.should eq true
 
-     base_request = HTTP::Request.new("DELETE", "/", headers, "Test")
-     req = Request.new(base_request)
-     req.delete?.should eq true
+    base_request = HTTP::Request.new("DELETE", "/", headers, "Test")
+    req = Request.new(base_request)
+    req.delete?.should eq true
 
-     base_request = HTTP::Request.new("PUT", "/", headers, "Test")
-     req = Request.new(base_request)
-     req.get?.should eq false
+    base_request = HTTP::Request.new("PUT", "/", headers, "Test")
+    req = Request.new(base_request)
+    req.get?.should eq false
+  end
+
+  it "returns query string, if exists" do
+    q_base_request = HTTP::Request.new("GET", "/index/path.html?p1=v1&p2=v2", headers, "Test")
+    q_req = Request.new(q_base_request)
+    q_req.query_string.should eq "p1=v1&p2=v2"
+    q_req.path = "/index/"
+    q_req.query_string.should eq nil
+  end
+
+  it "returns path without query string" do
+    path_request = HTTP::Request.new("GET", "/index", headers, "Test")
+    path_req = Request.new(path_request)
+    path_req.path.should eq "/index"
+    path_request = HTTP::Request.new("GET", "/index?user_id=1", headers, "Test")
+    path_req = Request.new(path_request)
+    path_req.path.should eq "/index"
   end
 end

@@ -3,8 +3,8 @@ require "./spec_helper"
 describe Router do
 
   router     = Router.new
-  request    = Amethyst::Http::Request.new(HTTP::Request.new("GET", "/index"))
-  response   = Amethyst::Http::Response.new(200, "Ok")
+  request    = Http::Request.new(HTTP::Request.new("GET", "/index"))
+  response   = Http::Response.new(200, "Ok")
   controller = IndexController.new(request, response)
 
   it "draws routes properly" do
@@ -28,6 +28,7 @@ describe Router do
   end
 
   it "returns HTTP::Response" do
-    router.call(request).should be_a Amethyst::Http::Response
+    request    = Http::Request.new(HTTP::Request.new("GET", "/index"))
+    router.call(request).should be_a Http::Response
   end
 end

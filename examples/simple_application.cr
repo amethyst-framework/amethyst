@@ -60,6 +60,7 @@ end
 app = Base::App.new
 # Middleware registering
 app.use(TimeMiddleware.new)
+app.use(HTTP::LogHandler.new)
 
 # Rails-like approach to describe routes. For now, only get() supported.
 # It consists of path and string "controller_name#action_name"
