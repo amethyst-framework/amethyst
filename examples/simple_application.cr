@@ -33,7 +33,7 @@ end
 # Core::Middleware::BaseMiddleware (or, just type "BaseMiddleware" if you  are
 # using "amethyst/all"), and should have the "call" method.
 # Actually, there are two call methods with different signatures.
-class TimeMiddleware < Base::Middleware
+class TimeMiddleware < Middleware::Base
 
   # All instance variables have to be initialized here to use them in call methods
   def initialize
@@ -56,11 +56,10 @@ class TimeMiddleware < Base::Middleware
 
 end
 
+Base::App.use TimeMiddleware
 # App creating
 app = Base::App.new
 # Middleware registering
-app.use(TimeMiddleware.new)
-app.use(HTTP::LogHandler.new)
 
 # Rails-like approach to describe routes. For now, only get() supported.
 # It consists of path and string "controller_name#action_name"

@@ -22,7 +22,7 @@ class Request
     end
   {% end %}
 
-  # Force path always return a String
+  # Force path to always return a String
   def path
     return URI.parse(@path).path.to_s
   end

@@ -1,13 +1,13 @@
 class Handler
 
-  def initialize(@middleware_stack, @router)
+  def initialize(@router)
   end
 
   def call(base_request : HTTP::Request)
     request  = Http::Request.new(base_request)
-    @middleware_stack.process_request(request)
+    Middleware::MiddlewareStack::INSTANCE.process_request(request)
     response = @router.call(request)
-    @middleware_stack.process_response(request,response)
+    Middleware::MiddlewareStack::INSTANCE.process_response(request,response)
     response.build
   end
 end

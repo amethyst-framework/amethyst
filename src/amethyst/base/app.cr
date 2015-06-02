@@ -6,21 +6,20 @@ class App
   def initialize(name= __FILE__, @port=8080)
     @name          = File.basename(name).gsub(/.\w+\Z/, "")
     @run_string    = "[Amethyst #{Time.now}] serving application \"#{@name}\" at http://127.0.0.1:#{port}" #TODO move to Logger class
-    @midware_stack = Base::MiddlewareStack.new
     @router        = Dispatch::Router.new
-    @http_handler  = Base::Handler.new(@midware_stack, @router)
+    @http_handler  = Base::Handler.new(@router)
   end
 
   def self.settings 
-    Base::Config.get 
+    Base::Config::INSTANCE
   end
 
   def routes
     @router
   end
 
-  def use(middleware : Base::Middleware)
-    @midware_stack.add middleware
+  def self.use(middleware : Middleware::Base.class)
+    Middleware::MiddlewareStack::INSTANCE.add middleware
   end
 
   def serve()
@@ -28,6 +27,12 @@ class App
     server = HTTP::Server.new @port, @http_handler
     server.listen
   end
+
+  def self.set_default_middleware
+    self.use Middleware::Logger
+  end
+
+  set_default_middleware
 end
 
 #TODO: Implement enviroments(production, development)

@@ -1,4 +1,5 @@
-class Middleware
+# Base middleware class
+abstract class Base
 	
 	def initialize()
 	end

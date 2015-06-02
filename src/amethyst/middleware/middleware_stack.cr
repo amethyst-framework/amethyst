@@ -1,7 +1,10 @@
 class MiddlewareStack
+
+  include Sugar
+  singleton_INSTANCE
   
   def initialize()
-    @middleware   = [] of Base::Middleware
+    @middleware   = [] of Middleware::Base
   end
 
   # This method is invoked when the application receives a request
@@ -21,7 +24,7 @@ class MiddlewareStack
   end
 
   # Adds middleware instance to the @middleware array
-  def add(middleware : Base::Middleware)
-    @middleware << middleware
+  def add(middleware : Middleware::Base.class)
+    @middleware << instanciate middleware
   end
 end
