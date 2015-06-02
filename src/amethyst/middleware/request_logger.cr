@@ -4,7 +4,9 @@ require "./logger"
 class RequestLogger < Middleware::LoggingMiddleware
 
   def log_request(request)
+    @indent = 3
     display_object request, "Request" 
+    @indent = 6
     display_subheading "headers"
     display_as_list request.headers, skip = ["Cookie"]
   end
@@ -15,16 +17,22 @@ class RequestLogger < Middleware::LoggingMiddleware
   end
 
   def log_response(response)
+    @indent = 3
     display_object response, "Response"
   end
 
   def call(request)
+    system("clear")
+    display_name
     log_request request
     #log_cookies request.headers
   end
 
   def call(request, response)
     log_response response
+    @indent = 6
+    display_subheading "headers"
+    display_as_list response.headers
     display_end
   end
 end

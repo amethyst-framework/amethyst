@@ -24,7 +24,7 @@ macro singleton(method)
   end
 end
 
-macro instanciate(klass)
+macro instantiate(klass)
   begin
    {{klass.id}}.new
   rescue Exception

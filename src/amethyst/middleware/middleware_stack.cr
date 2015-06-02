@@ -25,6 +25,6 @@ class MiddlewareStack
 
   # Adds middleware instance to the @middleware array
   def add(middleware : Middleware::Base.class)
-    @middleware << instanciate middleware
+    @middleware << instantiate middleware
   end
 end
