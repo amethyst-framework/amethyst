@@ -16,7 +16,7 @@ class IndexController < Base::Controller
   end
 end
 
-class TestMiddleware < Base::Middleware
+class TestMiddleware < Middleware::Base
 
   def call(request, response)
     response.body = "Response is being processed"

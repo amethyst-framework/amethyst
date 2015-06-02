@@ -4,7 +4,7 @@ require "./spec_helper"
 describe MiddlewareStack do
   
 	mdwstack = MiddlewareStack.new
-	bsmdware = TestMiddleware.new
+	bsmdware = TestMiddleware
 	request  = Request.new(HTTP::Request.new("GET", "/"))
 	response = Response.new(200, "OK")
 	mdwstack.add(bsmdware)
