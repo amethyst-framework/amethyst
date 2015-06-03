@@ -9,6 +9,7 @@ class Config
 
   def initialize
     @config = {} of Symbol => String
+    set_defaults
   end
 
   macro method_missing(name, args, block)
@@ -16,12 +17,17 @@ class Config
       begin
         return @config[:{{name}}]
       rescue e
-        raise "[Error] No config key with name :{{name.id}}"
+        raise "No config key with name :{{name.id}}"
         return
       end
     {% else %}
         @config[:{{name.id}}] = {{args[0]}}.to_s
     {% end %}
+  end
+
+  # Sets default configuration
+  def set_defaults
+    environment "production"
   end
 
   def configure(&block)
