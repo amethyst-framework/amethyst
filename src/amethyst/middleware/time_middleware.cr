@@ -1,8 +1,10 @@
-class TimeMiddleware < Middleware::LoggingMiddleware
+require "./middleware"
+require "./logging_middleware"
+class TimeLogger < Middleware::LoggingMiddleware
 
   # All instance variables have to be initialized here to use them in call methods
   def initialize
-    super
+    super(120, 3, '_', )
     @t_req = Time.new 
     @t_res = Time.new
   end
@@ -17,8 +19,9 @@ class TimeMiddleware < Middleware::LoggingMiddleware
 	def call(request, response)
     @t_res  = Time.now
     elapsed = (@t_res - @t_req).to_f*1000
+    string  = "%.4f ms" % elapsed
     display_name
-    display_string "Time elapsed:  %.4f ms" % elapsed
+    display_as_list ({ "Time elapsed" => string })
   end
 
 end

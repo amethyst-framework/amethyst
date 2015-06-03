@@ -29,10 +29,10 @@ class HttpLogger < Middleware::LoggingMiddleware
   end
 
   def call(request, response)
+    display_name
     log_response response
     @indent = 6
     display_subheading "headers"
     display_as_list response.headers
-    display_end
   end
 end

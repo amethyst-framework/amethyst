@@ -32,7 +32,7 @@ class App
   def self.set_default_middleware
     if App.settings.environment == "development"
       use Middleware::HttpLogger
-      use Middleware::TimeMiddleware
+      use Middleware::TimeLogger
     end
   end
 end

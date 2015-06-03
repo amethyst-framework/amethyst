@@ -5,14 +5,16 @@ class LoggingMiddleware < Middleware::Base
   setter :indent
   setter :name
 
-  def initialize(@justify=120, @indent=3, @symbol='_', @name=self)
+  def initialize(@justify=120, @indent=3, @symbol='_')
+    @name=self
   end
 
   def display_name
     heading = "\n\n"
     heading += @symbol.to_s*4 
-    heading += "[ #{@name}]"
-    heading = heading.ljust(@justify, @symbol)
+    heading += "/ #{@name} \\"
+    heading = heading.ljust(@justify+1, @symbol)
+    heading += "\n"
     puts heading
   end
 
@@ -42,11 +44,10 @@ class LoggingMiddleware < Middleware::Base
     end
   end
 
-  def display_array(array_obj : Array, skip = [] of String, justify=15, skip_empty_values=true)
+  def display_array(array_obj : Array, skip = [] of String, justify=15)
     array_obj.each do |item|
       item  = item.to_s
       next if skip.includes? item
-      next unless value && skip_empty_values
       @indent.times { print " " }
       item = item.ljust(justify, ' ')
       print item
@@ -59,7 +60,7 @@ class LoggingMiddleware < Middleware::Base
     justify    = @justify - indent
     print "\n"
     indent.times { print " " }
-    string = string.ljust(justify, @symbol) 
+    #string = string.ljust(justify, @symbol) 
     print string
   end
 
