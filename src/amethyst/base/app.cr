@@ -6,8 +6,7 @@ class App
   def initialize(name= __FILE__, @port=8080)
     @name          = File.basename(name).gsub(/.\w+\Z/, "")
     @run_string    = "[Amethyst #{Time.now}] serving application \"#{@name}\" at http://127.0.0.1:#{port}" #TODO move to Logger class
-    @router        = Dispatch::Router.new
-    @http_handler  = Base::Handler.new(@router)
+    @http_handler  = Base::Handler.new
     App.set_default_middleware
   end
 
@@ -15,8 +14,8 @@ class App
     Base::Config::INSTANCE
   end
 
-  def routes
-    @router
+  def self.routes
+    Dispatch::Router::INSTANCE
   end
 
   def self.use(middleware : Middleware::Base.class)

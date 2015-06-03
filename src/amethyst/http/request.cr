@@ -59,6 +59,9 @@ class Request
     @query_params
   end
 
+  def path_parameters
+  end
+
   # Sets variables to log (with HttpLogger)
   def log 
     {

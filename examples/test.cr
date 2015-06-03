@@ -16,12 +16,11 @@ App.settings.configure do |conf|
   conf.environment "development" 
 end
 
-app = App.new
-
-app.routes.draw do
+App.routes.draw do
   get "/", "test#index"
   register TestController
 end
 
+app = App.new
 
 app.serve

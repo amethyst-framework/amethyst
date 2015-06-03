@@ -53,4 +53,10 @@ describe Request do
     path_req = Request.new(path_request)
     path_req.path.should eq "/index"
   end
+
+  it "returns query parameters" do
+    qp_request = HTTP::Request.new("GET", "/index?user=user&name=name", headers, "Test")
+    qp_req = Request.new(qp_request)
+    qp_req.query_parameters.should eq Hash{"user" : "user", "name" : "name"}
+  end
 end

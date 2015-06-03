@@ -3,6 +3,8 @@ class Router
   getter :controllers
 
   include Support::RoutesPainter
+  include Sugar
+  singleton_INSTANCE
 
   # This macro is a hack that allows to instansiate controllers through 
   # @controllers.fetch("ControllerName")
