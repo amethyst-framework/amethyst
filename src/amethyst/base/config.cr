@@ -30,6 +30,7 @@ class Config
     environment "production"
   end
 
+  # Configures application with given block
   def configure(&block)
     with self yield self 
   end

@@ -2,6 +2,8 @@ require "./spec_helper"
 
 describe App do
 
+	
+
   it "has right name" do
   	app      = Base::App.new() 
 	app.port = 8080
