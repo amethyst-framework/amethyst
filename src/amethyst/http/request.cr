@@ -53,19 +53,22 @@ class Request
   end
 
   # Returns request parameters sent as a part of query
-  def parse_parameters(params_string, to_hash)
+  def parse_parameters(params_string)
+    hash = {} of String => String
     params = params_string.to_s.split("&")
     params.each do |param|
+      p param
       if match = /^(?<key>[^=]*)(=(?<value>.*))?$/.match(param)
         key, value = param.split("=").map { |s| CGI.unescape(s) }
-        to_hash[key] = value
+        hash[key] = value
       end
     end
+    hash
   end
 
   def query_parameters
     @query_params unless @query_params.empty?
-    parse_parameters query_string, @query_params
+    @query_params = parse_parameters query_string
   end
 
   def path_parameters
@@ -78,7 +81,7 @@ class Request
 
   def request_parameters
     if content_type == "application/x-www-form-urlencoded"
-      parse_parameters @body, @request_params
+      @request_params = parse_parameters @body
     end
     @request_params
   end
