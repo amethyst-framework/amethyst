@@ -17,7 +17,8 @@ App.settings.configure do |conf|
 end
 
 App.routes.draw do
-  get "/user/:id", "test#index"
+  get  "/user/:id", "test#index"
+  post "/post/", "test#index"
   register TestController
 end
 

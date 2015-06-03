@@ -1,3 +1,5 @@
+require "cgi"
+
 METHODS = %w(GET POST PUT DELETE)
 
 class Request
@@ -17,7 +19,8 @@ class Request
     @body 	 = base_request.body
     @version = base_request.version
     @query_params = {} of String => String
-    @path_parames = {} of String => String
+    @path_params = {} of String => String
+    @request_params = {} of String => String
   end
 
   # Allows you to know the request method (get? post?, etc.)
@@ -50,22 +53,34 @@ class Request
   end
 
   # Returns request parameters sent as a part of query
-  def query_parameters
-    return @query_params unless @query_params.empty?
-    params = query_string.to_s.split("&")
+  def parse_parameters(params_string, to_hash)
+    params = params_string.to_s.split("&")
     params.each do |param|
-      key, value = param.split("=")
-      @query_params[key] = value
+      if match = /^(?<key>[^=]*)(=(?<value>.*))?$/.match(param)
+        key, value = param.split("=").map { |s| CGI.unescape(s) }
+        to_hash[key] = value
+      end
     end
-    @query_params
+  end
+
+  def query_parameters
+    @query_params unless @query_params.empty?
+    parse_parameters query_string, @query_params
   end
 
   def path_parameters
-    params = ""
+    @path_params unless @path_params.empty?
     if App.routes.exists? path, method
-      params = App.routes.matched_route.params(path)
+      @path_params = App.routes.matched_route.params path
     end
-    return params
+    @path_params
+  end
+
+  def request_parameters
+    if content_type == "application/x-www-form-urlencoded"
+      parse_parameters @body, @request_params
+    end
+    @request_params
   end
 
   # Sets variables to log with HttpLogger
@@ -79,8 +94,19 @@ class Request
       "port"         : port,
       "version"      : @version,
       "query params" : query_parameters,
-      "path parameters" : path_parameters
+      "path parameters" : path_parameters,
+      "post parameters" : request_parameters,
+      "content type"    : content_type
     }
+  end
+
+  def content_type
+    begin
+      #if match = /^(?<content_type>^\w*\/\S*)/.match
+      headers["Content-type"].split(";")[0]
+    rescue MissingKey
+      ""
+    end
   end
 end
 
