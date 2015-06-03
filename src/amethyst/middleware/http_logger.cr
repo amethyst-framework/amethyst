@@ -1,7 +1,7 @@
 require "./middleware"
-require "./logger"
+require "./logging_middleware"
 
-class RequestLogger < Middleware::LoggingMiddleware
+class HttpLogger < Middleware::LoggingMiddleware
 
   def log_request(request)
     @indent = 3

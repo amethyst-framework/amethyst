@@ -12,8 +12,8 @@ class TestController < Controller
 end
 
 
-App.settings.configure do |conf| 
-  conf.environment 7 
+App.settings.configure do |conf|
+  conf.environment "development" 
 end
 
 app = App.new

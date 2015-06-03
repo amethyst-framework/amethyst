@@ -16,7 +16,7 @@ class Config
       begin
         return @config[:{{name}}]
       rescue e
-        puts "[Error] No config key with name :{{name.id}}"
+        raise "[Error] No config key with name :{{name.id}}"
         return
       end
     {% else %}
@@ -25,6 +25,6 @@ class Config
   end
 
   def configure(&block)
-    yield self
+    with self yield self 
   end
 end
