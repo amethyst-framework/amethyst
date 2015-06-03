@@ -17,6 +17,7 @@ class Request
     @body 	 = base_request.body
     @version = base_request.version
     @query_params = {} of String => String
+    @path_parames = {} of String => String
   end
 
   # Allows you to know the request method (get? post?, etc.)
@@ -60,9 +61,14 @@ class Request
   end
 
   def path_parameters
+    params = ""
+    if App.routes.exists? path, method
+      params = App.routes.matched_route.params(path)
+    end
+    return params
   end
 
-  # Sets variables to log (with HttpLogger)
+  # Sets variables to log with HttpLogger
   def log 
     {
       "http method"  => @method,
@@ -72,7 +78,8 @@ class Request
       "host"         : host,
       "port"         : port,
       "version"      : @version,
-      "query params" : query_parameters
+      "query params" : query_parameters,
+      "path parameters" : path_parameters
     }
   end
 end

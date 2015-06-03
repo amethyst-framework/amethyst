@@ -17,7 +17,7 @@ App.settings.configure do |conf|
 end
 
 App.routes.draw do
-  get "/", "test#index"
+  get "/user/:id", "test#index"
   register TestController
 end
 

@@ -1,6 +1,7 @@
 class Router
   getter :routes
   getter :controllers
+  getter :matched_route
 
   include Support::RoutesPainter
   include Sugar
@@ -29,6 +30,7 @@ class Router
     with self yield
   end
 
+  # Return true if path route exists, and sets @matched_route
   def exists?(path, method)
     exists = false
     @routes.each do |route|
@@ -45,10 +47,10 @@ class Router
   # Actually, performs a routing 
   def call(request : Http::Request)
     response = Http::Response.new(404, "404 Not found")
-    if exists?(request.path, request.method)
+    if exists? request.path, request.method
       response = Http::Response.new(200, "#{request.path} of application")
       controller = @matched_route.controller.capitalize+"Controller"
-      controller_instance = @controllers[controller].new(request, response)
+      controller_instance = instantiate @controllers[controller], request, response
       response = controller_instance.call_action(@matched_route.action)
     end
     return response

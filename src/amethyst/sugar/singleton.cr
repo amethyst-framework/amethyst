@@ -24,9 +24,9 @@ macro singleton(method)
   end
 end
 
-macro instantiate(klass)
+macro instantiate(klass, *args)
   begin
-   {{klass.id}}.new
+   {{klass.id}}.new({{*args}})
   rescue Exception
     raise "Can't instantiate class {{klass.id}}"
   end

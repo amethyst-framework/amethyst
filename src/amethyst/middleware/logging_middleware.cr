@@ -32,9 +32,10 @@ class LoggingMiddleware < Middleware::Base
   def display_as_list(hash_object, skip = [] of String, justify=15, skip_empty_values=true)
     print "\n"
     hash_object.each do |name, value|
+      value = false if value.to_s.empty?
       name  = name.to_s
       next if skip.includes? name
-      next unless value && skip_empty_values
+      next unless value && skip_empty_values 
       @indent.times { print " " }
       name = name.capitalize
       name = name.ljust(justify, ' ')
