@@ -16,6 +16,7 @@ class Router
     @routes      = [] of Dispatch::Route
     @controllers = {} of String => Base::Controller.class 
     @methods     = {} of String => Symbol
+    @matched_route = Dispatch::Route.new("/not_found/", "HttpError", "404" )
   end
 
   # Adds controller to hash @controllers and make it available for app
@@ -28,18 +29,27 @@ class Router
     with self yield
   end
 
-  # Actually, performs a routing 
-  def call(request : Http::Request)
-    path     = request.path
-    response = Http::Response.new(404, "Not found")
+  def exists?(path, method)
+    exists = false
     @routes.each do |route|
-      if route.matches?(path, request.method)
-        response = Http::Response.new(200, "#{path} of application")
-        controller = route.controller.capitalize+"Controller"
-        controller_instance = @controllers[controller].new(request, response)
-        response = controller_instance.call_action(route.action)
+      if route.matches?(path, method)
+        exists = true
+        @matched_route = route
         break
       end
+    end
+    return exists
+  end
+
+
+  # Actually, performs a routing 
+  def call(request : Http::Request)
+    response = Http::Response.new(404, "404 Not found")
+    if exists?(request.path, request.method)
+      response = Http::Response.new(200, "#{request.path} of application")
+      controller = @matched_route.controller.capitalize+"Controller"
+      controller_instance = @controllers[controller].new(request, response)
+      response = controller_instance.call_action(@matched_route.action)
     end
     return response
   end
