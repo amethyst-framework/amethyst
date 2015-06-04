@@ -34,6 +34,10 @@ class Logger
   end
 
   def display_as_list(hash_object, skip = [] of String, justify=15, skip_empty_values=true)
+    unless hash_object.responds_to?(:each)
+      display_string "Object #{hash_object.to_s} is not a hash.Setting it empty"
+      hash_object = [] of String
+    end
     print "\n"
     hash_object.each do |name, value|
       value = false if value.to_s.empty?
@@ -65,13 +69,16 @@ class Logger
     justify    = @justify - indent
     print "\n"
     indent.times { print " " }
-    #string = string.ljust(justify, @symbol) 
     print string
   end
 
   def display_object(obj, heading)
     display_heading heading
-    display_as_list obj.log
+    if obj.responds_to?(:log)
+      display_as_list obj.log
+    else
+      display_string "Object #{obj.to_s} has no :log method"
+    end
   end
 
   def display_subheading(name : String, level=1, indent=@indent)

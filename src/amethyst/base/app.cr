@@ -36,8 +36,6 @@ class App
     if App.settings.environment == "development"
       use Middleware::HttpLogger
       use Middleware::TimeLogger
-      # use Middleware::HttpLogger
-      # use Middleware::TimeLogger
     end
   end
 end

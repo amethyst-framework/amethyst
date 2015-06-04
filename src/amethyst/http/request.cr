@@ -57,7 +57,6 @@ class Request
     hash = {} of String => String
     params = params_string.to_s.split("&")
     params.each do |param|
-      p param
       if match = /^(?<key>[^=]*)(=(?<value>.*))?$/.match(param)
         key, value = param.split("=").map { |s| CGI.unescape(s) }
         hash[key] = value

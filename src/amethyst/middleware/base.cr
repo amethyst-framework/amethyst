@@ -1,5 +1,5 @@
 # Base middleware class
-class Base 
+abstract class Base 
 	
 	def initialize()
     @app = self
@@ -13,21 +13,4 @@ class Base
 	  @app = app
     self
 	end
-  
-end
-
-class Some < Base 
-  
-  def call(request)
-    puts "new"
-    @app.call(request)
-  end
-end
-
-class Where < Base
-
-  def call(request)
-    puts "hello"
-    @app.call(request)
-  end
 end

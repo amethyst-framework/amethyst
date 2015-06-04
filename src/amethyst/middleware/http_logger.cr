@@ -1,39 +1,40 @@
 require "./middleware"
 class HttpLogger < Middleware::Base
+  getter :logger
 
   def initialize
-    super
+    super()
     @logger = App.logger
   end
 
   def log_request(request)
-    @logger.indent = 3
-    @logger.display_object request, "Request" 
-    @logger.indent = 6
-    @logger.display_subheading "headers"
-    @logger.display_as_list request.headers, skip = ["Cookie"]
+    logger.indent = 3
+    logger.display_object request, "Request" 
+    logger.indent = 6
+    logger.display_subheading "headers"
+    logger.display_as_list request.headers, skip = ["Cookie"]
   end
 
   def log_cookies(headers)
-    @logger.display_subheading "Cookies", level = 3 
-    @logger.display_string headers["Cookie"], level = 3
+    logger.display_subheading "Cookies", level = 3 
+    logger.display_string headers["Cookie"], level = 3
   end
 
   def log_response(response)
-    @logger.indent = 3
-    @logger.display_object response, "Response"
+    logger.indent = 3
+    logger.display_object response, "Response"
   end
 
   def call(request)
     system("clear")
-    @logger.display_name
+    logger.display_name
     log_request request
     response = @app.call(request)
-    @logger.display_name
+    logger.display_name
     log_response response
-    @logger.indent = 6
-    @logger.display_subheading "headers"
-    @logger.display_as_list response.headers
+    logger.indent = 6
+    logger.display_subheading "headers"
+    logger.display_as_list response.headers
     response
   end
 end
