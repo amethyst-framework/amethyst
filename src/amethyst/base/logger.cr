@@ -1,4 +1,7 @@
-class LoggingMiddleware < Middleware::Base
+class Logger 
+
+  include Sugar
+  singleton_INSTANCE
 
   setter :justify
   setter :symbol
@@ -7,6 +10,7 @@ class LoggingMiddleware < Middleware::Base
 
   def initialize(@justify=120, @indent=3, @symbol='_')
     @name=self
+    @app = self
   end
 
   def display_name
