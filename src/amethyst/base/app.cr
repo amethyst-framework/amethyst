@@ -18,7 +18,7 @@ class App
     Dispatch::Router::INSTANCE
   end
 
-  def self.log
+  def self.logger
     Base::Logger::INSTANCE
   end
 
@@ -34,6 +34,7 @@ class App
 
   def self.set_default_middleware
     if App.settings.environment == "development"
+      use Middleware::HttpLogger
       use Middleware::TimeLogger
       # use Middleware::HttpLogger
       # use Middleware::TimeLogger

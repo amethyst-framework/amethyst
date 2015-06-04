@@ -1,35 +1,39 @@
-# require "./middleware"
-# require "./logging_middleware"
+require "./middleware"
+class HttpLogger < Middleware::Base
 
-# class HttpLogger < Middleware::Base
+  def initialize
+    super
+    @logger = App.logger
+  end
 
-#   def log_request(request)
-#     @indent = 3
-#     display_object request, "Request" 
-#     @indent = 6
-#     display_subheading "headers"
-#     display_as_list request.headers, skip = ["Cookie"]
-#   end
+  def log_request(request)
+    @logger.indent = 3
+    @logger.display_object request, "Request" 
+    @logger.indent = 6
+    @logger.display_subheading "headers"
+    @logger.display_as_list request.headers, skip = ["Cookie"]
+  end
 
-#   def log_cookies(headers)
-#     display_subheading "Cookies", level = 3 
-#     display_string headers["Cookie"], level = 3
-#   end
+  def log_cookies(headers)
+    @logger.display_subheading "Cookies", level = 3 
+    @logger.display_string headers["Cookie"], level = 3
+  end
 
-#   def log_response(response)
-#     @indent = 3
-#     display_object response, "Response"
-#   end
+  def log_response(response)
+    @logger.indent = 3
+    @logger.display_object response, "Response"
+  end
 
-#   def call(request)
-#     system("clear")
-#     display_name
-#     log_request request
-#     response = @app.call(request)
-#     display_name
-#     log_response response
-#     @indent = 6
-#     display_subheading "headers"
-#     display_as_list response.headers
-#   end
-# end
+  def call(request)
+    system("clear")
+    @logger.display_name
+    log_request request
+    response = @app.call(request)
+    @logger.display_name
+    log_response response
+    @logger.indent = 6
+    @logger.display_subheading "headers"
+    @logger.display_as_list response.headers
+    response
+  end
+end
