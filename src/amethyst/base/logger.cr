@@ -34,10 +34,6 @@ class Logger
   end
 
   def display_as_list(hash_object, skip = [] of String, justify=15, skip_empty_values=true)
-    unless hash_object.responds_to?(:each)
-      display_string "Object #{hash_object.to_s} is not a hash.Setting it empty"
-      hash_object = [] of String
-    end
     print "\n"
     hash_object.each do |name, value|
       value = false if value.to_s.empty?
