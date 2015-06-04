@@ -1,5 +1,4 @@
-# Base middleware class
-abstract class Base
+class New 
 	
 	def initialize()
     @app = self
