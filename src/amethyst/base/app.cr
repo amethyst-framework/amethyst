@@ -34,6 +34,7 @@ class App
 
   def self.set_default_middleware
     if Base::App.settings.environment == "development"
+      use Middleware::ShowExceptions
       use Middleware::HttpLogger
       use Middleware::TimeLogger
     end
@@ -42,4 +43,3 @@ end
 
 #TODO: Implement enviroments(production, development)
 #TODO: Implement configuring app.configure(&block)
-#TODO: Implement tracer module

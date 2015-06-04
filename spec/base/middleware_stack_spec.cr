@@ -12,7 +12,7 @@ describe MiddlewareStack do
     # end
     # app = mdwstack.build_middleware
     # app.call(request)
-    #request.body.should eq "Request is being processed"
+    # request.body.should eq "Request is being processed"
     # ???strange errors???
   end
 end

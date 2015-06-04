@@ -63,50 +63,29 @@ Controllers describe actions as a methods. Actions have direct access to request
 
 
 # Middleware
-Middleware are implemented as classes. Middleware class inherits from ```Base::Middleware``` (or, just type ```Middleware``` if you prefer ```require amethyst/all```), and should have the ```call``` method. Actually, there are two call methods with different signatures:
+Middleware are implemented as classes. Middleware class inherits from ```Base::Middleware``` (or, just type ```Middleware``` if you prefer ```require amethyst/all```), and should have the ```call``` method.
 ```crystal
 def call(request)
 end
-
-def call(request, response)
-end
 ```
-The first one will be called when app gets request from server. It accepts ```Amethyst::Http::Request``` as an argument. Last one will be invoked when controller returned response(this happens automatically). It gets ```Amethyst::Http::Request``` and ```Amethyst::Http::Response``` as arguments. Here is an example of middleware that calculates time elapsed between request and response.
+ Here is an example of middleware that calculates time elapsed between request and response.
 
 ```crystal
-class TimeMiddleware < Base::Middleware
+class TimeLogger < Middleware::Base
 
-  # All instance variables have to be initialized here to use them in call methods
-  def initialize
-    @t_req = Time.new 
-    @t_res = Time.new
-  end
-
+  # This one will be called when app gets request. It accepts Http::Request
   def call(request)
-    @t_req = Time.now
-  end
-
-  # This one will be called when response returned from controller. It accepts both
-  # Http::Request and Http::Response
-  def call(request, response)
-    @t_res = Time.now
-    response.body += "<hr> Time elapsed: #{(@t_res-@t_req)} seconds"
+    logger = Base::App.logger
+    t_req = Time.now
+    response = @app.call(request)
+    t_res  = Time.now
+    elapsed = (t_res - t_req).to_f*1000
+    string  = "%.4f ms" % elapsed
+    logger.display_name
+    logger.display_as_list ({ "Time elapsed" => string })
+    response
   end
 end
-```
-
-# Application creating
-
-```crystal
-app = Base::Application.new
-
-# Middleware registering
-app.use(TimeMiddleware.new)
-```
-You can set a port and app name (defaul port is ```8080```, default name is name of file application is in):
-```crystal
-app.port = 8080
-app.name = "example"
 ```
 
 #Routing
@@ -115,11 +94,12 @@ Amethyst has Rails-like approach to describe routes. For now, only ```get()``` s
 It consists of path and string ```controller_name#action_name```
 
 ```crystal 
-app.routes.draw do |routes|
+Base::App.routes.draw do |routes|
   # maps GET "/" to "hello" action of IndexController
   get "/",    "index#hello"
   # maps GET "/bye" to "bye" action of IndexController
   get "/bye", "index#bye"
+  post "/post", "index#bye" # you can use GET, POST, PUT, DELETE
 end
 ```
 
@@ -133,7 +113,19 @@ get "/users/:id", "users#show" #(params doesn't work yet)
 
 After you defined a controller, you have to register it in app with ```app.routes.register(NameController)``` where ```NameController```(CamelCase) is the classname of your controller:
 ```crystal
-app.routes.register(IndexController)
+Base::App.routes.register(IndexController)
+```
+# Application creating
+
+```crystal
+# Middleware registering
+Base::App.use TimeMiddleware
+app = Base::App.new
+```
+You can set a port and app name (defaul port is ```8080```, default name is name of file application is in):
+```crystal
+app.port = 8080
+app.name = "example"
 ```
 #Running application
 ```crystal
