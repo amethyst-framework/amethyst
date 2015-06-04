@@ -7,7 +7,7 @@ class App
     @name          = File.basename(name).gsub(/.\w+\Z/, "")
     @run_string    = "[Amethyst #{Time.now}] serving application \"#{@name}\" at http://127.0.0.1:#{port}" #TODO move to Logger class
     @http_handler  = Base::Handler.new
-    App.set_default_middleware
+    Base::App.set_default_middleware
   end
 
   def self.settings
@@ -33,7 +33,7 @@ class App
   end
 
   def self.set_default_middleware
-    if App.settings.environment == "development"
+    if Base::App.settings.environment == "development"
       use Middleware::HttpLogger
       use Middleware::TimeLogger
     end

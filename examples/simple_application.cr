@@ -32,47 +32,40 @@ end
 # Middleware are implemented as classes. Middleware class inherits from
 # Core::Middleware::BaseMiddleware (or, just type "BaseMiddleware" if you  are
 # using "amethyst/all"), and should have the "call" method.
-# Actually, there are two call methods with different signatures.
-class TimeMiddleware < Middleware::Base
-
-  # All instance variables have to be initialized here to use them in call methods
-  def initialize
-    @t_req = Time.new 
-    @t_res = Time.new
-  end
+class TimeLogger < Middleware::Base
 
   # This one will be called when app gets request. It accepts Http::Request
   def call(request)
-    @t_req = Time.now
+    logger   = Base::App.logger
+    t_req    = Time.now
+    response = @app.call(request)
+    t_res    = Time.now
+    elapsed  = (t_res - t_req).to_f*1000
+    string   = "%.4f ms" % elapsed
+    logger.display_name
+    logger.display_as_list ({ "Time elapsed" => string })
+    response
   end
-
-  # This one will be called when response returned from controller. It accepts both
-  # Http::Request and Http::Response
-	def call(request, response)
-    @t_res  = Time.now
-    elapsed = (@t_res - @t_req).to_f*1000
-    response.body +=  "<hr> Time elapsed:  %.4f ms" % elapsed
-  end
-
 end
-
-Base::App.use TimeMiddleware
-# App creating
-app = Base::App.new
-# Middleware registering
 
 # Rails-like approach to describe routes. For now, only get() supported.
 # It consists of path and string "controller_name#action_name"
 # You can specify params to be captured:
 # get "/users/:id", "users#show" (not works yet)
-app.routes.draw do
+Base::App.routes.draw do
   all "/all", "index#hello" 
-	get "/", 	  "index#hello"
-	get "/bye", "index#bye"
+  get "/",    "index#hello"
+  get "/bye", "index#bye"
 end
+
+# Middleware registering
+Base::App.use TimeLogger
 
 # After you defined a controller, you have to register it in app with
 # app.routes.register(NameController) where NameController is the class name
 # of your controller.
-app.routes.register(IndexController)
+Base::App.routes.register(IndexController)
+
+# App creating
+app = Base::App.new
 app.serve

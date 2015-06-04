@@ -4,7 +4,7 @@ class HttpLogger < Middleware::Base
 
   def initialize
     super()
-    @logger = App.logger
+    @logger = Base::App.logger
   end
 
   def log_request(request)

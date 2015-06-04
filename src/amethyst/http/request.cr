@@ -72,8 +72,8 @@ class Request
 
   def path_parameters
     @path_params unless @path_params.empty?
-    if App.routes.exists? path, method
-      @path_params = App.routes.matched_route.params path
+    if Base::App.routes.exists? path, method
+      @path_params = Base::App.routes.matched_route.params path
     end
     @path_params
   end
