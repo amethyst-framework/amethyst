@@ -4,7 +4,20 @@ class MiddlewareStack
   singleton_INSTANCE
   
   def initialize()
+    @middlewares   = [] of Middleware::New
     @middleware   = [] of Middleware::Base
+  end
+
+  def build
+    app = Dispatch::Router::INSTANCE
+    @middlewares.reverse.each do |mdware|
+      app = mdware.build(app)
+    end
+    app
+  end
+
+  def use(middleware)
+    @middlewares << instantiate middleware
   end
 
   # This method is invoked when the application receives a request

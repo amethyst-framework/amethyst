@@ -12,7 +12,7 @@ abstract class Base
     @app = app
     self
   end
-  
+
 	def call(request : Http::Request, response : Http::Response)
 	end
 end

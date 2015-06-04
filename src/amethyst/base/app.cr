@@ -18,8 +18,8 @@ class App
     Dispatch::Router::INSTANCE
   end
 
-  def self.use(middleware : Middleware::Base.class)
-    Middleware::MiddlewareStack::INSTANCE.add middleware
+  def self.use(middleware : Middleware::New.class)
+    Middleware::MiddlewareStack::INSTANCE.use middleware
   end
 
   def serve()
@@ -30,8 +30,9 @@ class App
 
   def self.set_default_middleware
     if App.settings.environment == "development"
-      use Middleware::HttpLogger
-      use Middleware::TimeLogger
+      use Middleware::New
+      # use Middleware::HttpLogger
+      # use Middleware::TimeLogger
     end
   end
 end
