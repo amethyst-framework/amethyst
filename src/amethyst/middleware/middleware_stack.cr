@@ -4,7 +4,7 @@ class MiddlewareStack
   singleton_INSTANCE
   
   def initialize()
-    @middlewares   = [] of Middleware::New
+    @middlewares   = [] of Middleware::Base
     @middleware   = [] of Middleware::Base
   end
 
