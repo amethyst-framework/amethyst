@@ -2,6 +2,7 @@ require "spec"
 require "../../src/all"
 
 class IndexController < Base::Controller
+  actions :hello, :bye
   def hello
     html "Hello"
   end
@@ -9,20 +10,12 @@ class IndexController < Base::Controller
   def bye
     html "Bye"
   end
-
-  def actions
-    add :hello
-    add :bye
-  end
 end
 
 class TestMiddleware < Middleware::Base
 
-  def call(request, response)
-    response.body = "Response is being processed"
-  end
-
   def call(request)
     request.body = "Request is being processed"
+    @app.call(request)
   end
 end

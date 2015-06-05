@@ -7,12 +7,11 @@ describe MiddlewareStack do
 	mdwstack.use TestMiddleware
 
   it "processes request" do
-    # App.settings.configure do |conf|
-    #   conf.environment "production"
-    # end
-    # app = mdwstack.build_middleware
-    # app.call(request)
-    # request.body.should eq "Request is being processed"
-    # ???strange errors???
+    App.settings.configure do |conf|
+      conf.environment = "development"
+    end
+    app = mdwstack.build_middleware
+    app.call(request)
+    request.body.should eq "Request is being processed"
   end
 end

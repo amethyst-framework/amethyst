@@ -6,17 +6,13 @@ require "../src/all"
 
 
 class IndexController < Base::Controller
+  actions :hello, :bye
   def hello
     html "Hello"
   end
 
   def bye
     html "Bye"
-  end
-
-  def actions
-    add :hello
-    add :bye
   end
 end
 
