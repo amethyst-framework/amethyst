@@ -43,6 +43,7 @@ and it needs to be inherited from ```Base::Controller```. Here is an example of 
 require "../src/amethyst"
 
 class IndexController < Base::Controller
+  actions :hello, :bye
 
   def hello
     html "<p>Hello, you're asked a #{request.method} #{request.path}</p> \n
@@ -52,15 +53,9 @@ class IndexController < Base::Controller
   def bye
     html "<p>Bye!We hope you will come back</p>"
   end
-
-  def actions
-    add :hello
-    add :bye
-  end
 end
 ```
-Controllers describe actions as a methods. Actions have direct access to request and response objects, and other helpers, such as a ```html``` . Controller method ```actions``` is special method that must be provided by each controller of your application.It lets app to know which methods of your contoller are actions, and which aren't. The synopsys is ```add :action_name```. 
-
+Controllers describe actions as a methods. Actions have direct access to request and response objects, and other helpers, such as a ```html``` .Code ```actions :hello, :bye``` lets app to know which methods of your contoller are actions, and which aren't.
 
 # Middleware
 Middleware are implemented as classes. Middleware class inherits from ```Base::Middleware``` (or, just type ```Middleware``` if you prefer ```require amethyst/all```), and should have the ```call``` method.
@@ -100,6 +95,7 @@ Base::App.routes.draw do |routes|
   # maps GET "/bye" to "bye" action of IndexController
   get "/bye", "index#bye"
   post "/post", "index#bye" # you can use GET, POST, PUT, DELETE
+  all "/bye-all", "index#bye" # resoonds to all HTTP methods
 end
 ```
 
