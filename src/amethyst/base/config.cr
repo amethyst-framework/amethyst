@@ -1,4 +1,6 @@
 class Config
+  property :environment
+  property :app_dir
 
   # Config class is storage of :key => "value"
   # You can get and set values by invoking config.key value
@@ -8,26 +10,12 @@ class Config
   singleton_INSTANCE
 
   def initialize
-    @config = {} of Symbol => String
-    set_defaults
+    @enviroment  = "production"
+    @app_dir     = ""
   end
-
-  macro method_missing(name, args, block)
-    {% if args[0] == nil %}
-      begin
-        return @config[:{{name}}]
-      rescue e
-        raise "No config key with name :{{name.id}}"
-        return
-      end
-    {% else %}
-        @config[:{{name.id}}] = {{args[0]}}.to_s
-    {% end %}
-  end
-
-  # Sets default configuration
-  def set_defaults
-    environment "production"
+  
+  def self.configure(&block)
+    yield INSTANCE
   end
 
   # Configures application with given block

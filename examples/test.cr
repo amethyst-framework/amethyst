@@ -5,17 +5,13 @@ class TestController < Controller
 
 	def index
     puts @actions_hash
-		html "Hello world!"
+		html "Hello world!<img src='/assets/amethyst.jpg'>"
   end
-
-  # def actions
-  #   add :index
-  # end
 end
 
 
 App.settings.configure do |conf|
-  conf.environment "development" 
+  conf.environment = "development"
 end
 
 App.routes.draw do
@@ -27,3 +23,5 @@ end
 app = App.new
 
 app.serve
+      
+      

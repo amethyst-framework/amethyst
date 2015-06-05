@@ -26,7 +26,7 @@ class HttpLogger < Middleware::Base
   end
 
   def call(request)
-    system("clear")
+    # system("clear")
     logger.display_name
     log_request request
     response = @app.call(request)
@@ -35,6 +35,7 @@ class HttpLogger < Middleware::Base
     logger.indent = 6
     logger.display_subheading "headers"
     logger.display_as_list response.headers
+    puts "\n\n"
     response
   end
 end

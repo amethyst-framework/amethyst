@@ -2,9 +2,11 @@ class App
   property :port
   property :name
   getter   :routes
+  getter   :app_dir
 
-  def initialize(name= __FILE__, @port=8080)
-    @name          = File.basename(name).gsub(/.\w+\Z/, "")
+  def initialize(app_path= __FILE__, @port=8080)
+    @name          = File.basename(app_path).gsub(/.\w+\Z/, "")
+    Base::App.settings.app_dir  = File.dirname(app_path)
     @run_string    = "[Amethyst #{Time.now}] serving application \"#{@name}\" at http://127.0.0.1:#{port}" #TODO move to Logger class
     @http_handler  = Base::Handler.new
     Base::App.set_default_middleware
@@ -34,10 +36,11 @@ class App
 
   def self.set_default_middleware
     if Base::App.settings.environment == "development"
-      use Middleware::ShowExceptions
-      use Middleware::HttpLogger
-      use Middleware::TimeLogger
+       use Middleware::ShowExceptions
+       use Middleware::HttpLogger
+       use Middleware::TimeLogger
     end
+    use Middleware::Static
   end
 end
 

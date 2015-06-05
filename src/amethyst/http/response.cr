@@ -17,10 +17,15 @@ class Response
   end
 
   def log
+    if headers["Content-type"] == ("text/html"||"text/plain")
+      body = @body
+    else 
+      body = nil
+    end
     {
       "status"   :  @status_code,
-      "response" :  @body,
-      "version"  :  @version,
+      "response" :  body
+      "version"  :  @version
     }
   end
 end
