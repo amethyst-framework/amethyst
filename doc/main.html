@@ -7,7 +7,7 @@
 <body>
 <h1>Amethyst <a href="https://travis-ci.org/Codcore/Amethyst" target="_blank"><img src="https://travis-ci.org/Codcore/Amethyst.svg" alt="Build Status"/></a></h1>
 
-<p>Amethyst is a web framework written in <a href="https://github.com/manastech/crystal" target="_blank">Crystal</a> language. The goals of Amethyst are to be fast and user-friendly as Rails. Note, Amethyst is at early stage of developing, so a lot of features are missing yet. However, it works :). Why I named my web framework "Amethyst" ? Because Crystal at GitHub has a light purple color as an <a href="http://en.wikipedia.org/wiki/Amethyst" target="_blank">amethyst gemstone</a>.</p>
+<p>Amethyst is a web framework written in <a href="https://github.com/manastech/crystal" target="_blank">Crystal</a> language. The goals of Amethyst are to be fast and user-friendly as Rails. Note, Amethyst is at early stage of developing, so a lot of features are missing yet. However, it works :). Why I called my web framework "Amethyst" ? Because Crystal  has a light purple color at GitHub like <a href="http://en.wikipedia.org/wiki/Amethyst" target="_blank">amethyst gemstone</a>.</p>
 
 <p>For now, next things are implemented:
 - class-based controllers with actions
@@ -18,7 +18,7 @@
 
 <h2>Installation</h2>
 
-<p>Suggested that you have installed <a href="https://github.com/manastech/crystal" target="_blank">Crystal</a> 0.7.1 or higher.</p>
+<p>Suggested that you have installed <a href="https://github.com/manastech/crystal" target="_blank">Crystal</a> 0.7.2. *<em>Code may not work properly with earliers version of 0.7.</em> branch**</p>
 
 <pre><code>git clone https<span class="n">:/</span><span class="s">/github.com/</span><span class="t">Codcore</span><span class="s">/Amethyst.git</code></pre>
 
@@ -69,58 +69,40 @@ and it needs to be inherited from <code></code><code><a href="Amethyst/Base/Cont
 
 <h1>Middleware</h1>
 
-<p>Middleware are implemented as classes. Middleware class inherits from <code></code><code><a href="Amethyst/Base/Middleware.html">Base::Middleware</a></code><code></code> (or, just type <code></code><code><a href="Amethyst/Base/Middleware.html">Middleware</a></code><code></code> if you prefer <code></code><code>require amethyst/all</code><code></code>), and should have the <code></code><code>call</code><code></code> method. Actually, there are two call methods with different signatures:</p>
+<p>Middleware are implemented as classes. Middleware class inherits from <code></code><code>Base::Middleware</code><code></code> (or, just type <code></code><code><a href="Amethyst/Middleware.html">Middleware</a></code><code></code> if you prefer <code></code><code>require amethyst/all</code><code></code>), and should have the <code></code><code>call</code><code></code> method.</p>
 
 <pre><code><span class="k">def</span> <span class="m">call</span>(request)
-<span class="k">end</span>
-
-<span class="k">def</span> <span class="m">call</span>(request, response)
 <span class="k">end</span></code></pre>
 
-<p>The first one will be called when app gets request from server. It accepts <code></code><code><a href="Amethyst/Http.html">Amethyst::Http</a>::<a href="Amethyst/Http/Request.html">Request</a></code><code></code> as an argument. Last one will be invoked when controller returned response(this happens automatically). It gets <code></code><code><a href="Amethyst/Http.html">Amethyst::Http</a>::<a href="Amethyst/Http/Request.html">Request</a></code><code></code> and <code></code><code><a href="Amethyst/Http.html">Amethyst::Http</a>::<a href="Amethyst/Http/Response.html">Response</a></code><code></code> as arguments. Here is an example of middleware that calculates time elapsed between request and response.</p>
+<p>Here is an example of middleware that calculates time elapsed between request and response.</p>
 
-<pre><code><span class="k">class</span> <span class="t">TimeMiddleware</span> <span class="o"><</span> <span class="t">Base</span><span class="t">::</span><span class="t">Middleware</span>
+<pre><code><span class="k">class</span> <span class="t">TimeLogger</span> <span class="o"><</span> <span class="t">Middleware</span><span class="t">::</span><span class="t">Base</span>
 
-  <span class="c"># All instance variables have to be initialized here to use them in call methods</span>
-  <span class="k">def</span> <span class="m">initialize</span>
-    @t_req <span class="o">=</span> <span class="t">Time</span>.<span class="k">new</span> 
-    @t_res <span class="o">=</span> <span class="t">Time</span>.<span class="k">new</span>
-  <span class="k">end</span>
-
+  <span class="c"># This one will be called when app gets request. It accepts Http::Request</span>
   <span class="k">def</span> <span class="m">call</span>(request)
-    @t_req <span class="o">=</span> <span class="t">Time</span>.now
-  <span class="k">end</span>
-
-  <span class="c"># This one will be called when response returned from controller. It accepts both</span>
-  <span class="c"># Http::Request and Http::Response</span>
-  <span class="k">def</span> <span class="m">call</span>(request, response)
-    @t_res <span class="o">=</span> <span class="t">Time</span>.now
-    response.body += <span class="s">"<hr> Time elapsed: </span><span class="i">#{</span></span>(@t_res<span class="o">-</span>@t_req)<span class="s"><span class="i">}</span> seconds"</span>
+    logger <span class="o">=</span> <span class="t">Base</span><span class="t">::</span><span class="t">App</span>.logger
+    t_req <span class="o">=</span> <span class="t">Time</span>.now
+    response <span class="o">=</span> @app.call(request)
+    t_res  <span class="o">=</span> <span class="t">Time</span>.now
+    elapsed <span class="o">=</span> (t_res <span class="o">-</span> t_req).to_f<span class="o">*</span><span class="n">1000</span>
+    string  <span class="o">=</span> <span class="s">"%.4f ms"</span> <span class="o">%</span> elapsed
+    logger.display_name
+    logger.display_as_list ({ <span class="s">"Time elapsed"</span> => string })
+    response
   <span class="k">end</span>
 <span class="k">end</span></code></pre>
-
-<h1>Application creating</h1>
-
-<pre><code>app <span class="o">=</span> <span class="t">Base</span><span class="t">::</span><span class="t">Application</span>.<span class="k">new</span>
-
-<span class="c"># Middleware registering</span>
-app.use(<span class="t">TimeMiddleware</span>.<span class="k">new</span>)</code></pre>
-
-<p>You can set a port and app name (defaul port is <code></code><code>8080</code><code></code>, default name is name of file application is in):</p>
-
-<pre><code>app.port <span class="o">=</span> <span class="n">8080</span>
-app.name <span class="o">=</span> <span class="s">"example"</span></code></pre>
 
 <h1>Routing</h1>
 
 <p>Amethyst has Rails-like approach to describe routes. For now, only <code></code><code>get()</code><code></code> supported. 
 It consists of path and string <code></code><code>controller_name#action_name</code><code></code></p>
 
-<pre><code>app.routes.draw <span class="k">do</span> <span class="o">|</span>routes<span class="o">|</span>
+<pre><code><span class="t">Base</span><span class="t">::</span><span class="t">App</span>.routes.draw <span class="k">do</span> <span class="o">|</span>routes<span class="o">|</span>
   <span class="c"># maps GET "/" to "hello" action of IndexController</span>
   get <span class="s">"/"</span>,    <span class="s">"index#hello"</span>
   <span class="c"># maps GET "/bye" to "bye" action of IndexController</span>
   get <span class="s">"/bye"</span>, <span class="s">"index#bye"</span>
+  post <span class="s">"/post"</span>, <span class="s">"index#bye"</span> <span class="c"># you can use GET, POST, PUT, DELETE</span>
 <span class="k">end</span></code></pre>
 
 <p>Note, <code></code><code>/bye</code><code></code> and <code></code><code>/bye/</code><code></code> work slightly different. First matches <code></code><code>/bye, /bye/, /bye_something</code><code></code>, second is "strict",
@@ -132,7 +114,18 @@ and matches only <code></code><code>/bye</code><code></code> and <code></code><c
 
 <p>After you defined a controller, you have to register it in app with <code></code><code>app.routes.register(NameController)</code><code></code> where <code></code><code>NameController</code><code></code>(CamelCase) is the classname of your controller:</p>
 
-<pre><code>app.routes.register(<span class="t">IndexController</span>)</code></pre>
+<pre><code><span class="t">Base</span><span class="t">::</span><span class="t">App</span>.routes.register(<span class="t">IndexController</span>)</code></pre>
+
+<h1>Application creating</h1>
+
+<pre><code><span class="c"># Middleware registering</span>
+<span class="t">Base</span><span class="t">::</span><span class="t">App</span>.use <span class="t">TimeMiddleware</span>
+app <span class="o">=</span> <span class="t">Base</span><span class="t">::</span><span class="t">App</span>.<span class="k">new</span></code></pre>
+
+<p>You can set a port and app name (defaul port is <code></code><code>8080</code><code></code>, default name is name of file application is in):</p>
+
+<pre><code>app.port <span class="o">=</span> <span class="n">8080</span>
+app.name <span class="o">=</span> <span class="s">"example"</span></code></pre>
 
 <h1>Running application</h1>
 

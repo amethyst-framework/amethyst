@@ -113,3 +113,4 @@ class Request
 end
 
 # TODO: Improve Request class, add @env like in Rails
+# TODO: Move params parsing to the ParamsParser middleware

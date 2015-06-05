@@ -3,6 +3,10 @@
 <head>
   <meta charset="utf-8" />
   <link href="../../css/style.css" rel="stylesheet" type="text/css" />
+  <script type="text/javascript">
+    var pathToIndex = "../../index.html"
+  </script>
+  <script type="text/javascript" src="../../js/type.js"></script>
 </head>
 <body>
 
@@ -32,7 +36,7 @@
   <h2>Defined in:</h2>
   
     
-      <a href="https://github.com/Codcore/Amethyst/blob/95b018dc2b200add7715f84cd1f670884a29f22b/src/amethyst/http/request.cr">amethyst/http/request.cr</a>
+      <a href="https://github.com/Codcore/Amethyst/blob/36aa06b65ff5ccbdafb36380bc7d811367001cba/src/amethyst/http/request.cr">amethyst/http/request.cr</a>
     
     <br/>
   
@@ -46,8 +50,6 @@
     
       <li class="entry-summary">
         <a href="#new%28base_request%20%3A%20HTTP%3A%3ARequest%29-class-method" class="signature"><strong>.new</strong>(base_request : HTTP::Request)</a>
-        
-          <div class="summary"><p>wraps http enviroment </p></div>
         
       </li>
     
@@ -69,12 +71,39 @@
       </li>
     
       <li class="entry-summary">
+        <a href="#content_type-instance-method" class="signature"><strong>#content_type</strong></a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#delete%3F-instance-method" class="signature"><strong>#delete?</strong></a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#get%3F-instance-method" class="signature"><strong>#get?</strong></a>
+        
+      </li>
+    
+      <li class="entry-summary">
         <a href="#headers-instance-method" class="signature"><strong>#headers</strong></a>
         
       </li>
     
       <li class="entry-summary">
         <a href="#headers%3D%28headers%29-instance-method" class="signature"><strong>#headers=</strong>(headers)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#host-instance-method" class="signature"><strong>#host</strong></a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#log-instance-method" class="signature"><strong>#log</strong></a>
+        
+          <div class="summary"><p>Sets variables to log with HttpLogger</p></div>
         
       </li>
     
@@ -89,12 +118,78 @@
       </li>
     
       <li class="entry-summary">
+        <a href="#parse_parameters%28params_string%29-instance-method" class="signature"><strong>#parse_parameters</strong>(params_string)</a>
+        
+          <div class="summary"><p>Returns request parameters sent as a part of query</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
         <a href="#path-instance-method" class="signature"><strong>#path</strong></a>
+        
+          <div class="summary"><p>Force path to always return a String</p></div>
         
       </li>
     
       <li class="entry-summary">
         <a href="#path%3D%28path%29-instance-method" class="signature"><strong>#path=</strong>(path)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#path_parameters-instance-method" class="signature"><strong>#path_parameters</strong></a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#path_parameters%3D%28path_parameters%29-instance-method" class="signature"><strong>#path_parameters=</strong>(path_parameters)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#port-instance-method" class="signature"><strong>#port</strong></a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#post%3F-instance-method" class="signature"><strong>#post?</strong></a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#protocol-instance-method" class="signature"><strong>#protocol</strong></a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#put%3F-instance-method" class="signature"><strong>#put?</strong></a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#query_parameters-instance-method" class="signature"><strong>#query_parameters</strong></a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#query_parameters%3D%28query_parameters%29-instance-method" class="signature"><strong>#query_parameters=</strong>(query_parameters)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#query_string-instance-method" class="signature"><strong>#query_string</strong></a>
+        
+          <div class="summary"><p>Returns path query string.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#request_parameters-instance-method" class="signature"><strong>#request_parameters</strong></a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#request_parameters%3D%28request_parameters%29-instance-method" class="signature"><strong>#request_parameters=</strong>(request_parameters)</a>
         
       </li>
     
@@ -118,11 +213,9 @@
         def self.<strong>new</strong>(base_request : HTTP::Request)
       </div>
       
-        <div class="doc"><p>wraps http enviroment </p></div>
-      
       
         <br/>
-        <div>[<a href="https://github.com/Codcore/Amethyst/blob/95b018dc2b200add7715f84cd1f670884a29f22b/src/amethyst/http/request.cr#L9" target="_blank">View source</a>]</div>
+        <div>[<a href="https://github.com/Codcore/Amethyst/blob/36aa06b65ff5ccbdafb36380bc7d811367001cba/src/amethyst/http/request.cr#L15" target="_blank">View source</a>]</div>
       
     </div>
     <hr/>
@@ -153,6 +246,45 @@
     <hr/>
   
     <div class="entry-detail">
+      <div class="signature" id="content_type-instance-method">
+        
+        def <strong>content_type</strong>
+      </div>
+      
+      
+        <br/>
+        <div>[<a href="https://github.com/Codcore/Amethyst/blob/36aa06b65ff5ccbdafb36380bc7d811367001cba/src/amethyst/http/request.cr#L105" target="_blank">View source</a>]</div>
+      
+    </div>
+    <hr/>
+  
+    <div class="entry-detail">
+      <div class="signature" id="delete%3F-instance-method">
+        
+        def <strong>delete?</strong>
+      </div>
+      
+      
+        <br/>
+        <div>[<a href="https://github.com/Codcore/Amethyst/blob/36aa06b65ff5ccbdafb36380bc7d811367001cba/src/amethyst/http/request.cr#L27" target="_blank">View source</a>]</div>
+      
+    </div>
+    <hr/>
+  
+    <div class="entry-detail">
+      <div class="signature" id="get%3F-instance-method">
+        
+        def <strong>get?</strong>
+      </div>
+      
+      
+        <br/>
+        <div>[<a href="https://github.com/Codcore/Amethyst/blob/36aa06b65ff5ccbdafb36380bc7d811367001cba/src/amethyst/http/request.cr#L27" target="_blank">View source</a>]</div>
+      
+    </div>
+    <hr/>
+  
+    <div class="entry-detail">
       <div class="signature" id="headers-instance-method">
         
         def <strong>headers</strong>
@@ -168,6 +300,34 @@
         def <strong>headers=</strong>(headers)
       </div>
       
+      
+    </div>
+    <hr/>
+  
+    <div class="entry-detail">
+      <div class="signature" id="host-instance-method">
+        
+        def <strong>host</strong>
+      </div>
+      
+      
+        <br/>
+        <div>[<a href="https://github.com/Codcore/Amethyst/blob/36aa06b65ff5ccbdafb36380bc7d811367001cba/src/amethyst/http/request.cr#L43" target="_blank">View source</a>]</div>
+      
+    </div>
+    <hr/>
+  
+    <div class="entry-detail">
+      <div class="signature" id="log-instance-method">
+        
+        def <strong>log</strong>
+      </div>
+      
+        <div class="doc"><p>Sets variables to log with HttpLogger</p></div>
+      
+      
+        <br/>
+        <div>[<a href="https://github.com/Codcore/Amethyst/blob/36aa06b65ff5ccbdafb36380bc7d811367001cba/src/amethyst/http/request.cr#L89" target="_blank">View source</a>]</div>
       
     </div>
     <hr/>
@@ -193,11 +353,31 @@
     <hr/>
   
     <div class="entry-detail">
+      <div class="signature" id="parse_parameters%28params_string%29-instance-method">
+        
+        def <strong>parse_parameters</strong>(params_string)
+      </div>
+      
+        <div class="doc"><p>Returns request parameters sent as a part of query</p></div>
+      
+      
+        <br/>
+        <div>[<a href="https://github.com/Codcore/Amethyst/blob/36aa06b65ff5ccbdafb36380bc7d811367001cba/src/amethyst/http/request.cr#L56" target="_blank">View source</a>]</div>
+      
+    </div>
+    <hr/>
+  
+    <div class="entry-detail">
       <div class="signature" id="path-instance-method">
         
         def <strong>path</strong>
       </div>
       
+        <div class="doc"><p>Force path to always return a String</p></div>
+      
+      
+        <br/>
+        <div>[<a href="https://github.com/Codcore/Amethyst/blob/36aa06b65ff5ccbdafb36380bc7d811367001cba/src/amethyst/http/request.cr#L34" target="_blank">View source</a>]</div>
       
     </div>
     <hr/>
@@ -206,6 +386,145 @@
       <div class="signature" id="path%3D%28path%29-instance-method">
         
         def <strong>path=</strong>(path)
+      </div>
+      
+      
+        <br/>
+        <div>[<a href="https://github.com/Codcore/Amethyst/blob/36aa06b65ff5ccbdafb36380bc7d811367001cba/src/amethyst/http/request.cr#L13" target="_blank">View source</a>]</div>
+      
+    </div>
+    <hr/>
+  
+    <div class="entry-detail">
+      <div class="signature" id="path_parameters-instance-method">
+        
+        def <strong>path_parameters</strong>
+      </div>
+      
+      
+        <br/>
+        <div>[<a href="https://github.com/Codcore/Amethyst/blob/36aa06b65ff5ccbdafb36380bc7d811367001cba/src/amethyst/http/request.cr#L73" target="_blank">View source</a>]</div>
+      
+    </div>
+    <hr/>
+  
+    <div class="entry-detail">
+      <div class="signature" id="path_parameters%3D%28path_parameters%29-instance-method">
+        
+        def <strong>path_parameters=</strong>(path_parameters)
+      </div>
+      
+      
+    </div>
+    <hr/>
+  
+    <div class="entry-detail">
+      <div class="signature" id="port-instance-method">
+        
+        def <strong>port</strong>
+      </div>
+      
+      
+        <br/>
+        <div>[<a href="https://github.com/Codcore/Amethyst/blob/36aa06b65ff5ccbdafb36380bc7d811367001cba/src/amethyst/http/request.cr#L51" target="_blank">View source</a>]</div>
+      
+    </div>
+    <hr/>
+  
+    <div class="entry-detail">
+      <div class="signature" id="post%3F-instance-method">
+        
+        def <strong>post?</strong>
+      </div>
+      
+      
+        <br/>
+        <div>[<a href="https://github.com/Codcore/Amethyst/blob/36aa06b65ff5ccbdafb36380bc7d811367001cba/src/amethyst/http/request.cr#L27" target="_blank">View source</a>]</div>
+      
+    </div>
+    <hr/>
+  
+    <div class="entry-detail">
+      <div class="signature" id="protocol-instance-method">
+        
+        def <strong>protocol</strong>
+      </div>
+      
+      
+        <br/>
+        <div>[<a href="https://github.com/Codcore/Amethyst/blob/36aa06b65ff5ccbdafb36380bc7d811367001cba/src/amethyst/http/request.cr#L47" target="_blank">View source</a>]</div>
+      
+    </div>
+    <hr/>
+  
+    <div class="entry-detail">
+      <div class="signature" id="put%3F-instance-method">
+        
+        def <strong>put?</strong>
+      </div>
+      
+      
+        <br/>
+        <div>[<a href="https://github.com/Codcore/Amethyst/blob/36aa06b65ff5ccbdafb36380bc7d811367001cba/src/amethyst/http/request.cr#L27" target="_blank">View source</a>]</div>
+      
+    </div>
+    <hr/>
+  
+    <div class="entry-detail">
+      <div class="signature" id="query_parameters-instance-method">
+        
+        def <strong>query_parameters</strong>
+      </div>
+      
+      
+        <br/>
+        <div>[<a href="https://github.com/Codcore/Amethyst/blob/36aa06b65ff5ccbdafb36380bc7d811367001cba/src/amethyst/http/request.cr#L68" target="_blank">View source</a>]</div>
+      
+    </div>
+    <hr/>
+  
+    <div class="entry-detail">
+      <div class="signature" id="query_parameters%3D%28query_parameters%29-instance-method">
+        
+        def <strong>query_parameters=</strong>(query_parameters)
+      </div>
+      
+      
+    </div>
+    <hr/>
+  
+    <div class="entry-detail">
+      <div class="signature" id="query_string-instance-method">
+        
+        def <strong>query_string</strong>
+      </div>
+      
+        <div class="doc"><p>Returns path query string. If it doesn't exists, returns "nil"</p></div>
+      
+      
+        <br/>
+        <div>[<a href="https://github.com/Codcore/Amethyst/blob/36aa06b65ff5ccbdafb36380bc7d811367001cba/src/amethyst/http/request.cr#L39" target="_blank">View source</a>]</div>
+      
+    </div>
+    <hr/>
+  
+    <div class="entry-detail">
+      <div class="signature" id="request_parameters-instance-method">
+        
+        def <strong>request_parameters</strong>
+      </div>
+      
+      
+        <br/>
+        <div>[<a href="https://github.com/Codcore/Amethyst/blob/36aa06b65ff5ccbdafb36380bc7d811367001cba/src/amethyst/http/request.cr#L81" target="_blank">View source</a>]</div>
+      
+    </div>
+    <hr/>
+  
+    <div class="entry-detail">
+      <div class="signature" id="request_parameters%3D%28request_parameters%29-instance-method">
+        
+        def <strong>request_parameters=</strong>(request_parameters)
       </div>
       
       
@@ -220,7 +539,7 @@
       
       
         <br/>
-        <div>[<a href="https://github.com/Codcore/Amethyst/blob/95b018dc2b200add7715f84cd1f670884a29f22b/src/amethyst/http/request.cr#L6" target="_blank">View source</a>]</div>
+        <div>[<a href="https://github.com/Codcore/Amethyst/blob/36aa06b65ff5ccbdafb36380bc7d811367001cba/src/amethyst/http/request.cr#L12" target="_blank">View source</a>]</div>
       
     </div>
     <hr/>

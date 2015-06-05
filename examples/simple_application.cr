@@ -8,6 +8,7 @@ require "../src/amethyst"
 # Controller class. The name of controller must be "NameController",
 # and it needs to be inherited from BaseController
 class IndexController < Base::Controller
+  actions :hello, :bye
 
 	# Controller action. It gets request of Http::Requst as an argument.
 	# For now, each controller should return Http::Response by itself.
@@ -23,10 +24,6 @@ class IndexController < Base::Controller
 	# Method "actions" must be provided by each controller of your application.
 	# It lets app to know which methods of your contoller are actions.
 	# The synopsys is add :action_name
-	def actions
-		add :hello
-		add :bye
-	end
 end
 
 # Middleware are implemented as classes. Middleware class inherits from

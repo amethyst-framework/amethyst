@@ -3,6 +3,10 @@
 <head>
   <meta charset="utf-8" />
   <link href="../../css/style.css" rel="stylesheet" type="text/css" />
+  <script type="text/javascript">
+    var pathToIndex = "../../index.html"
+  </script>
+  <script type="text/javascript" src="../../js/type.js"></script>
 </head>
 <body>
 
@@ -32,7 +36,7 @@
   <h2>Defined in:</h2>
   
     
-      <a href="https://github.com/Codcore/Amethyst/blob/95b018dc2b200add7715f84cd1f670884a29f22b/src/amethyst/base/app.cr">amethyst/base/app.cr</a>
+      <a href="https://github.com/Codcore/Amethyst/blob/36aa06b65ff5ccbdafb36380bc7d811367001cba/src/amethyst/base/app.cr">amethyst/base/app.cr</a>
     
     <br/>
   
@@ -45,7 +49,27 @@
   <ul>
     
       <li class="entry-summary">
+        <a href="#logger-class-method" class="signature"><strong>.logger</strong></a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#routes-class-method" class="signature"><strong>.routes</strong></a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#set_default_middleware-class-method" class="signature"><strong>.set_default_middleware</strong></a>
+        
+      </li>
+    
+      <li class="entry-summary">
         <a href="#settings-class-method" class="signature"><strong>.settings</strong></a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#use%28middleware%20%3A%20Middleware%3A%3ABase.class%29-class-method" class="signature"><strong>.use</strong>(middleware : Middleware::Base.class)</a>
         
       </li>
     
@@ -91,11 +115,6 @@
         
       </li>
     
-      <li class="entry-summary">
-        <a href="#use%28middleware%20%3A%20Base%3A%3AMiddleware%29-instance-method" class="signature"><strong>#use</strong>(middleware : Base::Middleware)</a>
-        
-      </li>
-    
   </ul>
 
 
@@ -106,6 +125,45 @@
   <h2>Class Method Detail</h2>
   
     <div class="entry-detail">
+      <div class="signature" id="logger-class-method">
+        
+        def self.<strong>logger</strong>
+      </div>
+      
+      
+        <br/>
+        <div>[<a href="https://github.com/Codcore/Amethyst/blob/36aa06b65ff5ccbdafb36380bc7d811367001cba/src/amethyst/base/app.cr#L21" target="_blank">View source</a>]</div>
+      
+    </div>
+    <hr/>
+  
+    <div class="entry-detail">
+      <div class="signature" id="routes-class-method">
+        
+        def self.<strong>routes</strong>
+      </div>
+      
+      
+        <br/>
+        <div>[<a href="https://github.com/Codcore/Amethyst/blob/36aa06b65ff5ccbdafb36380bc7d811367001cba/src/amethyst/base/app.cr#L17" target="_blank">View source</a>]</div>
+      
+    </div>
+    <hr/>
+  
+    <div class="entry-detail">
+      <div class="signature" id="set_default_middleware-class-method">
+        
+        def self.<strong>set_default_middleware</strong>
+      </div>
+      
+      
+        <br/>
+        <div>[<a href="https://github.com/Codcore/Amethyst/blob/36aa06b65ff5ccbdafb36380bc7d811367001cba/src/amethyst/base/app.cr#L35" target="_blank">View source</a>]</div>
+      
+    </div>
+    <hr/>
+  
+    <div class="entry-detail">
       <div class="signature" id="settings-class-method">
         
         def self.<strong>settings</strong>
@@ -113,7 +171,20 @@
       
       
         <br/>
-        <div>[<a href="https://github.com/Codcore/Amethyst/blob/95b018dc2b200add7715f84cd1f670884a29f22b/src/amethyst/base/app.cr#L14" target="_blank">View source</a>]</div>
+        <div>[<a href="https://github.com/Codcore/Amethyst/blob/36aa06b65ff5ccbdafb36380bc7d811367001cba/src/amethyst/base/app.cr#L13" target="_blank">View source</a>]</div>
+      
+    </div>
+    <hr/>
+  
+    <div class="entry-detail">
+      <div class="signature" id="use%28middleware%20%3A%20Middleware%3A%3ABase.class%29-class-method">
+        
+        def self.<strong>use</strong>(middleware : Middleware::Base.class)
+      </div>
+      
+      
+        <br/>
+        <div>[<a href="https://github.com/Codcore/Amethyst/blob/36aa06b65ff5ccbdafb36380bc7d811367001cba/src/amethyst/base/app.cr#L25" target="_blank">View source</a>]</div>
       
     </div>
     <hr/>
@@ -126,7 +197,7 @@
       
       
         <br/>
-        <div>[<a href="https://github.com/Codcore/Amethyst/blob/95b018dc2b200add7715f84cd1f670884a29f22b/src/amethyst/base/app.cr#L6" target="_blank">View source</a>]</div>
+        <div>[<a href="https://github.com/Codcore/Amethyst/blob/36aa06b65ff5ccbdafb36380bc7d811367001cba/src/amethyst/base/app.cr#L6" target="_blank">View source</a>]</div>
       
     </div>
     <hr/>
@@ -184,7 +255,7 @@
       
       
         <br/>
-        <div>[<a href="https://github.com/Codcore/Amethyst/blob/95b018dc2b200add7715f84cd1f670884a29f22b/src/amethyst/base/app.cr#L18" target="_blank">View source</a>]</div>
+        <div>[<a href="https://github.com/Codcore/Amethyst/blob/36aa06b65ff5ccbdafb36380bc7d811367001cba/src/amethyst/base/app.cr#L4" target="_blank">View source</a>]</div>
       
     </div>
     <hr/>
@@ -197,20 +268,7 @@
       
       
         <br/>
-        <div>[<a href="https://github.com/Codcore/Amethyst/blob/95b018dc2b200add7715f84cd1f670884a29f22b/src/amethyst/base/app.cr#L26" target="_blank">View source</a>]</div>
-      
-    </div>
-    <hr/>
-  
-    <div class="entry-detail">
-      <div class="signature" id="use%28middleware%20%3A%20Base%3A%3AMiddleware%29-instance-method">
-        
-        def <strong>use</strong>(middleware : <a href="../../Amethyst/Base/Middleware.html">Base::Middleware</a>)
-      </div>
-      
-      
-        <br/>
-        <div>[<a href="https://github.com/Codcore/Amethyst/blob/95b018dc2b200add7715f84cd1f670884a29f22b/src/amethyst/base/app.cr#L22" target="_blank">View source</a>]</div>
+        <div>[<a href="https://github.com/Codcore/Amethyst/blob/36aa06b65ff5ccbdafb36380bc7d811367001cba/src/amethyst/base/app.cr#L29" target="_blank">View source</a>]</div>
       
     </div>
     <hr/>

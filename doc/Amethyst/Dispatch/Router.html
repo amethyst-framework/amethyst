@@ -3,6 +3,10 @@
 <head>
   <meta charset="utf-8" />
   <link href="../../css/style.css" rel="stylesheet" type="text/css" />
+  <script type="text/javascript">
+    var pathToIndex = "../../index.html"
+  </script>
+  <script type="text/javascript" src="../../js/type.js"></script>
 </head>
 <body>
 
@@ -20,6 +24,13 @@
 
 
 
+  <h2>Included Modules</h2>
+  
+    <a href="../../Amethyst/Sugar.html">Amethyst::Sugar</a>,
+  
+    <a href="../../Amethyst/Support/RoutesPainter.html">Amethyst::Support::RoutesPainter</a>
+  
+
 
 
 
@@ -32,17 +43,34 @@
   <h2>Defined in:</h2>
   
     
-      <a href="https://github.com/Codcore/Amethyst/blob/95b018dc2b200add7715f84cd1f670884a29f22b/src/amethyst/dispatch/router.cr">amethyst/dispatch/router.cr</a>
+      <a href="https://github.com/Codcore/Amethyst/blob/36aa06b65ff5ccbdafb36380bc7d811367001cba/src/amethyst/dispatch/router.cr">amethyst/dispatch/router.cr</a>
     
     <br/>
   
 
 
 
+  
+    <h2>Constant Summary</h2>
+  
+  <ul>
+    
+      <li class="entry-const">
+        <strong>INSTANCE</strong> = <code><span class="k">new</span></code>
+        
+      </li>
+    
+  </ul>
+
 
 
   <h2>Class Method Summary</h2>
   <ul>
+    
+      <li class="entry-summary">
+        <a href="#instance-class-method" class="signature"><strong>.instance</strong></a>
+        
+      </li>
     
       <li class="entry-summary">
         <a href="#new-class-method" class="signature"><strong>.new</strong></a>
@@ -76,9 +104,14 @@
       </li>
     
       <li class="entry-summary">
-        <a href="#get%28pattern%2C%20controller_action%29-instance-method" class="signature"><strong>#get</strong>(pattern, controller_action)</a>
+        <a href="#exists%3F%28path%2C%20method%29-instance-method" class="signature"><strong>#exists?</strong>(path, method)</a>
         
-          <div class="summary"><p>Sets a route that should respond to GET HTTP method The synopsis of arguments receive is Rails-like: get "/products/:id", "products#show" where 'products' is a controller named ProductsController, and "show" is it's action</p></div>
+          <div class="summary"><p>Return true if path route exists, and sets @matched_route</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#matched_route-instance-method" class="signature"><strong>#matched_route</strong></a>
         
       </li>
     
@@ -116,6 +149,19 @@
   <h2>Class Method Detail</h2>
   
     <div class="entry-detail">
+      <div class="signature" id="instance-class-method">
+        
+        def self.<strong>instance</strong>
+      </div>
+      
+      
+        <br/>
+        <div>[<a href="https://github.com/Codcore/Amethyst/blob/36aa06b65ff5ccbdafb36380bc7d811367001cba/src/amethyst/dispatch/router.cr#L8" target="_blank">View source</a>]</div>
+      
+    </div>
+    <hr/>
+  
+    <div class="entry-detail">
       <div class="signature" id="new-class-method">
         
         def self.<strong>new</strong>
@@ -123,7 +169,7 @@
       
       
         <br/>
-        <div>[<a href="https://github.com/Codcore/Amethyst/blob/95b018dc2b200add7715f84cd1f670884a29f22b/src/amethyst/dispatch/router.cr#L11" target="_blank">View source</a>]</div>
+        <div>[<a href="https://github.com/Codcore/Amethyst/blob/36aa06b65ff5ccbdafb36380bc7d811367001cba/src/amethyst/dispatch/router.cr#L16" target="_blank">View source</a>]</div>
       
     </div>
     <hr/>
@@ -143,7 +189,7 @@
       
       
         <br/>
-        <div>[<a href="https://github.com/Codcore/Amethyst/blob/95b018dc2b200add7715f84cd1f670884a29f22b/src/amethyst/dispatch/router.cr#L39" target="_blank">View source</a>]</div>
+        <div>[<a href="https://github.com/Codcore/Amethyst/blob/36aa06b65ff5ccbdafb36380bc7d811367001cba/src/amethyst/dispatch/router.cr#L48" target="_blank">View source</a>]</div>
       
     </div>
     <hr/>
@@ -156,7 +202,7 @@
       
       
         <br/>
-        <div>[<a href="https://github.com/Codcore/Amethyst/blob/95b018dc2b200add7715f84cd1f670884a29f22b/src/amethyst/dispatch/router.cr#L3" target="_blank">View source</a>]</div>
+        <div>[<a href="https://github.com/Codcore/Amethyst/blob/36aa06b65ff5ccbdafb36380bc7d811367001cba/src/amethyst/dispatch/router.cr#L3" target="_blank">View source</a>]</div>
       
     </div>
     <hr/>
@@ -171,25 +217,35 @@
       
       
         <br/>
-        <div>[<a href="https://github.com/Codcore/Amethyst/blob/95b018dc2b200add7715f84cd1f670884a29f22b/src/amethyst/dispatch/router.cr#L23" target="_blank">View source</a>]</div>
+        <div>[<a href="https://github.com/Codcore/Amethyst/blob/36aa06b65ff5ccbdafb36380bc7d811367001cba/src/amethyst/dispatch/router.cr#L29" target="_blank">View source</a>]</div>
       
     </div>
     <hr/>
   
     <div class="entry-detail">
-      <div class="signature" id="get%28pattern%2C%20controller_action%29-instance-method">
+      <div class="signature" id="exists%3F%28path%2C%20method%29-instance-method">
         
-        def <strong>get</strong>(pattern, controller_action)
+        def <strong>exists?</strong>(path, method)
       </div>
       
-        <div class="doc"><p>Sets a route that should respond to GET HTTP method
-The synopsis of arguments receive is Rails-like:
-get "/products/:id", "products#show"
-where 'products' is a controller named ProductsController, and "show" is it's action</p></div>
+        <div class="doc"><p>Return true if path route exists, and sets @matched_route</p></div>
       
       
         <br/>
-        <div>[<a href="https://github.com/Codcore/Amethyst/blob/95b018dc2b200add7715f84cd1f670884a29f22b/src/amethyst/dispatch/router.cr#L31" target="_blank">View source</a>]</div>
+        <div>[<a href="https://github.com/Codcore/Amethyst/blob/36aa06b65ff5ccbdafb36380bc7d811367001cba/src/amethyst/dispatch/router.cr#L34" target="_blank">View source</a>]</div>
+      
+    </div>
+    <hr/>
+  
+    <div class="entry-detail">
+      <div class="signature" id="matched_route-instance-method">
+        
+        def <strong>matched_route</strong>
+      </div>
+      
+      
+        <br/>
+        <div>[<a href="https://github.com/Codcore/Amethyst/blob/36aa06b65ff5ccbdafb36380bc7d811367001cba/src/amethyst/dispatch/router.cr#L4" target="_blank">View source</a>]</div>
       
     </div>
     <hr/>
@@ -204,7 +260,7 @@ where 'products' is a controller named ProductsController, and "show" is it's ac
       
       
         <br/>
-        <div>[<a href="https://github.com/Codcore/Amethyst/blob/95b018dc2b200add7715f84cd1f670884a29f22b/src/amethyst/dispatch/router.cr#L18" target="_blank">View source</a>]</div>
+        <div>[<a href="https://github.com/Codcore/Amethyst/blob/36aa06b65ff5ccbdafb36380bc7d811367001cba/src/amethyst/dispatch/router.cr#L24" target="_blank">View source</a>]</div>
       
     </div>
     <hr/>
@@ -217,7 +273,7 @@ where 'products' is a controller named ProductsController, and "show" is it's ac
       
       
         <br/>
-        <div>[<a href="https://github.com/Codcore/Amethyst/blob/95b018dc2b200add7715f84cd1f670884a29f22b/src/amethyst/dispatch/router.cr#L2" target="_blank">View source</a>]</div>
+        <div>[<a href="https://github.com/Codcore/Amethyst/blob/36aa06b65ff5ccbdafb36380bc7d811367001cba/src/amethyst/dispatch/router.cr#L2" target="_blank">View source</a>]</div>
       
     </div>
     <hr/>
@@ -238,7 +294,7 @@ where 'products' is a controller named ProductsController, and "show" is it's ac
       
       
         <br/>
-        <div>[<a href="https://github.com/Codcore/Amethyst/blob/95b018dc2b200add7715f84cd1f670884a29f22b/src/amethyst/dispatch/router.cr#L7" target="_blank">View source</a>]</div>
+        <div>[<a href="https://github.com/Codcore/Amethyst/blob/36aa06b65ff5ccbdafb36380bc7d811367001cba/src/amethyst/dispatch/router.cr#L12" target="_blank">View source</a>]</div>
       
     </div>
     <hr/>

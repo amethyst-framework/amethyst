@@ -3,6 +3,10 @@
 <head>
   <meta charset="utf-8" />
   <link href="../../css/style.css" rel="stylesheet" type="text/css" />
+  <script type="text/javascript">
+    var pathToIndex = "../../index.html"
+  </script>
+  <script type="text/javascript" src="../../js/type.js"></script>
 </head>
 <body>
 
@@ -32,7 +36,7 @@
   <h2>Defined in:</h2>
   
     
-      <a href="https://github.com/Codcore/Amethyst/blob/95b018dc2b200add7715f84cd1f670884a29f22b/src/amethyst/dispatch/route.cr">amethyst/dispatch/route.cr</a>
+      <a href="https://github.com/Codcore/Amethyst/blob/36aa06b65ff5ccbdafb36380bc7d811367001cba/src/amethyst/dispatch/route.cr">amethyst/dispatch/route.cr</a>
     
     <br/>
   
@@ -62,6 +66,11 @@
       </li>
     
       <li class="entry-summary">
+        <a href="#add_respond_method%28method%20%3A%20String%29-instance-method" class="signature"><strong>#add_respond_method</strong>(method : String)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
         <a href="#controller-instance-method" class="signature"><strong>#controller</strong></a>
         
       </li>
@@ -72,7 +81,7 @@
       </li>
     
       <li class="entry-summary">
-        <a href="#matches%3F%28path%29-instance-method" class="signature"><strong>#matches?</strong>(path)</a>
+        <a href="#matches%3F%28path%2C%20method%29-instance-method" class="signature"><strong>#matches?</strong>(path, method)</a>
         
           <div class="summary"><p>Partially, stolen from Moonshine Cheks whether path matches a route pattern</p></div>
         
@@ -112,7 +121,7 @@
       
       
         <br/>
-        <div>[<a href="https://github.com/Codcore/Amethyst/blob/95b018dc2b200add7715f84cd1f670884a29f22b/src/amethyst/dispatch/route.cr#L8" target="_blank">View source</a>]</div>
+        <div>[<a href="https://github.com/Codcore/Amethyst/blob/36aa06b65ff5ccbdafb36380bc7d811367001cba/src/amethyst/dispatch/route.cr#L8" target="_blank">View source</a>]</div>
       
     </div>
     <hr/>
@@ -130,7 +139,20 @@
       
       
         <br/>
-        <div>[<a href="https://github.com/Codcore/Amethyst/blob/95b018dc2b200add7715f84cd1f670884a29f22b/src/amethyst/dispatch/route.cr#L4" target="_blank">View source</a>]</div>
+        <div>[<a href="https://github.com/Codcore/Amethyst/blob/36aa06b65ff5ccbdafb36380bc7d811367001cba/src/amethyst/dispatch/route.cr#L4" target="_blank">View source</a>]</div>
+      
+    </div>
+    <hr/>
+  
+    <div class="entry-detail">
+      <div class="signature" id="add_respond_method%28method%20%3A%20String%29-instance-method">
+        
+        def <strong>add_respond_method</strong>(method : String)
+      </div>
+      
+      
+        <br/>
+        <div>[<a href="https://github.com/Codcore/Amethyst/blob/36aa06b65ff5ccbdafb36380bc7d811367001cba/src/amethyst/dispatch/route.cr#L14" target="_blank">View source</a>]</div>
       
     </div>
     <hr/>
@@ -143,7 +165,7 @@
       
       
         <br/>
-        <div>[<a href="https://github.com/Codcore/Amethyst/blob/95b018dc2b200add7715f84cd1f670884a29f22b/src/amethyst/dispatch/route.cr#L3" target="_blank">View source</a>]</div>
+        <div>[<a href="https://github.com/Codcore/Amethyst/blob/36aa06b65ff5ccbdafb36380bc7d811367001cba/src/amethyst/dispatch/route.cr#L3" target="_blank">View source</a>]</div>
       
     </div>
     <hr/>
@@ -156,15 +178,15 @@
       
       
         <br/>
-        <div>[<a href="https://github.com/Codcore/Amethyst/blob/95b018dc2b200add7715f84cd1f670884a29f22b/src/amethyst/dispatch/route.cr#L5" target="_blank">View source</a>]</div>
+        <div>[<a href="https://github.com/Codcore/Amethyst/blob/36aa06b65ff5ccbdafb36380bc7d811367001cba/src/amethyst/dispatch/route.cr#L5" target="_blank">View source</a>]</div>
       
     </div>
     <hr/>
   
     <div class="entry-detail">
-      <div class="signature" id="matches%3F%28path%29-instance-method">
+      <div class="signature" id="matches%3F%28path%2C%20method%29-instance-method">
         
-        def <strong>matches?</strong>(path)
+        def <strong>matches?</strong>(path, method)
       </div>
       
         <div class="doc"><p>Partially, stolen from Moonshine
@@ -172,7 +194,7 @@ Cheks whether path matches a route pattern</p></div>
       
       
         <br/>
-        <div>[<a href="https://github.com/Codcore/Amethyst/blob/95b018dc2b200add7715f84cd1f670884a29f22b/src/amethyst/dispatch/route.cr#L15" target="_blank">View source</a>]</div>
+        <div>[<a href="https://github.com/Codcore/Amethyst/blob/36aa06b65ff5ccbdafb36380bc7d811367001cba/src/amethyst/dispatch/route.cr#L21" target="_blank">View source</a>]</div>
       
     </div>
     <hr/>
@@ -185,7 +207,7 @@ Cheks whether path matches a route pattern</p></div>
       
       
         <br/>
-        <div>[<a href="https://github.com/Codcore/Amethyst/blob/95b018dc2b200add7715f84cd1f670884a29f22b/src/amethyst/dispatch/route.cr#L6" target="_blank">View source</a>]</div>
+        <div>[<a href="https://github.com/Codcore/Amethyst/blob/36aa06b65ff5ccbdafb36380bc7d811367001cba/src/amethyst/dispatch/route.cr#L6" target="_blank">View source</a>]</div>
       
     </div>
     <hr/>
@@ -200,7 +222,7 @@ Cheks whether path matches a route pattern</p></div>
       
       
         <br/>
-        <div>[<a href="https://github.com/Codcore/Amethyst/blob/95b018dc2b200add7715f84cd1f670884a29f22b/src/amethyst/dispatch/route.cr#L23" target="_blank">View source</a>]</div>
+        <div>[<a href="https://github.com/Codcore/Amethyst/blob/36aa06b65ff5ccbdafb36380bc7d811367001cba/src/amethyst/dispatch/route.cr#L30" target="_blank">View source</a>]</div>
       
     </div>
     <hr/>
@@ -213,7 +235,7 @@ Cheks whether path matches a route pattern</p></div>
       
       
         <br/>
-        <div>[<a href="https://github.com/Codcore/Amethyst/blob/95b018dc2b200add7715f84cd1f670884a29f22b/src/amethyst/dispatch/route.cr#L2" target="_blank">View source</a>]</div>
+        <div>[<a href="https://github.com/Codcore/Amethyst/blob/36aa06b65ff5ccbdafb36380bc7d811367001cba/src/amethyst/dispatch/route.cr#L2" target="_blank">View source</a>]</div>
       
     </div>
     <hr/>
