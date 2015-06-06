@@ -85,7 +85,7 @@ end
 
 #Routing
 
-Amethyst has Rails-like approach to describe routes. For now, only ```get()``` supported. 
+Amethyst has Rails-like approach to describe routes. For now, only ```get(), post(), put(), delete(), all()``` supported. 
 It consists of path and string ```controller_name#action_name```
 
 ```crystal 
