@@ -21,6 +21,7 @@ class Request
     @query_params = {} of String => String
     @path_params = {} of String => String
     @request_params = {} of String => String
+    @cookies = {} of String => String
   end
 
   # Allows you to know the request method (get? post?, etc.)

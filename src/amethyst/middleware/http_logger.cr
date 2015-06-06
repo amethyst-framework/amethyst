@@ -16,8 +16,10 @@ class HttpLogger < Middleware::Base
   end
 
   def log_cookies(headers)
-    logger.display_subheading "Cookies", level = 3 
-    logger.display_string headers["Cookie"], level = 3
+    logger.display_subheading "Cookies", level = 3
+    if headers["Cookie"]
+      logger.display_string headers["Cookie"], level = 3
+    end
   end
 
   def log_response(response)
@@ -29,6 +31,7 @@ class HttpLogger < Middleware::Base
     # system("clear")
     logger.display_name
     log_request request
+    log_cookies(request.headers)
     response = @app.call(request)
     logger.display_name
     log_response response
