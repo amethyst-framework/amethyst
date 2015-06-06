@@ -9,8 +9,10 @@ class Request
   property :path_parameters
   property :request_parameters
   property :query_parameters
+  property :cookies
   getter   :version
   setter   :path
+
 
   def initialize(base_request : HTTP::Request)
     @method  = base_request.method

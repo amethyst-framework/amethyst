@@ -35,6 +35,7 @@ class App
   end
 
   def self.set_default_middleware
+    use Middleware::Cookies
     if Base::App.settings.environment == "development"
        use Middleware::ShowExceptions
        use Middleware::HttpLogger
