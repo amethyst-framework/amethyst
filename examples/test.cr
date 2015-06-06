@@ -23,5 +23,3 @@ end
 app = App.new
 
 app.serve
-      
-      

@@ -4,6 +4,7 @@ require "./amethyst/http"
 require "./amethyst/middleware"
 require "./amethyst/sugar"
 require "./amethyst/support"
+require "./amethyst/version"
 
 # All modules classes and inner modules loads to global namespace
 include Amethyst

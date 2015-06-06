@@ -6,10 +6,11 @@ class App
 
   def initialize(app_path= __FILE__, @port=8080)
     @name          = File.basename(app_path).gsub(/.\w+\Z/, "")
-    Base::App.settings.app_dir  = File.dirname(app_path)
-    @run_string    = "[Amethyst #{Time.now}] serving application \"#{@name}\" at http://127.0.0.1:#{port}" #TODO move to Logger class
-    @http_handler  = Base::Handler.new
-    Base::App.set_default_middleware
+    self.class.settings.app_dir  = File.dirname(app_path)
+    @run_string    = "[Amethyst #{VERSION}] serving application \"#{@name}\" at http://127.0.0.1:#{port}" #TODO move to Logger class
+    self.class.set_default_middleware
+    @app = Middleware::MiddlewareStack::INSTANCE.build_middleware
+    @http_handler  = Base::Handler.new(@app)
   end
 
   def self.settings
@@ -22,6 +23,10 @@ class App
 
   def self.logger
     Base::Logger::INSTANCE
+  end
+
+  def self.middlewares
+    Middleware::MiddlewareStack::INSTANCE
   end
 
   def self.use(middleware : Middleware::Base.class)
@@ -44,6 +49,3 @@ class App
     use Middleware::Static
   end
 end
-
-#TODO: Implement enviroments(production, development)
-#TODO: Implement configuring app.configure(&block)
