@@ -17,6 +17,8 @@ class IndexController < Base::Controller
           <a href='/bye'>Visit <b>bye</b> action</a>"
 	end
 
+  def text "This is a text. You can also use 'json'"
+
 	def bye
     html "<p>Bye!We hope you will come back</p>"
 	end
@@ -39,30 +41,32 @@ class TimeLogger < Middleware::Base
     t_res    = Time.now
     elapsed  = (t_res - t_req).to_f*1000
     string   = "%.4f ms" % elapsed
-    logger.log_paragraph self
-    logger.log_hash ({ "Time elapsed" => string })
+    response.body += "<hr>"+string
     response
   end
 end
 
-# Rails-like approach to describe routes. For now, only get() supported.
-# It consists of path and string "controller_name#action_name"
-# You can specify params to be captured:
-# get "/users/:id", "users#show" (not works yet)
-Base::App.routes.draw do
-  all "/all", "index#hello" 
-  get "/",    "index#hello"
-  get "/bye", "index#bye"
+# You can describe your apps with a classes
+class TestApp < Base::App
+  # Rails-like approach to describe routes.It consists of path
+  # and string "controller_name#action_name"
+  # You can specify params to be captured:
+  # get "/users/:id", "users#show" (not works yet)
+  routes.draw do
+    all "/all", "index#hello" 
+    get "/",    "index#hello"
+    get "/bye", "index#bye"
+
+    # After you defined a controller, you have to register it in app with
+    # app.routes.register(NameController) where NameController is the class name
+    # of your controller.
+    register IndexController
+  end
+
+  # Middleware registering
+  use TimeLogger
 end
 
-# Middleware registering
-Base::App.use TimeLogger
-
-# After you defined a controller, you have to register it in app with
-# app.routes.register(NameController) where NameController is the class name
-# of your controller.
-Base::App.routes.register(IndexController)
-
 # App creating
-app = Base::App.new
+app = TestApp.new
 app.serve

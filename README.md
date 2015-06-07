@@ -1,11 +1,12 @@
 # Amethyst [![Build Status](https://travis-ci.org/Codcore/Amethyst.svg)](https://travis-ci.org/Codcore/Amethyst)
 
-Amethyst is a web framework written in [Crystal](https://github.com/manastech/crystal) language. The goals of Amethyst are to be fast and user-friendly as Rails. Note, Amethyst is at early stage of developing, so a lot of features are missing yet. However, it works :). Why I called my web framework "Amethyst" ? Because Crystal  has a light purple color at GitHub like [amethyst gemstone](http://en.wikipedia.org/wiki/Amethyst).
+Amethyst is a web framework written in [Crystal](https://github.com/manastech/crystal) language. The goals of Amethyst are to be fast as Node.js and comfortable as Rails. Note, Amethyst is at early stage of developing, so a lot of features are missing yet. However, it works :). Why I called my web framework "Amethyst" ? Because Crystal  has a light purple color at GitHub like [amethyst gemstone](http://en.wikipedia.org/wiki/Amethyst).
 
 For now, next things are implemented:
 - class-based controllers with actions
 - middleware support
 - simple routing
+- and some new features in new release that coming soon!
 
 [Here are benchmarking results](https://gist.github.com/Codcore/0c7a331b69eed542fb78)
 
@@ -49,15 +50,19 @@ class IndexController < Base::Controller
 
   def hello
     html "<p>Hello, you're asked a #{request.method} #{request.path}</p> \n
-          <a href='/bye'>Visit <b>bye</b> action</a>"
+          <a href='/bye'>Visit <b>bye</b> action</a>
+          <img src="/images/amethyst.jpg">
   end
 
   def bye
-    html "<p>Bye!We hope you will come back</p>"
+    text "Bye!We hope you will come back"
   end
 end
 ```
-Controllers describe actions as a methods. Actions have direct access to request and response objects, and other helpers, such as a ```html``` .Code ```actions :hello, :bye``` lets app to know which methods of your contoller are actions, and which aren't.
+Controllers describe actions as a methods. Actions have direct access to request and response objects, and other helpers, such as a ```html``` .Code ```actions :hello, :bye``` lets app to know which methods of your contoller are actions, and which aren't. Inside a controller, you have acces to ```request``` and ```response``` objects. Request has ```query_parameters```, ```request_parameters``` and ```path_parameters``` hashes. First for GET params, second for POST params and third for parts of path marked with a colon. (For example, path "user/1/" matches route "/users/:id", and "id" will be "1").
+
+#Static files
+For now,static files served automatically, just specify the path of your static file relative to the dir your app is running from.
 
 # Middleware
 Middleware are implemented as classes. Middleware class inherits from ```Base::Middleware``` (or, just type ```Middleware``` if you prefer ```require amethyst/all```), and should have the ```call``` method.
@@ -72,61 +77,44 @@ class TimeLogger < Middleware::Base
 
   # This one will be called when app gets request. It accepts Http::Request
   def call(request)
-    logger = Base::App.logger
-    t_req = Time.now
+    logger   = Base::App.logger
+    t_req    = Time.now
     response = @app.call(request)
-    t_res  = Time.now
-    elapsed = (t_res - t_req).to_f*1000
-    string  = "%.4f ms" % elapsed
-    logger.display_name
-    logger.display_as_list ({ "Time elapsed" => string })
+    t_res    = Time.now
+    elapsed  = (t_res - t_req).to_f*1000
+    string   = "%.4f ms" % elapsed
+    response.body += "<hr>"+string
     response
   end
 end
 ```
 
-#Routing
+#Application
+After you wrote your controllers, and maybe, middleware you must to setup your app. It is a good way to describe your app with a class, and then run its instance with ```serve```:
 
-Amethyst has Rails-like approach to describe routes. For now, only ```get(), post(), put(), delete(), all()``` supported. 
-It consists of path and string ```controller_name#action_name```
+```crystal
+class TestApp < Base::App
+  # Rails-like approach to describe routes.It consists of path
+  # and string "controller_name#action_name"
+  # You can specify params to be captured:
+  # get "/users/:id", "users#show" (not works yet)
+  routes.draw do
+    all "/all/:id", "index#hello" # "id" will be available at request.ath_parameters"
+    get "/",    "index#hello"
+    get "/bye", "index#bye"
 
-```crystal 
-Base::App.routes.draw do |routes|
-  # maps GET "/" to "hello" action of IndexController
-  get "/",    "index#hello"
-  # maps GET "/bye" to "bye" action of IndexController
-  get "/bye", "index#bye"
-  post "/post", "index#bye" # you can use GET, POST, PUT, DELETE
-  all "/bye-all", "index#bye" # resoonds to all HTTP methods
+    # After you defined a controller, you have to register it in app with
+    # app.routes.register(NameController) where NameController is the class name
+    # of your controller.
+    register IndexController
+  end
+
+  # Middleware registering
+  use TimeLogger
 end
-```
 
-Note, ```/bye``` and ```/bye/``` work slightly different. First matches ```/bye, /bye/, /bye_something```, second is "strict",
-and matches only ```/bye``` and ```/bye/```. Both not matches ```/bye/something```.
-
-You can specify params to be captured:
-```crystal 
-get "/users/:id", "users#show" #(params doesn't work yet)
-```
-
-After you defined a controller, you have to register it in app with ```app.routes.register(NameController)``` where ```NameController```(CamelCase) is the classname of your controller:
-```crystal
-Base::App.routes.register(IndexController)
-```
-# Application creating
-
-```crystal
-# Middleware registering
-Base::App.use TimeMiddleware
-app = Base::App.new
-```
-You can set a port and app name (defaul port is ```8080```, default name is name of file application is in):
-```crystal
-app.port = 8080
-app.name = "example"
-```
-#Running application
-```crystal
+# App creating
+app = TestApp.new
 app.serve
 ```
 
