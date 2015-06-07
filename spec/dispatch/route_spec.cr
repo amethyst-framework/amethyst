@@ -26,6 +26,15 @@ describe Route do
     route_params.length.should eq 4
   end
 
+  it "respond to added http methods" do
+    route = Route.new("/", "IndexController", "hello")
+    route.add_respond_method("GET")
+    route.add_respond_method("PUT")
+    route.matches?("/", "GET").should eq true
+    route.matches?("/", "PUT").should eq true
+    route.matches?("/", "DELETE").should eq false
+  end
+
   it "matches a given path with stict route" do
     route_strict.matches?("/index", "GET").should eq true
     route_strict.matches?("/index", "PUT").should eq false
@@ -61,5 +70,19 @@ describe Route do
     expect_raises Exception, "Method 'SOME' not supported" do
       route.add_respond_method("SOME")
     end
+  end
+
+  it "responds to added http methods" do
+    route = Route.new("/", "IndexController", "hello")
+    route.add_respond_method("GET")
+    route.add_respond_method("PUT")
+    route.matches?("/", "GET").should eq true
+    route.matches?("/", "PUT").should eq true
+    route.matches?("/", "DELETE").should eq false
+  end
+
+  it "returns params hash of given path" do
+    route = Route.new("/users/:id", "UsersController", "id")
+    route.params("/users/45").should eq Hash{"id" => "45"}
   end
 end

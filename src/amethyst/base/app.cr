@@ -13,18 +13,22 @@ class App
     @http_handler  = Base::Handler.new(@app)
   end
 
+  # Shortcut for Config
   def self.settings
     Base::Config::INSTANCE
   end
 
+  # Shortcut for Router
   def self.routes
     Dispatch::Router::INSTANCE
   end
 
+  # Shortcut for Logger instance
   def self.logger
     Base::Logger::INSTANCE
   end
 
+  # Shortcut for MiddlewareStack instance
   def self.middlewares
     Middleware::MiddlewareStack::INSTANCE
   end
@@ -39,6 +43,7 @@ class App
     server.listen
   end
 
+  # Sets default middleware for app
   def self.set_default_middleware
     use Middleware::Cookies
     if Base::App.settings.environment == "development"

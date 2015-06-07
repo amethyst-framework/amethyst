@@ -25,11 +25,4 @@ describe IndexController do
     response.status_code.should eq 200
     response.body.should eq "Bye"
   end
-
-  it "should answer in html" do
-    controller.html "Okay"
-    controller.response.body.should eq "Okay"
-    controller.response.headers["Content-Type"].should eq "text/html"
-  end
-
 end

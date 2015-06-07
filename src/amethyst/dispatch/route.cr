@@ -11,13 +11,13 @@ class Route
     @methods = [] of String
   end
 
+  # Adds a HTTP method for route to respond to
   def add_respond_method(method : String)
     raise "Method '#{method}' not supported" unless Http::METHODS.includes?(method) 
     @methods << method
   end
 
-  # Partially, stolen from Moonshine
-  # Cheks whether path matches a route pattern
+  # Cheks whether path matches a route pattern and HTTP method
   def matches?(path, method)
     return false unless @methods.includes?(method) 
     path = path.gsub(/\/$/, "") unless path == "/"

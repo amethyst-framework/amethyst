@@ -4,9 +4,11 @@ abstract class Controller
   property :response
   property :body
 
+  include Support::ControllerHelpers
+
   # This hack creates procs from controller actions, and adds it to the @actions_hash
   macro actions(*actions)
-    def add_actions
+    private def add_actions
       {% for action in actions %}
         @actions_hash[{{action}}.to_s] = ->{{action.id}}
       {% end %}
@@ -23,16 +25,8 @@ abstract class Controller
   # Works like Ruby's send(:method) to invoke controller action:
   # NameController.call_action("show")
   def call_action(action)
-    #if $app.env == :development
-      #puts "Action #{action} invoked"
-    #end
     @actions_hash.fetch(action).call()
-    return @response
-  end
-
-  def html(body : String)
-    @response.body = body
-    @response.header("Content-Type", "text/html")
+    @response
   end
 end
 

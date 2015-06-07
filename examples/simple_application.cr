@@ -39,8 +39,8 @@ class TimeLogger < Middleware::Base
     t_res    = Time.now
     elapsed  = (t_res - t_req).to_f*1000
     string   = "%.4f ms" % elapsed
-    logger.display_name
-    logger.display_as_list ({ "Time elapsed" => string })
+    logger.log_paragraph self
+    logger.log_hash ({ "Time elapsed" => string })
     response
   end
 end

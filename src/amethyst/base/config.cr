@@ -2,9 +2,7 @@ class Config
   property :environment
   property :app_dir
 
-  # Config class is storage of :key => "value"
-  # You can get and set values by invoking config.key value
-  # All values will be transformed to strings through to_s
+  # Simple configuration class for App
   
   include Sugar
   singleton_INSTANCE

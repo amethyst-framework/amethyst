@@ -18,7 +18,6 @@ class Cookies < Middleware::Base
       response = @app.call(request)
     else
       request.cookies = parse_cookies(request.headers["Cookie"])
-      puts request.cookies
       response = @app.call(request)
     end
     response

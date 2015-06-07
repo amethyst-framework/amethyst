@@ -56,5 +56,3 @@ class Router
     return response
   end
 end
-
-# TODO: Fix call issues with instantiating controller

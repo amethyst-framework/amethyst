@@ -9,20 +9,19 @@ class Logger
   setter :name
 
   def initialize(@justify=120, @indent=3, @symbol='_')
-    @name=self
     @app = self
   end
 
-  def display_name
+  def log_paragraph(name)
     heading = "\n\n"
     heading += @symbol.to_s*4 
-    heading += "/ #{@name} \\"
+    heading += "/ #{name} \\"
     heading = heading.ljust(@justify+1, @symbol)
     heading += "\n"
     puts heading
   end
 
-  def display_heading(name : String, level=1, indent=@indent)
+  def log_heading(name : String, level=1, indent=@indent)
     indent     = level*indent
     justify    = @justify 
     heading = "\n"
@@ -33,7 +32,7 @@ class Logger
     print heading
   end
 
-  def display_as_list(hash_object, skip = [] of String, justify=15, skip_empty_values=true)
+  def log_hash(hash_object, skip = [] of String, justify=15, skip_empty_values=true)
     print "\n"
     hash_object.each do |name, value|
       value = false if value.to_s.empty?
@@ -49,7 +48,7 @@ class Logger
     end
   end
 
-  def display_array(array_obj : Array, skip = [] of String, justify=15)
+  def log_array(array_obj : Array, skip = [] of String, justify=15)
     array_obj.each do |item|
       item  = item.to_s
       next if skip.includes? item
@@ -60,7 +59,7 @@ class Logger
     end
   end
 
-  def display_string(string : String, level=1, indent=@indent)
+  def log_string(string : String, level=1, indent=@indent)
     indent     = level*indent
     justify    = @justify - indent
     print "\n"
@@ -68,16 +67,16 @@ class Logger
     print string
   end
 
-  def display_object(obj, heading)
-    display_heading heading
+  def log_object(obj, heading)
+    log_heading heading
     if obj.responds_to?(:log)
-      display_as_list obj.log
+      log_hash obj.log
     else
-      display_string "Object #{obj.to_s} has no :log method"
+      log_string "Object #{obj.to_s} has no :log method"
     end
   end
 
-  def display_subheading(name : String, level=1, indent=@indent)
+  def log_subheading(name : String, level=1, indent=@indent)
     indent     = level*indent
     justify    = @justify 
     subheading = "\n"
@@ -88,9 +87,9 @@ class Logger
     print subheading
   end
 
-  def display_end
+  def log_end
     print "\n"
-    (@justify).times {print @symbol}
+    (@justify-1).times {print @symbol}
     print "\n"
   end
 end
