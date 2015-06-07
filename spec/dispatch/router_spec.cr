@@ -20,7 +20,7 @@ describe Router do
     router.controllers["IndexController"].is_a?(Class).should eq true
   end
 
-  it "get method add right route to @routes" do
+  it "get method adds right route to @routes" do
     route = router.routes[0]
     route.controller.should eq "IndexController"
     route.action.should eq "hello"
@@ -30,5 +30,10 @@ describe Router do
   it "returns HTTP::Response" do
     request    = Http::Request.new(HTTP::Request.new("GET", "/index"))
     router.call(request).should be_a Http::Response
+  end
+
+  it "checks if path route exists" do
+    router.exists?("/index", "GET").should eq true
+    router.exists?("/index", "PUT").should eq false
   end
 end

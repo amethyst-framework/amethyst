@@ -28,4 +28,8 @@ class Response
       "version"  :  @version
     }
   end
+
+  def set_cookie(cookie : String)
+    headers["Set-Cookie"] = cookie
+  end
 end

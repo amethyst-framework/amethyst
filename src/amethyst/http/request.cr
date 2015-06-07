@@ -55,19 +55,7 @@ class Request
     URI.parse(@path).port
   end
 
-  # Returns request parameters sent as a part of query
-  def parse_parameters(params_string)
-    hash = {} of String => String
-    params = params_string.to_s.split("&")
-    params.each do |param|
-      if match = /^(?<key>[^=]*)(=(?<value>.*))?$/.match(param)
-        key, value = param.split("=").map { |s| CGI.unescape(s) }
-        hash[key] = value
-      end
-    end
-    hash
-  end
-
+  # returns "GET" parameters: '/index?user=Andrew&id=5'
   def query_parameters
     @query_params unless @query_params.empty?
     @query_params = parse_parameters query_string
@@ -88,7 +76,7 @@ class Request
     @request_params
   end
 
-  # Sets variables to log with HttpLogger
+  # Sets properties to log
   def log 
     {
       "http method"  => @method,
@@ -106,12 +94,24 @@ class Request
   end
 
   def content_type
-    begin
-      #if match = /^(?<content_type>^\w*\/\S*)/.match
-      headers["Content-type"].split(";")[0]
-    rescue MissingKey
-      ""
+    headers["Content-type"]? ? headers["Content-type"].split(";")[0] : ""
+  end
+
+  def content_type=(type)
+    headers["Content-type"] = type # TODO: Check mime-type, and make separate module/class for mime-types 
+  end
+
+  # Returns request parameters sent as a part of query
+  private def parse_parameters(params_string)
+    hash = {} of String => String
+    params = params_string.to_s.split("&")
+    params.each do |param|
+      if match = /^(?<key>[^=]*)(=(?<value>.*))?$/.match(param)
+        key, value = param.split("=").map { |s| CGI.unescape(s) }
+        hash[key] = value
+      end
     end
+    hash
   end
 end
 

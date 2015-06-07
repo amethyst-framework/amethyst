@@ -8,11 +8,9 @@ class TestController < Controller
   end
 
   def user
-    html "Here are users live :)"
+    text "Here are users live :)"
   end
-
 end
-
 
 App.settings.configure do |conf|
   conf.environment = "development"

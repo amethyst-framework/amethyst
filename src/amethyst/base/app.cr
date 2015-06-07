@@ -8,7 +8,7 @@ class App
     @name          = File.basename(app_path).gsub(/.\w+\Z/, "")
     self.class.settings.app_dir  = File.dirname(app_path)
     @run_string    = "[Amethyst #{VERSION}] serving application \"#{@name}\" at http://127.0.0.1:#{port}" #TODO move to Logger class
-    self.class.set_default_middleware
+    set_default_middleware
     @app = Middleware::MiddlewareStack::INSTANCE.build_middleware
     @http_handler  = Base::Handler.new(@app)
   end
@@ -44,13 +44,13 @@ class App
   end
 
   # Sets default middleware for app
-  def self.set_default_middleware
-    use Middleware::Cookies
-    if Base::App.settings.environment == "development"
-       use Middleware::ShowExceptions
-       use Middleware::HttpLogger
-       use Middleware::TimeLogger
+  private def set_default_middleware
+    self.class.use Middleware::Cookies
+    if self.class.settings.environment == "development"
+       self.class.use Middleware::ShowExceptions
+       self.class.use Middleware::HttpLogger
+       self.class.use Middleware::TimeLogger
     end
-    use Middleware::Static
+    self.class.use Middleware::Static
   end
 end
