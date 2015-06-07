@@ -7,6 +7,8 @@ For now, next things are implemented:
 - middleware support
 - simple routing
 
+[Here are benchmarking results](https://gist.github.com/Codcore/0c7a331b69eed542fb78)
+
 For details, see docs below.
 
 ## Installation
