@@ -51,7 +51,7 @@ class IndexController < Base::Controller
   def hello
     html "<p>Hello, you're asked a #{request.method} #{request.path}</p> \n
           <a href='/bye'>Visit <b>bye</b> action</a>
-          <img src="/images/amethyst.jpg">
+          <img src='/images/amethyst.jpg'>"
   end
 
   def bye
@@ -79,7 +79,7 @@ class TimeLogger < Middleware::Base
   def call(request)
     logger   = Base::App.logger
     t_req    = Time.now
-    response = @app.call(request)
+    response = @app.call(request) # sends request to next middleware
     t_res    = Time.now
     elapsed  = (t_res - t_req).to_f*1000
     string   = "%.4f ms" % elapsed
