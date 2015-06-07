@@ -10,7 +10,7 @@ class Router
   # This macro is a hack that allows to instansiate controllers through 
   # @controllers.fetch("ControllerName")
   macro register_controller(klass_name)
-    @controllers[{{klass_name}}.to_s] = {{klass_name.id}}
+    @controllers["{{klass_name.id}}"] = {{klass_name.id}}
   end
 
   def initialize()
