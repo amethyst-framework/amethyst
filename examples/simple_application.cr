@@ -17,8 +17,6 @@ class IndexController < Base::Controller
           <a href='/bye'>Visit <b>bye</b> action</a>"
 	end
 
-  def text "This is a text. You can also use 'json'"
-
 	def bye
     html "<p>Bye!We hope you will come back</p>"
 	end
@@ -35,7 +33,6 @@ class TimeLogger < Middleware::Base
 
   # This one will be called when app gets request. It accepts Http::Request
   def call(request)
-    logger   = Base::App.logger
     t_req    = Time.now
     response = @app.call(request)
     t_res    = Time.now
