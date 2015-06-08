@@ -1,16 +1,8 @@
 # Amethyst [![Build Status](https://travis-ci.org/Codcore/Amethyst.svg)](https://travis-ci.org/Codcore/Amethyst)
 
-Amethyst is a web framework written in [Crystal](https://github.com/manastech/crystal) language. The goals of Amethyst are to be fast as Node.js and comfortable as Rails. Note, Amethyst is at early stage of developing, so a lot of features are missing yet. However, it works :). Why I called my web framework "Amethyst" ? Because Crystal  has a light purple color at GitHub like [amethyst gemstone](http://en.wikipedia.org/wiki/Amethyst).
+Amethyst is a web framework written in [Crystal](https://github.com/manastech/crystal) language. The goals of Amethyst are to be fast as Node.js and comfortable as Rails. Note, Amethyst is at early stage of developing, so a lot of features are missing yet. However, it works :). Why I called my web framework "Amethyst"? Because Crystal  has a light purple color at GitHub like [amethyst gemstone](http://en.wikipedia.org/wiki/Amethyst).
 
-Latest version - [0.0.7]()
-For now, next things are implemented:
-- class-based controllers with method-based actions
-- middleware support
-- simple REST routing
-- path, GET and POST params inside actions
-- base cookies support
-- static files serving
-- tools for developers (console logging)
+Latest version - [0.0.7](https://github.com/Codcore/Amethyst/releases/tag/v0.0.7)
 
 For detailed information, see docs on our [wiki](https://github.com/Codcore/Amethyst/wiki) below:
 
@@ -23,6 +15,16 @@ For detailed information, see docs on our [wiki](https://github.com/Codcore/Amet
 * [Applications](https://github.com/Codcore/Amethyst/wiki/Applications)
 
 [Here are some benchmarking results](https://gist.github.com/Codcore/0c7a331b69eed542fb78)
+
+For now, next things are implemented:
+* class-based controllers with method-based actions
+* middleware support
+* simple REST routing
+* path, GET and POST params inside actions
+* base cookies support
+* static files serving
+* http logger and timer for developers
+* simple environments support
 
 ## Development
 
@@ -51,7 +53,6 @@ Feel free to fork project and make pull-requests. Stick to standart project stru
 
     examples/          # examples to play with
                        # don't forget to require "..src/amethyst" or "..src/all"
-
 
 
 ## Contributing
