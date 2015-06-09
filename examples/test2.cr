@@ -37,7 +37,7 @@ class MyApp < Base::App
     get  "/user/:id", "test#user"
     post "/post/", "test#index"
     all  "/", "test#index"
-    # register TestController
+    register TestController
   end
 
   use TimeLogger

@@ -20,13 +20,7 @@ class Static < Middleware::Base
 	end
 
 	private def mime_type(path)
-    case File.extname(path)
-    when ".jpg", "jpeg" then "image/jpeg"
-    when ".txt" then "text/plain"
-    when ".htm", ".html" then "text/html"
-    when ".css" then "text/css"
-    when ".js" then "application/javascript"
-    else "application/octet-stream"
-    end
-  end
+    mime_type = "text/plain"
+    mime_type = Mime.from_ext(File.extname(path).gsub(".", "")) as String
+   end
 end

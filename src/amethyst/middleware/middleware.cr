@@ -1,4 +1,5 @@
 # Dependencies
+require "mime"
 
 # Amethyst dependencies
 require "../base/"
