@@ -48,7 +48,7 @@ class TestApp < Base::App
   # Rails-like approach to describe routes.It consists of path
   # and string "controller_name#action_name"
   # You can specify params to be captured:
-  # get "/users/:id", "users#show" (not works yet)
+  # get "/users/:id", "users#show"
   routes.draw do
     all "/all", "index#hello" 
     get "/",    "index#hello"

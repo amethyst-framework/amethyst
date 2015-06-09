@@ -26,6 +26,32 @@ For now, next things are implemented:
 * http logger and timer for developers
 * simple environments support
 
+## Example
+Here is classic 'Hello World' in Amethyst
+```crystal
+require "amethyst"
+
+class WordController < Base::Controller
+  actions :hello
+
+  def hello
+    html "<h1>Hello, world!"
+  end
+end
+
+class HelloWorldApp < Base::App
+  routes.draw do
+    all "/",      "word#hello" 
+    get "/hello", "word#hello" 
+    register WordController
+  end
+end
+
+app = HelloWorldApp.new
+app.serve
+```
+
+
 ## Development
 
 Feel free to fork project and make pull-requests. Stick to standart project structure and name conventions:

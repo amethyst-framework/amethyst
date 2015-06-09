@@ -4,10 +4,10 @@ class App
   getter   :routes
   getter   :app_dir
 
-  def initialize(app_path= __FILE__, @port=8080)
+  def initialize(app_path= __FILE__)
+    @port = 8080
     @name          = File.basename(app_path).gsub(/.\w+\Z/, "")
     self.class.settings.app_dir  = File.dirname(app_path)
-    @run_string    = "[Amethyst #{VERSION}] serving application \"#{@name}\" at http://127.0.0.1:#{port}" #TODO move to Logger class
     set_default_middleware
     @app = Middleware::MiddlewareStack::INSTANCE.build_middleware
     @http_handler  = Base::Handler.new(@app)
@@ -37,9 +37,11 @@ class App
     Middleware::MiddlewareStack::INSTANCE.use middleware
   end
 
-  def serve()
-    puts @run_string
-    server = HTTP::Server.new @port, @http_handler
+  def serve(port=8080)
+    @port = port
+    run_string    = "[Amethyst #{VERSION}] serving application \"#{@name}\" at http://127.0.0.1:#{@port}" #TODO move to Logger class
+    puts run_string
+    server = HTTP::Server.new port, @http_handler
     server.listen
   end
 
