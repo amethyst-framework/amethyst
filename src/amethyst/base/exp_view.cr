@@ -1,4 +1,6 @@
-
+require "ecr"
+require "ecr/macros"
+require "file"
 
 macro context(*args)
   def initialize(
@@ -13,7 +15,7 @@ class View
   def render
     response = StringIO.new
     to_s(response)
-    response.to_s
+    response
   end
 
 end
@@ -39,9 +41,11 @@ macro render(view_klass, *args)
     {% for arg in args %}
       {{arg.id}},
     {% end %})
-  _view.render
+   response = _view.render
 end
 
-# view "My", __DIR__, :name
-# name = "Andrew"
-# render "My", name
+view "My", __DIR__, :name
+
+name = "Andrew"
+
+puts render "My", name

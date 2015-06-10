@@ -1,5 +1,7 @@
 # Dependencies
 require "http"
+require "ecr"
+require "ecr/macros"
 
 # Amethyst dependencies
 require "../http"

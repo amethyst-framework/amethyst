@@ -22,8 +22,10 @@ class TestController < Controller
     html "Hello world!<img src='/assets/amethyst.jpg'>"
   end
 
+  view "My", __DIR__, name
   def user
-    text "Here users are living :)"
+    name = "Andrew"
+    @response.body = render "My", name
   end
 end
 
