@@ -16,21 +16,21 @@ class TimeLogger < Middleware::Base
 end
 
 class TestController < Controller
-  actions :index
+  actions :index #:user
 
   def index
     html "Hello world!<img src='/assets/amethyst.jpg'>"
   end
 
   def user
-    text "Here are users live :)"
+    text "Here users are living :)"
   end
 end
 
 class MyApp < Base::App
 
   settings.configure do |conf|
-    conf.environment = "production"
+    conf.environment = "development"
   end
 
   routes.draw do

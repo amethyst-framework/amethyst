@@ -28,6 +28,14 @@ abstract class Controller
     @actions_hash.fetch(action).call()
     @response
   end
+
+  def to_s(io : IO)
+    msg = "self.name\n"
+    @actions_hash.each do |action|
+      msg += "#{action}\n"
+    end
+    io << msg
+  end
 end
 
 # TODO: Separate module for html, answer etc. (mixin module)
