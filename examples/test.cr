@@ -13,7 +13,7 @@ class TestController < Controller
 end
 
 App.settings.configure do |conf|
-  conf.environment = "production"
+  conf.environment = "development"
 end
 
 App.routes.draw do

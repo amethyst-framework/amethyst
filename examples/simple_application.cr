@@ -45,6 +45,7 @@ end
 
 # You can describe your apps with a classes
 class TestApp < Base::App
+  settings.environment = "development"
   # Rails-like approach to describe routes.It consists of path
   # and string "controller_name#action_name"
   # You can specify params to be captured:
