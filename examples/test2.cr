@@ -40,7 +40,7 @@ class MyApp < Base::App
   routes.draw do
     get  "/user/:id", "test#user"
     post "/post/", "test#index"
-    all  "/", "test#index"
+    all  "/", "test#user"
     register TestController
   end
 

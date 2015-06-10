@@ -7,7 +7,8 @@ describe IndexController do
   base_request      = HTTP::Request.new("GET", "/", headers, "Test")
   request           = Http::Request.new(base_request)
   http_response     = Http::Response.new(200, "Ok")
-  controller        = IndexController.new(request, http_response)
+  controller        = IndexController.new
+  controller.set_env(request, http_response)
 
   it "instantiates properly" do
     controller.actions_hash.should be_a Hash

@@ -5,7 +5,8 @@ describe Router do
   router     = Router.new
   request    = Http::Request.new(HTTP::Request.new("GET", "/index"))
   response   = Http::Response.new(200, "Ok")
-  controller = IndexController.new(request, response)
+  controller = IndexController.new
+  controller.set_env(request, response)
 
   it "draws routes properly" do
     router.draw do
