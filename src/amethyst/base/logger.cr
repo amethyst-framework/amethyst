@@ -1,6 +1,6 @@
 class Logger 
 
-  include Sugar
+  include Sugar::Klass
   singleton_INSTANCE
 
   setter :justify

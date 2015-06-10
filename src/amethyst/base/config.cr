@@ -4,7 +4,7 @@ class Config
 
   # Simple configuration class for App
   
-  include Sugar
+  include Sugar::Klass
   singleton_INSTANCE
 
   def initialize

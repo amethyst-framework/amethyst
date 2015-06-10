@@ -1,6 +1,6 @@
 class MiddlewareStack
 
-  include Sugar
+  include Sugar::Klass
   singleton_INSTANCE
   include Enumerable(Class)
   

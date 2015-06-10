@@ -4,7 +4,7 @@ class Router
   getter :matched_route
 
   include Support::RoutesPainter
-  include Sugar
+  include Sugar::Klass
   singleton_INSTANCE
 
   # This macro is a hack that allows to instansiate controllers through 
