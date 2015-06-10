@@ -25,6 +25,7 @@ abstract class Controller
   # Works like Ruby's send(:method) to invoke controller action:
   # NameController.call_action("show")
   def call_action(action)
+    raise ActionNotFound.new(action, self.class.name) unless @actions_hash.has_key? action
     @actions_hash.fetch(action).call()
     @response
   end
