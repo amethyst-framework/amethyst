@@ -25,7 +25,9 @@ class TestController < Controller
   view "My", __DIR__, name
   def user
     name = "Andrew"
-    @response.body = render "My", name
+    respond_to do |format|
+      format.html { render "My", name }
+    end
   end
 end
 

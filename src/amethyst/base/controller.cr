@@ -28,6 +28,23 @@ abstract class Controller
 
   def set_env(@request, @response)
   end
+
+  class Formatter
+
+    def initialize(response)
+      @response = response
+    end
+
+    def html(&block)
+      @response.header "Content-type", "text/html"
+      @response.body = yield
+    end
+  end
+
+  def respond_to(&block)
+    formatter = Formatter.new(@response)
+    yield formatter
+  end
   
   # Works like Ruby's send(:method) to invoke controller action:
   # NameController.call_action("show")
