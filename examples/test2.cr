@@ -16,7 +16,7 @@ class TimeLogger < Middleware::Base
 end
 
 class TestController < Controller
-  actions :index #:user
+  actions :index, :user
 
   def index
     html "Hello world!<img src='/assets/amethyst.jpg'>"

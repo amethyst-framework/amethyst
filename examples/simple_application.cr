@@ -61,7 +61,7 @@ class TestApp < Base::App
   end
 
   # Middleware registering
-  use TimeLogger
+  # use TimeLogger
 end
 
 # App creating

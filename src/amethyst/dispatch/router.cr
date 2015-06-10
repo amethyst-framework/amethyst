@@ -18,6 +18,7 @@ class Router
     @controllers = {} of String => Base::Controller.class 
     @methods     = {} of String => Symbol
     @matched_route = Dispatch::Route.new("/not_found/", "HttpError", "404" )
+    @controllers_instances = {} of String => Base::Controller
   end
 
   # Adds controller to hash @controllers and make it available for app
@@ -50,8 +51,13 @@ class Router
     if exists? request.path, request.method
       response = Http::Response.new(200, "#{request.path} of application")
       controller = @matched_route.controller.capitalize+"Controller"
-      controller_instance = instantiate @controllers[controller], request, response
-      response = controller_instance.call_action(@matched_route.action)
+      # t_n = Time.now
+      controller_instance = @controllers_instances[controller] ||=  @controllers.fetch(controller).new
+      controller_instance.set_env(request, response)
+      # puts "Controller setting"+(t_n - Time.now).to_s
+      # t_n = Time.now
+      response = @controllers_instances[controller].call_action(@matched_route.action)
+      # puts "Action calling"+(t_n - Time.now).to_s+"\n"
     end
     return response
   end
