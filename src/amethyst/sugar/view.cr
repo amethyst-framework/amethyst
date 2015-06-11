@@ -8,7 +8,7 @@ module View
 	end
 
 	macro view(name, path=__DIR__, *args)
-	  class MyView < View
+	  class {{name.id}} < View
 	    def initialize(
 	      {% for arg in args %}
 	        @{{arg.id}},
