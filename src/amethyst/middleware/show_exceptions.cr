@@ -1,10 +1,12 @@
 class ShowExceptions < Middleware::Base
 
-  def call(request : Http::Request)
+  def call(request : Http::Request) : Http::Response
     begin
       response = @app.call(request)
+      p typeof(response)
+      response.set(200, "OK")
     rescue httpexception : HttpException
-        response = Response.new(httpexception.status, httpexception.msg)
+      response.set(httpexception.status, httpexception.msg)
     rescue ex : Exception
       if Base::App.settings.environment == "development"
       	response = Http::Response.new(200, "ERROR: #{ex.message}\n\n#{ex.backtrace.join '\n'}\n")

@@ -14,8 +14,9 @@ end
 
 class TestMiddleware < Middleware::Base
 
-  def call(request)
+  def call(request) : Http::Response
     request.body = "Request is being processed"
+    response = HTTP::Response.new(200, "Ok")
     @app.call(request)
   end
 end

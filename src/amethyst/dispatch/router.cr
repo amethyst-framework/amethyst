@@ -46,7 +46,7 @@ class Router
 
 
   # Actually, performs a routing 
-  def call(request : Http::Request)
+  def call(request : Http::Request) : Http::Response
     response = Http::Response.new(404, "404 Not found")
     if exists? request.path, request.method
       response = Http::Response.new(200, "#{request.path} of application")

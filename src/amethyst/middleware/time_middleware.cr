@@ -1,7 +1,7 @@
 require "./middleware"
 class TimeLogger < Middleware::Base
 
-  def call(request)
+  def call(request) : Http::Response
     logger = Base::App.logger
     t_req = Time.now
     response = @app.call(request)

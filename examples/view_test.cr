@@ -2,9 +2,7 @@ require "../src/all"
 
 class TimeLogger < Middleware::Base
 
-  # This one will be called when app gets request. It accepts Http::Request
   def call(request)
-    logger   = Base::App.logger
     t_req    = Time.now
     response = @app.call(request)
     t_res    = Time.now

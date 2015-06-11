@@ -4,9 +4,9 @@ class Static < Middleware::Base
 		@app = self
 	end
 
-	def call(request)
+	def call(request) : Http::Response
 		if File.extname(request.path) == ""
-			@app.call(request)
+			response = @app.call(request)
 		else
 			app_path = Base::App.settings.app_dir
 			path_to_file = app_path+request.path
@@ -16,6 +16,7 @@ class Static < Middleware::Base
 				response.headers["Content-type"] = mime_type(path_to_file)
 			end
 			response
+      p typeof(response)
 		end
 	end
 

@@ -1,12 +1,9 @@
 module Amethyst
 	module Exceptions
 
-    class AmethystException < Exception
+    class AmethystException < Exception; end
 
-    end
-
-    class ControllerException < AmethystException
-    end
+    class ControllerException < AmethystException; end
 
     class HttpException < AmethystException
       getter :status

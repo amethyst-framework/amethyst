@@ -5,8 +5,8 @@ abstract class Base
     @app = self
 	end
 
-	def call(request : Http::Request)
-    @app.call(request)
+	def call(request : Http::Request) : Http::Response
+      @app.call(request)
 	end
 
   def build(app)

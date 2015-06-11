@@ -2,13 +2,15 @@ class Response
   property :body
   property :status
   property :headers
-  #TODO add cookies
 
   def initialize(@status=nil, @body="" : String, @headers=HTTP::Headers.new, @version="HTTP/1.1")
   end
 
   def header(key, value)
     @headers[key] = value
+  end
+
+  def set(@status, @body)
   end
 
   # "builds" an HTTP::Response from self
