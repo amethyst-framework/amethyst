@@ -34,15 +34,16 @@ abstract class Controller
     def initialize(request : Http::Request, response : Http::Response)
       @response = response
       @request  = request
+      @accept   = @request.headers["Accept"]
     end
 
     def html(&block)
-      if @request.headers["Accept"].includes? "text/html"
-        @response.status_code = 200
+      if @accept.includes? "text/html"
+        @response.status = 200
         @response.header "Content-type", "text/html"
         @response.body = yield
       else
-        @response.status_code = 400
+        @response.status = 400
         @response.body = "Bad request"
       end
     end

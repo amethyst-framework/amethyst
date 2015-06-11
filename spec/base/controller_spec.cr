@@ -23,7 +23,7 @@ describe IndexController do
   it "actions return HTTP::Response" do
     response = controller.call_action("bye")
     response.should be_a Http::Response
-    response.status_code.should eq 200
+    response.status.should eq 200
     response.body.should eq "Bye"
   end
 
@@ -59,6 +59,6 @@ describe IndexController do
     view_controller =  ViewController.new
     view_controller.set_env(request, response)
     view_controller.call_action "hello"
-    response.status_code.should eq 400
+    response.status.should eq 400
   end
 end
