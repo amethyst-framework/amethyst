@@ -45,7 +45,7 @@ describe IndexController do
     response     = Http::Response.new(404, "Not found")
     view_controller =  ViewController.new
     view_controller.set_env(request, response)
-    expect_raises ActionNotFound do
+    expect_raises ControllerActionNotFound do
       view_controller.call_action "hell"
     end
   end
@@ -58,7 +58,8 @@ describe IndexController do
     response     = Http::Response.new(404, "Not found")
     view_controller =  ViewController.new
     view_controller.set_env(request, response)
-    view_controller.call_action "hello"
-    response.status.should eq 400
+    expect_raises HttpBadRequest do
+      view_controller.call_action "hello"
+    end
   end
 end

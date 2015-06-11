@@ -30,11 +30,13 @@ abstract class Controller
   end
 
   class Formatter
+    getter :processed
 
     def initialize(request : Http::Request, response : Http::Response)
       @response = response
       @request  = request
       @accept   = @request.headers["Accept"]
+      @processed = false
     end
 
     def html(&block)
@@ -42,9 +44,7 @@ abstract class Controller
         @response.status = 200
         @response.header "Content-type", "text/html"
         @response.body = yield
-      else
-        @response.status = 400
-        @response.body = "Bad request"
+        @processed = true
       end
     end
   end
@@ -52,12 +52,13 @@ abstract class Controller
   def respond_to(&block)
     formatter = Formatter.new(@request, @response)
     yield formatter
+    raise HttpBadRequest.new() unless formatter.processed
   end
   
   # Works like Ruby's send(:method) to invoke controller action:
   # NameController.call_action("show")
   def call_action(action)
-    raise Exceptions::ActionNotFound.new(action, self.class.name) unless @actions_hash.has_key? action
+    raise Exceptions::ControllerActionNotFound.new(action, self.class.name) unless @actions_hash.has_key? action
     @actions_hash[action].call
     @response
   end

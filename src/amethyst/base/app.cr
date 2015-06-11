@@ -47,7 +47,7 @@ class App
 
   # Sets default middleware for app
   private def set_default_middleware
-    # self.class.use Middleware::ShowExceptions
+    self.class.use Middleware::ShowExceptions
     self.class.use Middleware::Cookies
     if self.class.settings.environment == "development"
        self.class.use Middleware::HttpLogger

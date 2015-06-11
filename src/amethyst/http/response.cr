@@ -4,7 +4,7 @@ class Response
   property :headers
   #TODO add cookies
 
-  def initialize(@status=nil, @body=nil,@headers=HTTP::Headers.new, @version="HTTP/1.1")
+  def initialize(@status=nil, @body="" : String, @headers=HTTP::Headers.new, @version="HTTP/1.1")
   end
 
   def header(key, value)
@@ -20,11 +20,11 @@ class Response
     if headers.has_key?("Content-type") && (headers["Content-type"] == ("text/html"||"text/plain"))
       body = @body
     else 
-      body = nil
+      body = ""
     end
     {
-      "status"   :  @status,
-      "response" :  body
+      "status"   :  status,
+      "response" :  body,
       "version"  :  @version
     }
   end
