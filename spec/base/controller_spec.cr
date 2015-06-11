@@ -6,9 +6,9 @@ describe IndexController do
   headers["Accept"] = ["text/plain"]
   base_request      = HTTP::Request.new("GET", "/", headers, "Test")
   request           = Http::Request.new(base_request)
-  http_response     = Http::Response.new(200, "Ok")
+  response     = Http::Response.new(200, "Ok")
   controller        = IndexController.new
-  controller.set_env(request, http_response)
+  controller.set_env(request, response)
 
   it "instantiates properly" do
     controller.actions_hash.should be_a Hash
@@ -25,5 +25,15 @@ describe IndexController do
     response.should be_a Http::Response
     response.status_code.should eq 200
     response.body.should eq "Bye"
+  end
+
+  it "renders view" do
+    base_request = HTTP::Request.new("GET", "/", headers, "Test")
+    request      = Http::Request.new(base_request)
+    response     = Http::Response.new(404, "Not found")
+    view_controller =  ViewController.new
+    view_controller.set_env(request, response)
+    view_controller.call_action "hello"
+    response.body.should eq "Hello, Andrew"
   end
 end

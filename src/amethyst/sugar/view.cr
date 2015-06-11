@@ -8,7 +8,7 @@ module View
 	end
 
 	macro view(name, path=__DIR__, *args)
-	  class {{name.id}} < View
+	  class {{name.id.capitalize}}View < View
 	    def initialize(
 	      {% for arg in args %}
 	        @{{arg.id}},
@@ -19,7 +19,7 @@ module View
 	end
 
 	macro render(view_klass, *args)
-	  _view = {{view_klass.id}}View.new(
+	  _view = {{view_klass.id.capitalize}}View.new(
 	    {% for arg in args %}
 	      {{arg.id}},
 	    {% end %})

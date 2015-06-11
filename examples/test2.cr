@@ -44,7 +44,7 @@ class MyApp < Base::App
     register TestController
   end
 
-  use TimeLogger
+  # use TimeLogger
 end
 
 MyApp.new.serve
