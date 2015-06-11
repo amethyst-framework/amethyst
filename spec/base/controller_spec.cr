@@ -28,6 +28,8 @@ describe IndexController do
   end
 
   it "renders view" do
+    headers           = HTTP::Headers.new
+    headers["Accept"] = ["text/html"]
     base_request = HTTP::Request.new("GET", "/", headers, "Test")
     request      = Http::Request.new(base_request)
     response     = Http::Response.new(404, "Not found")
@@ -35,5 +37,28 @@ describe IndexController do
     view_controller.set_env(request, response)
     view_controller.call_action "hello"
     response.body.should eq "Hello, Andrew"
+  end
+
+  it "raises exception if acton not found" do
+    base_request = HTTP::Request.new("GET", "/", headers, "Test")
+    request      = Http::Request.new(base_request)
+    response     = Http::Response.new(404, "Not found")
+    view_controller =  ViewController.new
+    view_controller.set_env(request, response)
+    expect_raises ActionNotFound do
+      view_controller.call_action "hell"
+    end
+  end
+
+  it "Formatter html method response according to value of 'Accept' header" do
+    headers           = HTTP::Headers.new
+    headers["Accept"] = ["text/plain"]
+    base_request = HTTP::Request.new("GET", "/", headers, "Test")
+    request      = Http::Request.new(base_request)
+    response     = Http::Response.new(404, "Not found")
+    view_controller =  ViewController.new
+    view_controller.set_env(request, response)
+    view_controller.call_action "hello"
+    response.status_code.should eq 400
   end
 end

@@ -31,18 +31,25 @@ abstract class Controller
 
   class Formatter
 
-    def initialize(response)
+    def initialize(request : Http::Request, response : Http::Response)
       @response = response
+      @request  = request
     end
 
     def html(&block)
-      @response.header "Content-type", "text/html"
-      @response.body = yield
+      if @request.headers["Accept"].includes? "text/html"
+        @response.status_code = 200
+        @response.header "Content-type", "text/html"
+        @response.body = yield
+      else
+        @response.status_code = 400
+        @response.body = "Bad request"
+      end
     end
   end
 
   def respond_to(&block)
-    formatter = Formatter.new(@response)
+    formatter = Formatter.new(@request, @response)
     yield formatter
   end
   
@@ -64,3 +71,4 @@ abstract class Controller
 end
 
 # TODO: Separate module for html, answer etc. (mixin module)
+# TODO: Implement Http errors handling middleware
