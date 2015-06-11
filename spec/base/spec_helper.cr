@@ -27,7 +27,7 @@ class ViewController < Controller
     html "Hello world!<img src='/assets/amethyst.jpg'>"
   end
 
-  view "hello", __DIR__, name
+  view "hello", "#{__DIR__}/views/", name
   def hello
     name = "Andrew"
     respond_to do |format|

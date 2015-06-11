@@ -16,18 +16,22 @@ class TimeLogger < Middleware::Base
 end
 
 class TestController < Controller
-  actions :index, :user
+  actions :index, :user, :hello
 
   def index
     html "Hello world!<img src='/assets/amethyst.jpg'>"
   end
 
-  view "My", __DIR__, name
-  def user
+  view "hello", "#{__DIR__}/views", name
+  def hello
     name = "Andrew"
     respond_to do |format|
-      format.html { render "My", name }
+      format.html { render "hello", name }
     end
+  end
+
+  def user
+    html "Hello from user #{request.path_parameters["id"]}"
   end
 end
 
@@ -40,7 +44,7 @@ class MyApp < Base::App
   routes.draw do
     get  "/user/:id", "test#user"
     post "/post/", "test#index"
-    all  "/", "test#user"
+    all  "/", "test#hello"
     register TestController
   end
 
