@@ -10,9 +10,9 @@ abstract class Controller
     getter :processed
 
     def initialize(request : Http::Request, response : Http::Response)
-      @response = response
-      @request  = request
-      @accept   = @request.headers["Accept"]
+      @response  = response
+      @request   = request
+      @accept    = @request.headers["Accept"]? ? @request.headers["Accept"] : "text/html"
       @processed = false
     end
     
@@ -24,6 +24,13 @@ abstract class Controller
         yield
         @processed = true
       end
+    end
+
+    def any(&block)
+      @response.status = 200
+      @response.header "Content-type", "text/html"
+      yield
+      @processed = true
     end
   end
 

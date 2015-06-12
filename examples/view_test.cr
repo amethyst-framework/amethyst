@@ -24,6 +24,7 @@ class TestController < Controller
   def hello
     name = "Andrew"
     respond_to do |format|
+      format.any  { render "hello", name } 
       format.html { render "hello", name }
     end
   end
