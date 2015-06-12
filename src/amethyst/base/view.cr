@@ -11,7 +11,7 @@ end
 
 # class MyView < View
 #   context name
-#   view "view"
+#   view_file "view"
 # end
 
 # view "My", __DIR__, :name

@@ -7,6 +7,10 @@ module View
 	  end
 	end
 
+  macro view_file(file, a=__DIR__)
+    ecr_file "{{a.id}}/{{file.id}}.ecr"
+  end
+
 	macro view(name, path=__DIR__, *args)
 	  class {{name.id.capitalize}}View < View
 	    def initialize(
