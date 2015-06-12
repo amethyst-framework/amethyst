@@ -22,7 +22,7 @@ class TestMiddleware < Middleware::Base
 end
 
 class ViewController < Controller
-  actions :index, :hello
+  actions :index, :hello, :redirect
 
   def index
     html "Hello world!<img src='/assets/amethyst.jpg'>"
@@ -33,6 +33,12 @@ class ViewController < Controller
     name = "Andrew"
     respond_to do |format|
       format.html { render "hello", name }
+    end
+  end
+
+  def redirect
+    respond_to do |format|
+      format.html { redirect_to "user/45" }
     end
   end
 end

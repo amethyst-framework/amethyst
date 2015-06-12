@@ -44,20 +44,14 @@ class Router
     return exists
   end
 
-
   # Actually, performs a routing 
   def call(request : Http::Request) : Http::Response
     response = Http::Response.new(404, "404 Not found")
     if exists? request.path, request.method
-      response = Http::Response.new(200, "#{request.path} of application")
       controller = @matched_route.controller.capitalize+"Controller"
-      # t_n = Time.now
       controller_instance = @controllers_instances[controller] ||=  @controllers.fetch(controller).new
       controller_instance.set_env(request, response)
-      # puts "Controller setting"+(t_n - Time.now).to_s
-      # t_n = Time.now
       response = @controllers_instances[controller].call_action(@matched_route.action)
-      # puts "Action calling"+(t_n - Time.now).to_s+"\n"
     end
     return response
   end

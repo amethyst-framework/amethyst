@@ -14,7 +14,7 @@ class TimeLogger < Middleware::Base
 end
 
 class TestController < Controller
-  actions :index, :user, :hello
+  actions :index, :user, :hello, :redirect
 
   def index
     html "Hello world!<img src='/assets/amethyst.jpg'>"
@@ -31,6 +31,13 @@ class TestController < Controller
   def user
     html "Hello from user #{request.path_parameters["id"]}"
   end
+
+  def redirect
+    respond_to do |format|
+      format.html { redirect_to "user/45" }
+    end
+  end
+  
 end
 
 class MyApp < Base::App

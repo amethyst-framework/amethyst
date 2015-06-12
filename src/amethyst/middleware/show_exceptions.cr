@@ -17,4 +17,4 @@ class ShowExceptions < Middleware::Base
   end
 end
 
-#TODO : Make an exception controller and views
+#TODO : Make an exception controller and view

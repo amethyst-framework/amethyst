@@ -27,7 +27,7 @@ describe IndexController do
     response.body.should eq "Bye"
   end
 
-  it "renders view" do
+  it "Formatter html method renders view if html/text' presented in 'Accept' header" do
     headers           = HTTP::Headers.new
     headers["Accept"] = ["text/html"]
     base_request = HTTP::Request.new("GET", "/", headers, "Test")
@@ -39,7 +39,7 @@ describe IndexController do
     response.body.should eq "Hello, Andrew"
   end
 
-  it "raises exception if acton not found" do
+  it "raises exception if action not found" do
     base_request = HTTP::Request.new("GET", "/", headers, "Test")
     request      = Http::Request.new(base_request)
     response     = Http::Response.new(404, "Not found")
@@ -50,7 +50,7 @@ describe IndexController do
     end
   end
 
-  it "Formatter html method response according to value of 'Accept' header" do
+  it "Formatter html method yields only if 'html/text' presented in 'Accept' header" do
     headers           = HTTP::Headers.new
     headers["Accept"] = ["text/plain"]
     base_request = HTTP::Request.new("GET", "/", headers, "Test")
@@ -61,5 +61,17 @@ describe IndexController do
     expect_raises HttpBadRequest do
       view_controller.call_action "hello"
     end
+  end
+
+  it "redirects with 'redirect_to' method" do
+    headers           = HTTP::Headers.new
+    headers["Accept"] = ["text/html"]
+    base_request = HTTP::Request.new("GET", "/", headers, "Test")
+    request      = Http::Request.new(base_request)
+    response     = Http::Response.new(404, "Not found")
+    view_controller =  ViewController.new
+    view_controller.set_env(request, response)
+    view_controller.call_action "redirect"
+    response.status.should eq 303
   end
 end

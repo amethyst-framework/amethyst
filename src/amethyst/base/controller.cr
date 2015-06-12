@@ -6,14 +6,33 @@ abstract class Controller
 
   include Support::ControllerHelpers
 
+  class Formatter
+    getter :processed
+
+    def initialize(request : Http::Request, response : Http::Response)
+      @response = response
+      @request  = request
+      @accept   = @request.headers["Accept"]
+      @processed = false
+    end
+    
+    # Do stuff in block if client accepts text/html
+    def html(&block)
+      if @accept.includes? "text/html"
+        @response.status = 200
+        @response.header "Content-type", "text/html"
+        yield
+        @processed = true
+      end
+    end
+  end
+
   # This hack creates procs from controller actions, and adds it to the @actions_hash
   macro actions(*actions)
     private def add_actions
-      # t_n = Time.now
       {% for action in actions %}
         @actions_hash[{{action}}.to_s] = ->{{action.id}}
       {% end %}
-      # puts "Actions creating"+(t_n - Time.now).to_s
     end
   end
 
@@ -27,26 +46,6 @@ abstract class Controller
   end
 
   def set_env(@request, @response)
-  end
-
-  class Formatter
-    getter :processed
-
-    def initialize(request : Http::Request, response : Http::Response)
-      @response = response
-      @request  = request
-      @accept   = @request.headers["Accept"]
-      @processed = false
-    end
-
-    def html(&block)
-      if @accept.includes? "text/html"
-        @response.status = 200
-        @response.header "Content-type", "text/html"
-        @response.body = yield
-        @processed = true
-      end
-    end
   end
 
   def respond_to(&block)
