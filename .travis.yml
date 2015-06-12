@@ -10,6 +10,3 @@ install: |
 script:
   - crystal deps
   - crystal spec
-  - crystal examples/test.cr
-  - crystal examples/view_test.cr
-  - crystal examples/simple_application.cr
