@@ -15,9 +15,8 @@ class Static < Middleware::Base
 				response = Http::Response.new(200, File.read(path_to_file))
 				response.headers["Content-type"] = mime_type(path_to_file)
 			end
-			response
-      p typeof(response)
 		end
+    response
 	end
 
 	private def mime_type(path)

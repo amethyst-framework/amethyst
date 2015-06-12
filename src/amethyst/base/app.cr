@@ -50,8 +50,8 @@ class App
     self.class.use Middleware::ShowExceptions
     self.class.use Middleware::Cookies
     if self.class.settings.environment == "development"
-       self.class.use Middleware::HttpLogger
-       self.class.use Middleware::TimeLogger
+      self.class.use Middleware::HttpLogger
+      self.class.use Middleware::TimeLogger
     end
     self.class.use Middleware::Static
   end

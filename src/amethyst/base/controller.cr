@@ -52,7 +52,7 @@ abstract class Controller
   def respond_to(&block)
     formatter = Formatter.new(@request, @response)
     yield formatter
-    raise HttpBadRequest.new() unless formatter.processed
+    raise Exceptions::HttpBadRequest.new() unless formatter.processed
   end
   
   # Works like Ruby's send(:method) to invoke controller action:

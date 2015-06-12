@@ -1,20 +1,19 @@
 class ShowExceptions < Middleware::Base
 
-  def call(request : Http::Request) : Http::Response
+  def call(request : Http::Request) 
     begin
       response = @app.call(request)
-      p typeof(response)
-      response.set(200, "OK")
-    rescue httpexception : HttpException
-      response.set(httpexception.status, httpexception.msg)
+    rescue httpexception : Exceptions::HttpException
+      Http::Response.new(httpexception.status, httpexception.msg)
     rescue ex : Exception
       if Base::App.settings.environment == "development"
       	response = Http::Response.new(200, "ERROR: #{ex.message}\n\n#{ex.backtrace.join '\n'}\n")
       else
-      	response = Response.new(404, "404 Not Found")
+      	response = Http::Response.new(404, "404 Not Found")
       end
+    ensure
+      response
     end
-    response
   end
 end
 
