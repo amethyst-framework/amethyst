@@ -3,11 +3,10 @@ class Response
   property :status
   property :headers
 
-  include Support::ContentTypeHelper
+  include Support::HeaderHelper
 
   def initialize(@status=nil, @body="" : String, @headers=HTTP::Headers.new, @version="HTTP/1.1")
   end
-
 
   def set(@status, @body)
   end

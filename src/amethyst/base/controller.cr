@@ -12,13 +12,12 @@ abstract class Controller
     def initialize(request : Http::Request, response : Http::Response)
       @response  = response
       @request   = request
-      @accept    = @request.headers["Accept"]? ? @request.headers["Accept"] : "text/html"
       @processed = false
     end
     
     # Do stuff in block if client accepts text/html
     def html(&block)
-      if @accept.includes? "text/html"
+      if @request.accept == "text/html"
         @response.status = 200
         @response.header "Content-type", "text/html"
         yield

@@ -10,7 +10,7 @@ class Request
   getter   :version
   setter   :path
 
-  include Support::ContentTypeHelper
+  include Support::HeaderHelper
 
   def initialize(base_request : HTTP::Request)
     @method  = base_request.method
@@ -22,6 +22,7 @@ class Request
     @path_parameters    = {} of String => String
     @request_parameters = {} of String => String
     @cookies = {} of String => String
+    @accept = ""
   end
 
   # Allows you to know the request method (get? post?, etc.)
@@ -74,6 +75,25 @@ class Request
       @query_parameters = parse_parameters @body
     end
     @query_parameters
+  end
+
+  # For now, if '*/*' is specified, then 'html/text', else first type in the list will be returned
+  # This is a workaround, need to be fixed in future
+  def accept
+    @accept ||= begin
+      entries = headers["Accept"].split ","
+      entries.map do |e|
+        if e.includes? ";"
+          e = e.split(";")[0]
+        end
+        e
+      end
+      if e.includes? "*/*"
+        "text/html"
+      else
+        e.first
+      end
+    end
   end
 
   # Parses params from a given string

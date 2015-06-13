@@ -70,7 +70,6 @@ describe Request do
     base_request = HTTP::Request.new("GET", "/", headers, "Test")
     request      = Request.new(base_request)
     request.body = "user=Andrew&id=5"
-    p request.body
     request.content_type = "application/x-www-form-urlencoded"
     request.request_parameters.should eq Hash{ "user" => "Andrew", "id" => "5"}
   end

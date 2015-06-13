@@ -1,4 +1,4 @@
-module ContentTypeHelper
+module HeaderHelper 
 
   # Sets header: header "Location", "google.com"
   def header(key, value)
