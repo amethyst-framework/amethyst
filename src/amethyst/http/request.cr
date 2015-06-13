@@ -75,9 +75,6 @@ class Request
     end
     @query_parameters
   end
-  
-
-  
 
   # Parses params from a given string
   private def parse_parameters(params_string)

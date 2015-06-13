@@ -3,12 +3,11 @@ class Response
   property :status
   property :headers
 
+  include Support::ContentTypeHelper
+
   def initialize(@status=nil, @body="" : String, @headers=HTTP::Headers.new, @version="HTTP/1.1")
   end
 
-  def header(key, value)
-    @headers[key] = value
-  end
 
   def set(@status, @body)
   end
@@ -16,6 +15,10 @@ class Response
   # "builds" an HTTP::Response from self
   def build
     return HTTP::Response.new(@status, @body, headers = @headers, version = @version)
+  end
+
+  def set_cookie(cookie : String)
+    headers["Set-Cookie"] = cookie
   end
 
   def log
@@ -29,9 +32,5 @@ class Response
       "response" :  body,
       "version"  :  @version
     }
-  end
-
-  def set_cookie(cookie : String)
-    headers["Set-Cookie"] = cookie
   end
 end

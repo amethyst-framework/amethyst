@@ -1,5 +1,22 @@
 module ContentTypeHelper
 
+  # Sets header: header "Location", "google.com"
+  def header(key, value)
+    @headers[key] = value
+  end
+
+  # Returns header: header "Location"
+  def header(key)
+    @headers[key]
+  end
+
+  # Returns true if header exists and vice versa
+  def has_header?(key)
+    has = true
+    has = false unless @headers[key]?
+    has
+  end
+
   # Returns 'Content-type' header as string
 	def content_type : String
     headers["Content-type"]? ? headers["Content-type"].split(";")[0] : ""
@@ -10,15 +27,16 @@ module ContentTypeHelper
     headers["Content-type"] = ctype
   end
 
-  # Sets 'Content-type' header from file extension: ctype_ext ".jpg"
-  def ctype_ext=(ext : String)
+  # Sets 'Content-type' header from file extension: ctype_ext "jpg"
+  def ctype_ext=(ext : String) 
     unless ctype = Mime.from_ext(ext)
-      raise Exceptions::UnknowContentType.new(ctype)
+      raise Exceptions::UnknownContentType.new(ext)
     else
-      content_type = ctype
+      headers["Content-type"] = ctype as String
     end
   end
 
+  # Returns true if content type presented and vice versa
   def content_type?(ctype : String)
     matches = false
     matches = true if ctype == content_type
