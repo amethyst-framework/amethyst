@@ -1,4 +1,5 @@
 # Amethyst [![Build Status](https://travis-ci.org/Codcore/Amethyst.svg)](https://travis-ci.org/Codcore/Amethyst)
+![Amethyst-logo](http://s019.radikal.ru/i635/1506/28/bac4764b9e03.png)
 
 Amethyst is a web framework written in [Crystal](https://github.com/manastech/crystal) language. The goals of Amethyst are to be fast as Node.js and comfortable as Rails. Note, Amethyst is at early stage of developing, so a lot of features are missing yet. However, it works :). Why I called my web framework "Amethyst"? Because Crystal  has a light purple color at GitHub like [amethyst gemstone](http://en.wikipedia.org/wiki/Amethyst).
 
