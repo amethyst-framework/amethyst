@@ -1,6 +1,6 @@
 require "./spec_helper"
 
-describe ContentTypeHelper do
+describe HeaderHelper do
 
   base_request = HTTP::Request.new("GET", "/")
   request      = Http::Request.new(base_request)

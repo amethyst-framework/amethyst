@@ -80,19 +80,17 @@ class Request
   # For now, if '*/*' is specified, then 'html/text', else first type in the list will be returned
   # This is a workaround, need to be fixed in future
   def accept
-    @accept ||= begin
-      entries = headers["Accept"].split ","
-      entries.map do |e|
-        if e.includes? ";"
-          e = e.split(";")[0]
-        end
-        e
+    entries = headers["Accept"].split ","
+    entries.map do |e|
+      if e.includes? ";"
+        e = e.split(";")[0]
       end
-      if e.includes? "*/*"
-        "text/html"
-      else
-        e.first
-      end
+      e
+    end
+    if entries.includes? "*/*"
+      @accept = "text/html"
+    else
+      @accept = entries.first
     end
   end
 

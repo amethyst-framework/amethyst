@@ -84,4 +84,15 @@ describe Request do
     end
     request.path_parameters.should eq Hash{ "id" => "55"}
   end
+
+  it "negotiates mime-types through 'Accept' header" do
+    base_request = HTTP::Request.new("GET", "/users/55", headers, "Test")
+    request      = Request.new(base_request)
+    accept = "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0"
+    request.header "Accept", accept
+    request.accept.should eq "text/html"
+    accept = "application/xhtml+xml,application/xml;q=0.9,image/webp"
+    request.header "Accept", accept
+    request.accept.should eq "application/xhtml+xml"
+  end
 end
