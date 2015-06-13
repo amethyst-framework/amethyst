@@ -6,13 +6,11 @@ class Request
   property :method
   property :headers
   property :body
-  property :path_parameters
-  property :request_parameters
-  property :query_parameters
   property :cookies
   getter   :version
   setter   :path
 
+  include Support::ContentTypeHelper
 
   def initialize(base_request : HTTP::Request)
     @method  = base_request.method
@@ -20,9 +18,9 @@ class Request
     @headers = base_request.headers
     @body 	 = base_request.body
     @version = base_request.version
-    @query_params = {} of String => String
-    @path_params = {} of String => String
-    @request_params = {} of String => String
+    @query_parameters   = {} of String => String
+    @path_parameters    = {} of String => String
+    @request_parameters = {} of String => String
     @cookies = {} of String => String
   end
 
@@ -57,51 +55,31 @@ class Request
 
   # returns "GET" parameters: '/index?user=Andrew&id=5'
   def query_parameters
-    @query_params unless @query_params.empty?
-    @query_params = parse_parameters query_string
+    @query_parameters unless @query_parameters.empty?
+    @query_parameters = parse_parameters query_string
   end
 
+  # returns path parameters: '/users/:id'
   def path_parameters
-    @path_params unless @path_params.empty?
+    @path_parameters unless @path_parameters.empty?
     if Base::App.routes.exists? path, method
-      @path_params = Base::App.routes.matched_route.params path
+      @path_parameters = Base::App.routes.matched_route.params path
     end
-    @path_params
+    @path_parameters
   end
 
+  # returns POST parameters
   def request_parameters
     if content_type == "application/x-www-form-urlencoded"
-      @request_params = parse_parameters @body
+      @query_parameters = parse_parameters @body
     end
-    @request_params
+    @query_parameters
   end
+  
 
-  # Sets properties to log
-  def log 
-    {
-      "http method"  => @method,
-      "path"         : path,
-      "query string" : query_string,
-      "protocol"     : protocol,
-      "host"         : host,
-      "port"         : port,
-      "version"      : @version,
-      "query params" : query_parameters,
-      "path parameters" : path_parameters,
-      "post parameters" : request_parameters,
-      "content type"    : content_type
-    }
-  end
+  
 
-  def content_type
-    headers["Content-type"]? ? headers["Content-type"].split(";")[0] : ""
-  end
-
-  def content_type=(type)
-    headers["Content-type"] = type # TODO: Check mime-type, and make separate module/class for mime-types 
-  end
-
-  # Returns request parameters sent as a part of query
+  # Parses params from a given string
   private def parse_parameters(params_string)
     hash = {} of String => String
     params = params_string.to_s.split("&")
@@ -113,7 +91,23 @@ class Request
     end
     hash
   end
+
+  # Sets properties to log
+  def log 
+    {
+      "http method"     : @method,
+      "path"            : path,
+      "query string"    : query_string,
+      "protocol"        : protocol,
+      "host"            : host,
+      "port"            : port,
+      "version"         : @version,
+      "query params"    : query_parameters,
+      "path parameters" : path_parameters,
+      "post parameters" : request_parameters,
+      "content type"    : content_type
+    }
+  end
 end
 
 # TODO: Improve Request class, add @env like in Rails
-# TODO: Move params parsing to the ParamsParser middleware

@@ -14,6 +14,13 @@ module Amethyst
       end
     end
 
+    class UnknownContentType < AmethystException
+
+      def initialize(@ctype)
+        super("Unknown content-type #{@ctype}")
+      end
+    end
+
     require "./http_exceptions"
     require "./controller_exceptions"
 

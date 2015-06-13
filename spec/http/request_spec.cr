@@ -74,4 +74,15 @@ describe Request do
     request.content_type = "application/x-www-form-urlencoded"
     request.request_parameters.should eq Hash{ "user" => "Andrew", "id" => "5"}
   end
+
+
+  it "returns path parameters" do
+    base_request = HTTP::Request.new("GET", "/users/55", headers, "Test")
+    request      = Request.new(base_request)
+    App.routes.draw do
+      get "/users/:id", "index#users"
+      register IndexController
+    end
+    request.path_parameters.should eq Hash{ "id" => "55"}
+  end
 end
