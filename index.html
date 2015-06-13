@@ -35,177 +35,64 @@
 <a id="amethyst-" class="anchor" href="#amethyst-" aria-hidden="true"><span class="octicon octicon-link"></span></a>Amethyst <a href="https://travis-ci.org/Codcore/Amethyst"><img src="https://travis-ci.org/Codcore/Amethyst.svg" alt="Build Status"></a>
 </h1>
 
-<p>Amethyst is a web framework written in <a href="https://github.com/manastech/crystal">Crystal</a> language. The goals of Amethyst are to be fast as Node.js and comfortable as Rails. Note, Amethyst is his early stages, so a lot of features are missing yet. However, it works :). Why I called my web framework "Amethyst" ? Because Crystal  has a light purple color at GitHub like <a href="http://en.wikipedia.org/wiki/Amethyst">amethyst gemstone</a>.</p>
+<p><img src="http://s019.radikal.ru/i635/1506/28/bac4764b9e03.png" alt="Amethyst-logo"></p>
+
+<p>Amethyst is a web framework written in <a href="https://github.com/manastech/crystal">Crystal</a> language. The goals of Amethyst are to be fast as Node.js and comfortable as Rails. Note, Amethyst is at early stage of developing, so a lot of features are missing yet. However, it works :). Why I called my web framework "Amethyst"? Because Crystal  has a light purple color at GitHub like <a href="http://en.wikipedia.org/wiki/Amethyst">amethyst gemstone</a>.</p>
+
+<p>Latest version - <a href="https://github.com/Codcore/Amethyst/releases/tag/v0.0.7">0.0.7</a></p>
+
+<p>For detailed information, see docs on our <a href="https://github.com/Codcore/Amethyst/wiki">wiki</a> below:</p>
+
+<ul>
+<li><a href="https://github.com/Codcore/Amethyst/wiki/Installation">Installation</a></li>
+<li><a href="https://github.com/Codcore/Amethyst/wiki/Usage">Usage</a></li>
+<li><a href="https://github.com/Codcore/Amethyst/wiki/Controllers">Controllers</a></li>
+<li><a href="https://github.com/Codcore/Amethyst/wiki/Routing">Routing</a></li>
+<li><a href="https://github.com/Codcore/Amethyst/wiki/Middleware">Middleware</a></li>
+<li><a href="https://github.com/Codcore/Amethyst/wiki/StaticFiles">Static files</a></li>
+<li><a href="https://github.com/Codcore/Amethyst/wiki/Applications">Applications</a></li>
+</ul>
+
+<p><a href="https://gist.github.com/Codcore/0c7a331b69eed542fb78">Here are some benchmarking results</a></p>
 
 <p>For now, next things are implemented:</p>
 
 <ul>
-<li>class-based controllers with actions</li>
+<li>class-based controllers with method-based actions</li>
 <li>middleware support</li>
-<li>simple routing</li>
+<li>simple REST routing</li>
+<li>path, GET and POST params inside actions</li>
+<li>base cookies support</li>
+<li>static files serving</li>
+<li>http logger and timer for developers</li>
+<li>simple environments support</li>
 </ul>
 
-<p>Next release is almost ready, and will introduce new features:</p>
-
-<ul>
-<li>REST</li>
-<li>GET and POST params</li>
-<li>Static files handling</li>
-<li>improved controllers and middleware implementation</li>
-<li>Cookies support</li>
-</ul>
-
-<p>For details, see docs on <a href="https://github.com/Codcore/Amethyst">GitHub</a>.</p>
-
 <h2>
-<a id="installation" class="anchor" href="#installation" aria-hidden="true"><span class="octicon octicon-link"></span></a>Installation</h2>
+<a id="example" class="anchor" href="#example" aria-hidden="true"><span class="octicon octicon-link"></span></a>Example</h2>
 
-<p>Suggested that you have installed <a href="https://github.com/manastech/crystal">Crystal</a> 0.7.2. <strong>Code may not work properly with earliers version of 0.7.* branch</strong></p>
+<p>Here is classic 'Hello World' in Amethyst</p>
 
-<pre><code>git clone https://github.com/Codcore/Amethyst.git
-</code></pre>
+<div class="highlight highlight-crystal"><pre><span class="pl-k">require</span> <span class="pl-s"><span class="pl-pds">"</span>amethyst<span class="pl-pds">"</span></span>
 
-<p>Or add it to <code>Projectfile</code> of your Crystal project</p>
-
-<div class="highlight highlight-crystal"><pre>deps <span class="pl-k">do</span>
-  github <span class="pl-s"><span class="pl-pds">"</span>Codcore/amethyst<span class="pl-pds">"</span></span>
-<span class="pl-k">end</span></pre></div>
-
-<p>You can play with example of simple web-application written with Amethyst at <code>examples</code> directory:</p>
-
-<pre><code>crystal examples/simple_application.cr
-</code></pre>
-
-<h2>
-<a id="usage" class="anchor" href="#usage" aria-hidden="true"><span class="octicon octicon-link"></span></a>Usage</h2>
-
-<p>If you want to load Amethyst in global namespace to be able not to prepend classes with name of modules they are in (for example, <code>Base::Controller</code>),you can load all modules into global namespace next way:</p>
-
-<div class="highlight highlight-crystal"><pre><span class="pl-k">require</span> <span class="pl-s"><span class="pl-pds">"</span>amethyst/all<span class="pl-pds">"</span></span></pre></div>
-
-<p>From that moment, you can type <code>App.new</code> instead of <code>Base::App.new</code>, <code>Base::Controller</code> instead <code>Base::Controller</code>, etc.)</p>
-
-<h1>
-<a id="controllers" class="anchor" href="#controllers" aria-hidden="true"><span class="octicon octicon-link"></span></a>Controllers</h1>
-
-<p>Amethyst controllers are classes with method-actions. The name of any controller must be like <code>NameController</code>,
-and it needs to be inherited from <code>Base::Controller</code>. Here is an example of simple controller:</p>
-
-<div class="highlight highlight-crystal"><pre><span class="pl-k">require</span> <span class="pl-s"><span class="pl-pds">"</span>../src/amethyst<span class="pl-pds">"</span></span>
-
-<span class="pl-k">class</span> <span class="pl-en">IndexController<span class="pl-e"> &lt; Base::Controller</span></span>
-  actions <span class="pl-c1">:hello</span>, <span class="pl-c1">:bye</span>
+<span class="pl-k">class</span> <span class="pl-en">WordController<span class="pl-e"> &lt; Base::Controller</span></span>
+  actions <span class="pl-c1">:hello</span>
 
   <span class="pl-k">def</span> <span class="pl-en">hello</span>
-    html <span class="pl-s"><span class="pl-pds">"</span>&lt;p&gt;Hello, you're asked a <span class="pl-pse">#{</span><span class="pl-s1">request.method</span><span class="pl-pse"><span class="pl-s1">}</span></span> <span class="pl-pse">#{</span><span class="pl-s1">request.path</span><span class="pl-pse"><span class="pl-s1">}</span></span>&lt;/p&gt; <span class="pl-cce">\n</span></span>
-<span class="pl-s">          &lt;a href='/bye'&gt;Visit &lt;b&gt;bye&lt;/b&gt; action&lt;/a&gt;<span class="pl-pds">"</span></span>
+    html <span class="pl-s"><span class="pl-pds">"</span>&lt;h1&gt;Hello, world!<span class="pl-pds">"</span></span>
   <span class="pl-k">end</span>
+<span class="pl-k">end</span>
 
-  <span class="pl-k">def</span> <span class="pl-en">bye</span>
-    html <span class="pl-s"><span class="pl-pds">"</span>&lt;p&gt;Bye!We hope you will come back&lt;/p&gt;<span class="pl-pds">"</span></span>
+<span class="pl-k">class</span> <span class="pl-en">HelloWorldApp<span class="pl-e"> &lt; Base::App</span></span>
+  routes.draw <span class="pl-k">do</span>
+    all <span class="pl-s"><span class="pl-pds">"</span>/<span class="pl-pds">"</span></span>,      <span class="pl-s"><span class="pl-pds">"</span>word#hello<span class="pl-pds">"</span></span> 
+    get <span class="pl-s"><span class="pl-pds">"</span>/hello<span class="pl-pds">"</span></span>, <span class="pl-s"><span class="pl-pds">"</span>word#hello<span class="pl-pds">"</span></span> 
+    register <span class="pl-c1">WordController</span>
   <span class="pl-k">end</span>
-<span class="pl-k">end</span></pre></div>
+<span class="pl-k">end</span>
 
-<p>Controllers describe actions as a methods. Actions have direct access to request and response objects, and other helpers, such as a <code>html</code> .Code <code>actions :hello, :bye</code> lets app to know which methods of your contoller are actions, and which aren't.</p>
-
-<h1>
-<a id="middleware" class="anchor" href="#middleware" aria-hidden="true"><span class="octicon octicon-link"></span></a>Middleware</h1>
-
-<p>Middleware are implemented as classes. Middleware class inherits from <code>Base::Middleware</code> (or, just type <code>Middleware</code> if you prefer <code>require amethyst/all</code>), and should have the <code>call</code> method.</p>
-
-<div class="highlight highlight-crystal"><pre><span class="pl-k">def</span> <span class="pl-en">call</span>(<span class="pl-smi">request</span>)
-<span class="pl-k">end</span></pre></div>
-
-<p>Here is an example of middleware that calculates time elapsed between request and response.</p>
-
-<div class="highlight highlight-crystal"><pre><span class="pl-k">class</span> <span class="pl-en">TimeLogger<span class="pl-e"> &lt; Middleware::Base</span></span>
-
-  <span class="pl-c"># This one will be called when app gets request. It accepts Http::Request</span>
-  <span class="pl-k">def</span> <span class="pl-en">call</span>(<span class="pl-smi">request</span>)
-    logger <span class="pl-k">=</span> <span class="pl-c1">Base</span>::<span class="pl-c1">App</span>.logger
-    t_req <span class="pl-k">=</span> <span class="pl-c1">Time</span>.now
-    response <span class="pl-k">=</span> <span class="pl-smi">@app</span>.call(request)
-    t_res  <span class="pl-k">=</span> <span class="pl-c1">Time</span>.now
-    elapsed <span class="pl-k">=</span> (t_res <span class="pl-k">-</span> t_req).to_f<span class="pl-k">*</span><span class="pl-c1">1000</span>
-    string  <span class="pl-k">=</span> <span class="pl-s"><span class="pl-pds">"</span>%.4f ms<span class="pl-pds">"</span></span> <span class="pl-k">%</span> elapsed
-    logger.display_name
-    logger.display_as_list ({ <span class="pl-s"><span class="pl-pds">"</span>Time elapsed<span class="pl-pds">"</span></span> =&gt; string })
-    response
-  <span class="pl-k">end</span>
-<span class="pl-k">end</span></pre></div>
-
-<h1>
-<a id="routing" class="anchor" href="#routing" aria-hidden="true"><span class="octicon octicon-link"></span></a>Routing</h1>
-
-<p>Amethyst has Rails-like approach to describe routes. For now, only <code>get()</code> supported. 
-It consists of path and string <code>controller_name#action_name</code></p>
-
-<div class="highlight highlight-crystal"><pre><span class="pl-c1">Base</span>::<span class="pl-c1">App</span>.routes.draw <span class="pl-k">do </span>|<span class="pl-smi">routes</span>|
-  <span class="pl-c"># maps GET "/" to "hello" action of IndexController</span>
-  get <span class="pl-s"><span class="pl-pds">"</span>/<span class="pl-pds">"</span></span>,    <span class="pl-s"><span class="pl-pds">"</span>index#hello<span class="pl-pds">"</span></span>
-  <span class="pl-c"># maps GET "/bye" to "bye" action of IndexController</span>
-  get <span class="pl-s"><span class="pl-pds">"</span>/bye<span class="pl-pds">"</span></span>, <span class="pl-s"><span class="pl-pds">"</span>index#bye<span class="pl-pds">"</span></span>
-  post <span class="pl-s"><span class="pl-pds">"</span>/post<span class="pl-pds">"</span></span>, <span class="pl-s"><span class="pl-pds">"</span>index#bye<span class="pl-pds">"</span></span> <span class="pl-c"># you can use GET, POST, PUT, DELETE</span>
-  all <span class="pl-s"><span class="pl-pds">"</span>/bye-all<span class="pl-pds">"</span></span>, <span class="pl-s"><span class="pl-pds">"</span>index#bye<span class="pl-pds">"</span></span> <span class="pl-c"># resoonds to all HTTP methods</span>
-<span class="pl-k">end</span></pre></div>
-
-<p>Note, <code>/bye</code> and <code>/bye/</code> work slightly different. First matches <code>/bye, /bye/, /bye_something</code>, second is "strict",
-and matches only <code>/bye</code> and <code>/bye/</code>. Both not matches <code>/bye/something</code>.</p>
-
-<p>You can specify params to be captured:</p>
-
-<div class="highlight highlight-crystal"><pre>get <span class="pl-s"><span class="pl-pds">"</span>/users/:id<span class="pl-pds">"</span></span>, <span class="pl-s"><span class="pl-pds">"</span>users#show<span class="pl-pds">"</span></span> <span class="pl-c">#(params doesn't work yet)</span></pre></div>
-
-<p>After you defined a controller, you have to register it in app with <code>app.routes.register(NameController)</code> where <code>NameController</code>(CamelCase) is the classname of your controller:</p>
-
-<div class="highlight highlight-crystal"><pre><span class="pl-c1">Base</span>::<span class="pl-c1">App</span>.routes.register(<span class="pl-c1">IndexController</span>)</pre></div>
-
-<h1>
-<a id="application-creating" class="anchor" href="#application-creating" aria-hidden="true"><span class="octicon octicon-link"></span></a>Application creating</h1>
-
-<div class="highlight highlight-crystal"><pre><span class="pl-c"># Middleware registering</span>
-<span class="pl-c1">Base</span>::<span class="pl-c1">App</span>.use <span class="pl-c1">TimeMiddleware</span>
-app <span class="pl-k">=</span> <span class="pl-c1">Base</span>::<span class="pl-c1">App</span>.<span class="pl-k">new</span></pre></div>
-
-<p>You can set a port and app name (defaul port is <code>8080</code>, default name is name of file application is in):</p>
-
-<div class="highlight highlight-crystal"><pre>app.port <span class="pl-k">=</span> <span class="pl-c1">8080</span>
-app.name <span class="pl-k">=</span> <span class="pl-s"><span class="pl-pds">"</span>example<span class="pl-pds">"</span></span></pre></div>
-
-<h1>
-<a id="running-application" class="anchor" href="#running-application" aria-hidden="true"><span class="octicon octicon-link"></span></a>Running application</h1>
-
-<div class="highlight highlight-crystal"><pre>app.serve</pre></div>
-
-<h2>
-<a id="development" class="anchor" href="#development" aria-hidden="true"><span class="octicon octicon-link"></span></a>Development</h2>
-
-<p>Feel free to fork project and make pull-requests. Stick to standart project structure and name conventions:</p>
-
-<pre><code>src/
-  amethyst/
-    module1/       # module1 files
-      class1.cr
-      ...
-      module1.cr   # loads all module1 files into namespace Amethyst::Module1
-    module2/
-      class1.cr    # describe class Class1 (module, struct, i.e)
-      ...
-      module2.cr   # loads all module2 files into namespace Amethyst::Module2
-    file_module.cr # module that consists of one file
-  amethyst.cr      # requires module1.cr, module2.cr, file_module.cr
-
-spec/
-  module1/
-    class1_spec.cr # specs for Module1::Class
-    spec_helper.cr # loads main spec_helper
-  module2/
-    class2_spec.cr
-  spec_helper      # loads "amethyst/all"
-
-examples/          # examples to play with
-                   # don't forget to require "..src/amethyst" or "..src/all"
-</code></pre>
+app <span class="pl-k">=</span> <span class="pl-c1">HelloWorldApp</span>.<span class="pl-k">new</span>
+app.serve</pre></div>
 
 <h2>
 <a id="contributing" class="anchor" href="#contributing" aria-hidden="true"><span class="octicon octicon-link"></span></a>Contributing</h2>
@@ -234,7 +121,17 @@ examples/          # examples to play with
           This page was generated by <a href="https://pages.github.com">GitHub Pages</a>. Tactile theme by <a href="https://twitter.com/jasonlong">Jason Long</a>.
         </footer>
 
-        
+                  <script type="text/javascript">
+            var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+            document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+          </script>
+          <script type="text/javascript">
+            try {
+              var pageTracker = _gat._getTracker("UA-64088406-1");
+            pageTracker._trackPageview();
+            } catch(err) {}
+          </script>
+
       </div>
     </div>
   </body>
