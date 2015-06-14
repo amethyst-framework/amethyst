@@ -1,9 +1,9 @@
 # Amethyst [![Build Status](https://travis-ci.org/Codcore/Amethyst.svg)](https://travis-ci.org/Codcore/Amethyst)
 ![Amethyst-logo](http://s019.radikal.ru/i635/1506/28/bac4764b9e03.png)
 
-Amethyst is a web framework written in [Crystal](https://github.com/manastech/crystal) language. The goals of Amethyst are to be fast as Node.js and comfortable as Rails. Note, Amethyst is at early stage of developing, so a lot of features are missing yet. However, it works :). Why I called my web framework "Amethyst"? Because Crystal  has a light purple color at GitHub like [amethyst gemstone](http://en.wikipedia.org/wiki/Amethyst).
+Amethyst is a web framework written in [Crystal](https://github.com/manastech/crystal) language. The goals of Amethyst are to be fast like Node.js and provide agility in application development as Rails do. Why I called my web framework "Amethyst"? Because Crystal  has a light purple color at GitHub like [amethyst gemstone](http://en.wikipedia.org/wiki/Amethyst).
 
-Latest version - [0.0.7](https://github.com/Codcore/Amethyst/releases/tag/v0.0.7)
+Latest version - [0.1](https://github.com/Codcore/Amethyst/releases/tag/v0.0.7)
 
 For detailed information, see docs on our [wiki](https://github.com/Codcore/Amethyst/wiki) below:
 
@@ -19,10 +19,11 @@ For detailed information, see docs on our [wiki](https://github.com/Codcore/Amet
 
 For now, next things are implemented:
 * class-based controllers with method-based actions
+* views for actions (*.ecr) (with some magic behind the scene done for you)
 * middleware support
 * simple REST routing
 * path, GET and POST params inside actions
-* base cookies support
+* basic cookies support
 * static files serving
 * http logger and timer for developers
 * simple environments support
@@ -35,8 +36,12 @@ require "amethyst"
 class WordController < Base::Controller
   actions :hello
 
+  view "hello", "#{__DIR__}/views", name
   def hello
-    html "<h1>Hello, world!"
+    name = "World"
+    respond_to do |format|
+      format.html { render "hello", name }
+    end
   end
 end
 
@@ -50,6 +55,9 @@ end
 
 app = HelloWorldApp.new
 app.serve
+
+# /views/hello.ecr
+Hello, <%= @name %>
 ```
 
 
