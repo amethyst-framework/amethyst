@@ -5,6 +5,7 @@ abstract class Controller
   property :body
 
   include Support::ControllerHelpers
+  include Sugar::View
 
   class Formatter
     getter :processed

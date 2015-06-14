@@ -12,7 +12,7 @@ module View
   end
 
 	macro view(name, path=__DIR__, *args)
-	  class {{name.id.capitalize}}View < View
+	  class {{name.id.capitalize}}View < Base::View
 	    def initialize(
 	      {% for arg in args %}
 	        @{{arg.id}},
