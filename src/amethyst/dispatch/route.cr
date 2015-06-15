@@ -11,8 +11,8 @@ class Route
     @methods = [] of String
   end
 
-  # Adds a HTTP method for route to respond to
-  def add_respond_method(method : String)
+  # Adds a HTTP request method for route to respond to
+  def add_request_method(method : String)
     raise "Method '#{method}' not supported" unless Http::METHODS.includes?(method) 
     @methods << method
   end

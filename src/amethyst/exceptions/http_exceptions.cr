@@ -7,7 +7,6 @@ class HttpException < AmethystException
   end
 end
 
-
 class HttpNotFound < HttpException
 
   def initialize
@@ -19,5 +18,23 @@ class HttpBadRequest < HttpException
 
   def initialize
     super(400, "Bad request")
+  end
+end
+
+class HttpMethodNotAllowed < HttpException
+  getter :method
+  getter :allowed
+
+  def initialize(@method, allowed : Array)
+    @allowed = allowed.join(",")
+    super(405, "Method #{method} not allowed. Allowed : #{@allowed}")
+  end
+end
+
+class HttpNotImplemented < HttpException
+  getter :method
+
+  def initialize(@method)
+    super(501, "Method #{@method} not implemented")
   end
 end

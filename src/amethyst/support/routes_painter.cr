@@ -11,7 +11,7 @@ module RoutesPainter
     controller, action = controller_action.split("#")
     controller = controller.capitalize+"Controller"
     route = Dispatch::Route.new(pattern, controller, action)
-    route.add_respond_method("GET")
+    route.add_request_method("GET")
     @routes << route
   end
 
@@ -20,7 +20,7 @@ module RoutesPainter
     controller, action = controller_action.split("#")
     controller = controller.capitalize+"Controller"
     route = Dispatch::Route.new(pattern, controller, action)
-    route.add_respond_method("PUT")
+    route.add_request_method("PUT")
     @routes << route
   end
 
@@ -29,7 +29,7 @@ module RoutesPainter
     controller, action = controller_action.split("#")
     controller = controller.capitalize+"Controller"
     route = Dispatch::Route.new(pattern, controller, action)
-    route.add_respond_method("POST")
+    route.add_request_method("POST")
     @routes << route
   end
 
@@ -38,7 +38,7 @@ module RoutesPainter
     controller, action = controller_action.split("#")
     controller = controller.capitalize+"Controller"
     route = Dispatch::Route.new(pattern, controller, action)
-    route.add_respond_method("DELETE")
+    route.add_request_method("DELETE")
     @routes << route
   end
 
@@ -47,10 +47,10 @@ module RoutesPainter
     controller, action = controller_action.split("#")
     controller = controller.capitalize+"Controller"
     route = Dispatch::Route.new(pattern, controller, action)
-    route.add_respond_method("GET")
-    route.add_respond_method("POST")
-    route.add_respond_method("PUT")
-    route.add_respond_method("DELETE")
+    route.add_request_method("GET")
+    route.add_request_method("POST")
+    route.add_request_method("PUT")
+    route.add_request_method("DELETE")
     @routes << route
   end
 end

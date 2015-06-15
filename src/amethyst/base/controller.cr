@@ -78,5 +78,4 @@ abstract class Controller
   end
 end
 
-# TODO: Separate module for html, answer etc. (mixin module)
 # TODO: Implement Http errors handling middleware

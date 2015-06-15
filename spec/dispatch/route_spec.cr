@@ -5,13 +5,13 @@ require "./spec_helper"
 describe Route do
 
   route_strict  = Route.new("/index/", "IndexController", "hello")
-  route_strict.add_respond_method("GET")
+  route_strict.add_request_method("GET")
   root_route    = Route.new("/", "IndexController", "show")
-  root_route.add_respond_method("POST")
+  root_route.add_request_method("POST")
   route_params  = Route.new("/users/show/:id", "UsersController", "show")
-  route_params.add_respond_method("PUT")
+  route_params.add_request_method("PUT")
   route_match   = Route.new("/index", "IndexController", "all")
-  route_match.add_respond_method("DELETE")
+  route_match.add_request_method("DELETE")
 
   it "instantiates with simple path properly" do
     route_strict.pattern.should eq "/index$"
@@ -28,8 +28,8 @@ describe Route do
 
   it "respond to added http methods" do
     route = Route.new("/", "IndexController", "hello")
-    route.add_respond_method("GET")
-    route.add_respond_method("PUT")
+    route.add_request_method("GET")
+    route.add_request_method("PUT")
     route.matches?("/", "GET").should eq true
     route.matches?("/", "PUT").should eq true
     route.matches?("/", "DELETE").should eq false
@@ -68,14 +68,14 @@ describe Route do
   it "raises an exception if unsupported method given" do
     route = Route.new("/", "IndexController", "hello")
     expect_raises Exception, "Method 'SOME' not supported" do
-      route.add_respond_method("SOME")
+      route.add_request_method("SOME")
     end
   end
 
   it "responds to added http methods" do
     route = Route.new("/", "IndexController", "hello")
-    route.add_respond_method("GET")
-    route.add_respond_method("PUT")
+    route.add_request_method("GET")
+    route.add_request_method("PUT")
     route.matches?("/", "GET").should eq true
     route.matches?("/", "PUT").should eq true
     route.matches?("/", "DELETE").should eq false
