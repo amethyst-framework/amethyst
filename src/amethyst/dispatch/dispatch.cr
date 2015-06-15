@@ -8,7 +8,7 @@ require "../sugar"
 
 # Load files into module namespace
 module Amethyst
-	module Dispatch 
-  	require "./*"
+  module Dispatch
+    require "./*"
   end
 end

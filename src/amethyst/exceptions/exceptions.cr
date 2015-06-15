@@ -1,5 +1,5 @@
 module Amethyst
-	module Exceptions
+  module Exceptions
 
     class AmethystException < Exception; end
 

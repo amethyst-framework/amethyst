@@ -13,10 +13,10 @@
 #
 #    it "should be initialized properly" do
 #      assert_equal request.method,  base_request.method
-#      assert_equal request.path,	  base_request.path
+#      assert_equal request.path,    base_request.path
 #      assert_equal request.headers, base_request.headers
-#      assert_equal request.body,		base_request.body
-#      assert_equal request.version,	base_request.version
+#      assert_equal request.body,    base_request.body
+#      assert_equal request.version,  base_request.version
 #    end
 #  end
 #end

@@ -3,8 +3,8 @@ require "../src/all"
 class TestController < Controller
   actions :index
 
-	def index
-		html "Hello world!<img src='/assets/amethyst.jpg'>"
+  def index
+    html "Hello world!<img src='/assets/amethyst.jpg'>"
   end
 
   def user

@@ -6,7 +6,7 @@ require "http"
 require "../support"
 
 module Amethyst
-	module Http
-		require "./*"
-	end
+  module Http
+    require "./*"
+  end
 end
