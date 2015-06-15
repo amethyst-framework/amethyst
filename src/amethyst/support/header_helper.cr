@@ -18,7 +18,7 @@ module HeaderHelper
   end
 
   # Returns 'Content-type' header as string
-	def content_type : String
+  def content_type : String
     headers["Content-type"]? ? headers["Content-type"].split(";")[0] : ""
   end
   

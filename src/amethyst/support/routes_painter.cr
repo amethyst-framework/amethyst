@@ -1,8 +1,8 @@
 module RoutesPainter
 
-	# Describes methods available in App.routes.draw block of router
+  # Describes methods available in App.routes.draw block of router
 
-	# Sets a route that should respond to GET HTTP method
+  # Sets a route that should respond to GET HTTP method
   # The synopsis of arguments receive is Rails-like:
   # get "/products/:id", "products#show"
   # where 'products' is a controller named ProductsController, and "show" is it's action
@@ -43,7 +43,7 @@ module RoutesPainter
   end
 
   def all(pattern, controller_action)
-  	pattern.gsub(/\$/, "\$") unless pattern == "/"
+    pattern.gsub(/\$/, "\$") unless pattern == "/"
     controller, action = controller_action.split("#")
     controller = controller.capitalize+"Controller"
     route = Dispatch::Route.new(pattern, controller, action)

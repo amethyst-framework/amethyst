@@ -2,9 +2,9 @@ require "./spec_helper"
 
 describe MiddlewareStack do
   
-	mdwstack = MiddlewareStack.new
-	request  = Request.new(HTTP::Request.new("GET", "/"))
-	mdwstack.use TestMiddleware
+  mdwstack = MiddlewareStack.new
+  request  = Request.new(HTTP::Request.new("GET", "/"))
+  mdwstack.use TestMiddleware
 
   it "processes request" do
     App.settings.configure do |conf|

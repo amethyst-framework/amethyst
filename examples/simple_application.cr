@@ -10,20 +10,20 @@ require "../src/amethyst"
 class IndexController < Base::Controller
   actions :hello, :bye
 
-	# Controller action. It gets request of Http::Requst as an argument.
-	# For now, each controller should return Http::Response by itself.
-	def hello
-  	html "<p>Hello, you're asked a #{request.method} #{request.path}</p> \n
+  # Controller action. It gets request of Http::Requst as an argument.
+  # For now, each controller should return Http::Response by itself.
+  def hello
+    html "<p>Hello, you're asked a #{request.method} #{request.path}</p> \n
           <a href='/bye'>Visit <b>bye</b> action</a>"
-	end
+  end
 
-	def bye
+  def bye
     html "<p>Bye!We hope you will come back</p>"
-	end
+  end
 
-	# Method "actions" must be provided by each controller of your application.
-	# It lets app to know which methods of your contoller are actions.
-	# The synopsys is add :action_name
+  # Method "actions" must be provided by each controller of your application.
+  # It lets app to know which methods of your contoller are actions.
+  # The synopsys is add :action_name
 end
 
 # Middleware are implemented as classes. Middleware class inherits from
@@ -51,7 +51,7 @@ class TestApp < Base::App
   # You can specify params to be captured:
   # get "/users/:id", "users#show"
   routes.draw do
-    all "/all", "index#hello" 
+    all "/all", "index#hello"
     get "/",    "index#hello"
     get "/bye", "index#bye"
 

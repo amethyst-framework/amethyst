@@ -14,9 +14,9 @@ class Request
 
   def initialize(base_request : HTTP::Request)
     @method  = base_request.method
-    @path 	 = base_request.path
+    @path    = base_request.path
     @headers = base_request.headers
-    @body 	 = base_request.body
+    @body    = base_request.body
     @version = base_request.version
     @query_parameters   = {} of String => String
     @path_parameters    = {} of String => String

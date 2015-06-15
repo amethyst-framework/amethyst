@@ -6,7 +6,7 @@ describe HeaderHelper do
   request      = Http::Request.new(base_request)
   response     = Http::Response.new(200, "OK")
 
-	it "sets and returns headers" do
+  it "sets and returns headers" do
     request.header "Accept", "text/html"
     response.header "Location", "google.com"
 

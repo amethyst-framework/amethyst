@@ -13,7 +13,7 @@ require "../exceptions"
 
 # Load files into module namespace
 module Amethyst
-	module Base
-		require "./*"
-	end
+  module Base
+    require "./*"
+  end
 end
