@@ -104,4 +104,4 @@ I would be glad for any help with contributing.
 
 ## Contributors
 
-- [Andrew Yaroshuk](https://github.com/[your-github-name]) Codcore - creator, maintainer
+- [Andrew Yaroshuk](https://github.com/Codcore]) Codcore - creator, maintainer
