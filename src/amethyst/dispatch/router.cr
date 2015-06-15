@@ -44,19 +44,39 @@ class Router
     return exists
   end
 
-  def process_named_route(request, response)
+  def process_named_route(request : Http::Request, response : Http::Response)
     controller = @matched_route.controller.capitalize+"Controller"
     controller_instance = @controllers_instances[controller] ||=  @controllers.fetch(controller).new
     controller_instance.set_env(request, response)
     response = @controllers_instances[controller].call_action(@matched_route.action)
   end
 
+  def process_default_route(request : Http::Request, response : Http::Response)
+    regexp = "^(?<controller>[a-z]*)\/(?<action>[a-z]*)"
+    match = Regex.new(regexp).match("request.path")
+    if match
+      controller = match["controller"] as String
+      action     = match["action"]     as String
+      if @controllers.has_key? controller
+        controller = controller.capitalize+"Controller"
+        controller_instance = @controllers_instances[controller] ||=  @controllers.fetch(controller).new
+        controller_instance.set_env(request, response)
+      end
+      response = @controllers_instances[controller].call_action(action)
+    else
+      response
+    end
+  end
+
+
+
   # Actually, performs a routing 
   def call(request : Http::Request) : Http::Response
     response = Http::Response.new(404, "Not found")
     if exists? request.path, request.method
       response = process_named_route(request, response)
+    else
+      response = process_default_route(request, response)
     end
-    response
   end
 end
