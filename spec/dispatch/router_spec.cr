@@ -35,6 +35,8 @@ describe Router do
 
   it "checks if path route exists" do
     router.exists?("/index", "GET").should eq true
-    router.exists?("/index", "PUT").should eq false
+    expect_raises HttpMethodNotAllowed do
+      router.exists?("/index", "PUT")
+    end
   end
 end

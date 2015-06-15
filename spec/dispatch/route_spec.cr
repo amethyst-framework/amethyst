@@ -26,18 +26,25 @@ describe Route do
     route_params.length.should eq 4
   end
 
-  it "respond to added http methods" do
+  it "respond to added http methods that allowed" do
     route = Route.new("/", "IndexController", "hello")
     route.add_request_method("GET")
     route.add_request_method("PUT")
     route.matches?("/", "GET").should eq true
     route.matches?("/", "PUT").should eq true
-    route.matches?("/", "DELETE").should eq false
+    expect_raises HttpMethodNotAllowed do
+      route.matches?("/", "DELETE")
+    end
+    expect_raises HttpNotImplemented do
+      route.matches?("/", "CONNECT")
+    end
   end
 
-  it "matches a given path with stict route" do
+  it "matches a given path with strict route" do
     route_strict.matches?("/index", "GET").should eq true
-    route_strict.matches?("/index", "PUT").should eq false
+    expect_raises HttpMethodNotAllowed do
+      route_strict.matches?("/index", "PUT")
+    end
     route_strict.matches?("/indexsd", "GET").should eq false
     route_strict.matches?("/index/", "GET").should eq true
     route_strict.matches?("/index/1/ddd/", "GET").should eq false
@@ -45,7 +52,9 @@ describe Route do
 
   it "mathes a given path with a matching route" do
     route_match.matches?("/index", "DELETE").should eq true
-    route_match.matches?("/index", "PUT").should eq false
+    expect_raises HttpMethodNotAllowed do
+      route_match.matches?("/index", "PUT")
+    end
     route_match.matches?("/indexsd", "DELETE").should eq true
     route_match.matches?("/index/", "DELETE").should eq true
     route_match.matches?("/index/1/ddd/", "DELETE").should eq false
@@ -57,7 +66,9 @@ describe Route do
     route_params.matches?("users/show/10/you", "PUT").should eq false
     route_params.matches?("users/show", "PUT").should eq false
     route_params.matches?("users/show/", "PUT").should eq false
-    route_params.matches?("users/show/10", "DELETE").should eq false
+    expect_raises HttpMethodNotAllowed do
+      route_params.matches?("/users/show/10", "DELETE")
+    end
   end
 
   it "mathes root route" do
@@ -67,7 +78,7 @@ describe Route do
 
   it "raises an exception if unsupported method given" do
     route = Route.new("/", "IndexController", "hello")
-    expect_raises Exception, "Method 'SOME' not supported" do
+    expect_raises UnsupportedHttpMethod do
       route.add_request_method("SOME")
     end
   end
@@ -78,7 +89,9 @@ describe Route do
     route.add_request_method("PUT")
     route.matches?("/", "GET").should eq true
     route.matches?("/", "PUT").should eq true
-    route.matches?("/", "DELETE").should eq false
+    expect_raises HttpMethodNotAllowed do
+      route.matches?("/", "DELETE")
+    end
   end
 
   it "returns params hash of given path" do

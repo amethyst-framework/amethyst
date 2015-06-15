@@ -10,6 +10,7 @@ class Config
   def initialize
     @enviroment  = "production"
     @app_dir     = ""
+    @raise_http_method_exceptions = true
   end
   
   def self.configure(&block)

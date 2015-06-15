@@ -4,6 +4,7 @@ class Route
   getter :action
   getter :length
   getter :params
+  getter :methods
 
   def initialize(@pattern, @controller, @action)
     @pattern = @pattern.gsub(/\/$/, "\$") unless @pattern == "/"
@@ -13,17 +14,22 @@ class Route
 
   # Adds a HTTP request method for route to respond to
   def add_request_method(method : String)
-    raise "Method '#{method}' not supported" unless Http::METHODS.includes?(method) 
+    raise Exceptions::UnsupportedHttpMethod.new(method) unless Http::METHODS.includes?(method) 
     @methods << method
   end
 
   # Cheks whether path matches a route pattern and HTTP method
   def matches?(path, method)
-    return false unless @methods.includes?(method) 
     path = path.gsub(/\/$/, "") unless path == "/"
     return false unless path.split("/").length == @length
     regex = Regex.new(@pattern.to_s.gsub(/(:\w*)/, ".*"))
-    path.match(regex) ? true : false
+    matches = false
+    if path.match(regex)
+      raise HttpNotImplemented.new(method) unless Http::METHODS.includes?(method)
+      raise HttpMethodNotAllowed.new(method, @methods) unless @methods.includes?(method)
+      matches = true
+    end
+    matches
   end
 
   # Returns hash of params of given path 

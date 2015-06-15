@@ -21,6 +21,13 @@ module Amethyst
       end
     end
 
+    class UnsupportedHttpMethod < AmethystException
+
+      def initialize(@ext)
+        super("Method #{@method} is not supported. Use #{Http::METHODS.join(" ")}")
+      end
+    end
+
     require "./http_exceptions"
     require "./controller_exceptions"
 
