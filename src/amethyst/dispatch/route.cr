@@ -20,12 +20,12 @@ class Route
 
   # Cheks whether path matches a route pattern and HTTP method
   def matches?(path, method)
+    raise HttpNotImplemented.new(method) unless Http::METHODS.includes?(method)
     path = path.gsub(/\/$/, "") unless path == "/"
     return false unless path.split("/").length == @length
     regex = Regex.new(@pattern.to_s.gsub(/(:\w*)/, ".*"))
     matches = false
     if path.match(regex)
-      raise HttpNotImplemented.new(method) unless Http::METHODS.includes?(method)
       raise HttpMethodNotAllowed.new(method, @methods) unless @methods.includes?(method)
       matches = true
     end

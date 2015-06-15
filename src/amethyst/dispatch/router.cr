@@ -10,7 +10,7 @@ class Router
   # This macro is a hack that allows to instansiate controllers through 
   # @controllers.fetch("ControllerName")
   macro register_controller(klass_name)
-    @controllers["{{klass_name.id}}"] = {{klass_name.id}}
+    @controllers["#{{{klass_name.id}}}"] = {{klass_name.id}}
   end
 
   def initialize()
@@ -45,20 +45,21 @@ class Router
   end
 
   def process_named_route(request : Http::Request, response : Http::Response)
-    controller = @matched_route.controller.capitalize+"Controller"
+    controller = @matched_route.controller
     controller_instance = @controllers_instances[controller] ||=  @controllers.fetch(controller).new
     controller_instance.set_env(request, response)
     response = @controllers_instances[controller].call_action(@matched_route.action)
   end
 
   def process_default_route(request : Http::Request, response : Http::Response)
-    regexp = "^(?<controller>[a-z]*)\/(?<action>[a-z]*)"
-    match = Regex.new(regexp).match("request.path")
+    regexp = "^\/(?<controller>[a-z]*)\/(?<action>[a-z]*)"
+    Regex.new(regexp).match("request.path")
+    match = Regex.new(regexp).match(request.path)
     if match
       controller = match["controller"] as String
       action     = match["action"]     as String
+      controller = controller.capitalize+"Controller"
       if @controllers.has_key? controller
-        controller = controller.capitalize+"Controller"
         controller_instance = @controllers_instances[controller] ||=  @controllers.fetch(controller).new
         controller_instance.set_env(request, response)
       end
@@ -67,8 +68,6 @@ class Router
       response
     end
   end
-
-
 
   # Actually, performs a routing 
   def call(request : Http::Request) : Http::Response

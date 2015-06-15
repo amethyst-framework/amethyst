@@ -1,7 +1,7 @@
 require "../src/all"
 
 class TestController < Controller
-  actions :index
+  actions :index, :user
 
   def index
     html "Hello world!<img src='/assets/amethyst.jpg'>"

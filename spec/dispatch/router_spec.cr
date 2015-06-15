@@ -11,6 +11,7 @@ describe Router do
   it "draws routes properly" do
     router.draw do
       get "/index/", "index#hello"
+      register IndexController
     end
     router.routes[0].should be_a Amethyst::Dispatch::Route
   end
@@ -38,5 +39,21 @@ describe Router do
     expect_raises HttpMethodNotAllowed do
       router.exists?("/index", "PUT")
     end
+  end
+
+  it "routes to default route if named route doesn't exists" do
+    router     = Router.new
+    request    = Http::Request.new(HTTP::Request.new("GET", "/index/hello"))
+    response   = Http::Response.new(200, "Ok")
+    controller = IndexController.new
+    controller.set_env(request, response)
+    router.draw do
+      register IndexController
+    end
+    response = router.call(request)
+    response.should be_a Http::Response
+    response.body.should eq "Hello"
+    request    = Http::Request.new(HTTP::Request.new("TYRE", "/index/hello"))
+    controller.set_env(request, response)
   end
 end

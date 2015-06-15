@@ -16,6 +16,17 @@ class IndexController < Base::Controller
   end
 end
 
+class MatchedController < Base::Controller
+  actions :hello, :bye
+  def hello
+    html "Hello"
+  end
+
+  def bye
+    html "Bye"
+  end
+end
+
 class TestMiddleware < Middleware::Base
 
   def call(request)
