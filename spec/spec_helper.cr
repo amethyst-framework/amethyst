@@ -1,9 +1,7 @@
 require "spec"
 require "../src/all"
 
-#require "minitest/autorun"
-#require "webmock"
-
+require "minitest/autorun"
 
 class IndexController < Base::Controller
   actions :hello, :bye

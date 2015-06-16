@@ -1,24 +1,36 @@
 require "./spec_helper"
+require "minitest/autorun"
 
-describe App do
+describe Base::App do
+  let(:app) { Base::App.new }
 
-  it "has right name" do
-    app      = Base::App.new()
-    app.port = 8080
-    app.name.should eq File.basename(__FILE__).gsub(/.\w+\Z/, "")
+  describe "initialize method" do
+    it "should set app name" do
+      app.name.must_equal "application_spec"
+    end
+
+    it "should set default middleware" do
+      Middleware::MiddlewareStack::INSTANCE.must_include Middleware::ShowExceptions
+      Middleware::MiddlewareStack::INSTANCE.must_include Middleware::Cookies
+      Middleware::MiddlewareStack::INSTANCE.must_include Middleware::Static
+    end
   end
 
-  it "class methods delegate shortcuts to other objects" do
-    App.settings.should be_a Base::Config
-    App.routes.should be_a   Dispatch::Router
-    App.logger.should be_a   Base::Logger
-    App.middlewares.should be_a Middleware::MiddlewareStack
-  end
+  describe "class methods delegate shortcuts to other objects" do
+    it "self.settings" do
+      Base::App.settings.must_be_same_as Base::Config::INSTANCE
+    end
 
-  it "loads middleware to a MiddlewareStack" do
-    App.use TestMiddleware
-    App.middlewares.any?.should eq true
-    puts App.middlewares
-    App.middlewares.includes?(TestMiddleware).should eq true
-  end 
+    it "self.routes" do
+      Base::App.routes.must_be_same_as Dispatch::Router::INSTANCE
+    end
+
+    it "self.logger" do
+      Base::App.logger.must_be_same_as Base::Logger::INSTANCE
+    end
+
+    it "self.middleware" do
+      Base::App.middleware.must_be_same_as Middleware::MiddlewareStack::INSTANCE
+    end
+  end
 end

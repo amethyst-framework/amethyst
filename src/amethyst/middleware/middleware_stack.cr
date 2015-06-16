@@ -9,13 +9,12 @@ class MiddlewareStack
   end
 
   def build_middleware
-    print "Building middleware\n"
     app = Dispatch::Router::INSTANCE
     @middlewares.reverse.each do |mdware|
       mdware = instantiate mdware
       app = mdware.build(app)
     end
-    puts self
+    puts self if App.settings.environment == "development"
     app
   end
 
@@ -27,6 +26,10 @@ class MiddlewareStack
     0.upto(@middlewares.length-1) do |i|
       yield @middlewares[i]
     end
+  end
+
+  def includes?(middleware)
+    @middlewares.includes? middleware
   end
 
   def to_s(io : IO)

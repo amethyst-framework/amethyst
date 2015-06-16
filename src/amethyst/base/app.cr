@@ -6,7 +6,7 @@ class App
 
   def initialize(app_path= __FILE__)
     @port = 8080
-    @name          = File.basename(app_path).gsub(/.\w+\Z/, "")
+    @name = File.basename(app_path).gsub(/.\w+\Z/, "")
     self.class.settings.app_dir  = File.dirname(app_path)
     set_default_middleware
     @app = Middleware::MiddlewareStack::INSTANCE.build_middleware
@@ -29,7 +29,7 @@ class App
   end
 
   # Shortcut for MiddlewareStack instance
-  def self.middlewares
+  def self.middleware
     Middleware::MiddlewareStack::INSTANCE
   end
 
