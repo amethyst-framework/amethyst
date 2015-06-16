@@ -2,7 +2,6 @@ class App
   property :port
   property :name
   getter   :routes
-  getter   :app_dir
 
   def initialize(app_path= __FILE__)
     @port = 8080
@@ -34,7 +33,7 @@ class App
   end
 
   def self.use(middleware : Middleware::Base.class)
-    Middleware::MiddlewareStack::INSTANCE.use middleware
+    self.middleware.use middleware
   end
 
   def serve(port=8080)
