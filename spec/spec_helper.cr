@@ -4,29 +4,6 @@ require "../src/all"
 #require "minitest/autorun"
 #require "webmock"
 
-
-class IndexController < Base::Controller
-  actions :hello, :bye
-  def hello
-    html "Hello"
-  end
-
-  def bye
-    html "Bye"
-  end
-end
-
-class MatchedController < Base::Controller
-  actions :hello, :bye
-  def hello
-    html "Hello"
-  end
-
-  def bye
-    html "Bye"
-  end
-end
-
 class TestMiddleware < Middleware::Base
 
   def call(request)
@@ -34,4 +11,14 @@ class TestMiddleware < Middleware::Base
     response = HTTP::Response.new(200, "Ok")
     @app.call(request)
   end
+end
+
+def create_controller_instance(controller : Base::Controller.class) 
+  headers      = HTTP::Headers.new
+  base_request = HTTP::Request.new("GET", "/", headers, "Test")
+  request      = Http::Request.new(base_request)
+  response     = Http::Response.new(404, "Not Found")
+  controller = IndexController.new
+  controller.set_env(request, response)
+  controller
 end

@@ -1,5 +1,5 @@
 abstract class Controller
-  getter   :actions_hash
+  getter   :actions
   property :request
   property :response
   property :body
@@ -34,11 +34,11 @@ abstract class Controller
     end
   end
 
-  # This hack creates procs from controller actions, and adds it to the @actions_hash
+  # This hack creates procs from controller actions, and adds it to the @actions
   macro actions(*actions)
     private def add_actions
       {% for action in actions %}
-        @actions_hash[{{action}}.to_s] = ->{{action.id}}
+        @actions[{{action}}.to_s] = ->{{action.id}}
       {% end %}
     end
   end
@@ -48,7 +48,7 @@ abstract class Controller
   def initialize()
     @request :: Http::Request
     @response :: Http::Response
-    @actions_hash = {} of String => ->
+    @actions = {} of String => ->
     add_actions
   end
 
@@ -64,14 +64,14 @@ abstract class Controller
   # Works like Ruby's send(:method) to invoke controller action:
   # NameController.call_action("show")
   def call_action(action)
-    raise Exceptions::ControllerActionNotFound.new(action, self.class.name) unless @actions_hash.has_key? action
-    @actions_hash[action].call
+    raise Exceptions::ControllerActionNotFound.new(action, self.class.name) unless @actions.has_key? action
+    @actions[action].call
     @response
   end
 
   def to_s(io : IO)
     msg = "self.name\n"
-    @actions_hash.each do |action|
+    @actions.each do |action|
       msg += "#{action}\n"
     end
     io << msg

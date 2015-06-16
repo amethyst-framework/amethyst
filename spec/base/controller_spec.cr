@@ -1,77 +1,106 @@
 require "./spec_helper"
 
-describe IndexController do
+describe Base::Controller do
 
-  headers           = HTTP::Headers.new
-  headers["Accept"] = ["text/plain"]
-  base_request      = HTTP::Request.new("GET", "/", headers, "Test")
-  request           = Http::Request.new(base_request)
-  response     = Http::Response.new(200, "Ok")
-  controller        = IndexController.new
-  controller.set_env(request, response)
+  describe "#initialize" do
+    controller = create_controller_instance(IndexController) 
 
-  it "instantiates properly" do
-    controller.actions_hash.should be_a Hash
-    controller.actions_hash.length.should eq 2
-  end
-
-  it "actions method captures actions properly" do
-    controller.actions_hash["hello"].should eq ->controller.hello
-    #controller.actions_hash["bye"].should be_a Proc
-  end
-
-  it "actions return HTTP::Response" do
-    response = controller.call_action("bye")
-    response.should be_a Http::Response
-    response.status.should eq 200
-    response.body.should eq "Bye"
-  end
-
-  it "Formatter html method renders view if html/text' presented in 'Accept' header" do
-    headers           = HTTP::Headers.new
-    headers["Accept"] = ["text/html"]
-    base_request = HTTP::Request.new("GET", "/", headers, "Test")
-    request      = Http::Request.new(base_request)
-    response     = Http::Response.new(404, "Not found")
-    view_controller =  ViewController.new
-    view_controller.set_env(request, response)
-    view_controller.call_action "hello"
-    response.body.should eq "Hello, Andrew"
-  end
-
-  it "raises exception if action not found" do
-    base_request = HTTP::Request.new("GET", "/", headers, "Test")
-    request      = Http::Request.new(base_request)
-    response     = Http::Response.new(404, "Not found")
-    view_controller =  ViewController.new
-    view_controller.set_env(request, response)
-    expect_raises ControllerActionNotFound do
-      view_controller.call_action "hell"
+    it "adds actions to @actions hash as procs" do
+      controller.actions.should be_a Hash
+      controller.actions.length.should eq 2
+      controller.actions["hello"].should eq ->controller.hello
+      controller.actions["bye"].should be_a Proc(Void)
     end
   end
 
-  it "Formatter html method yields only if 'html/text' presented in 'Accept' header" do
-    headers           = HTTP::Headers.new
-    headers["Accept"] = ["text/plain"]
-    base_request = HTTP::Request.new("GET", "/", headers, "Test")
-    request      = Http::Request.new(base_request)
-    response     = Http::Response.new(404, "Not found")
-    view_controller =  ViewController.new
-    view_controller.set_env(request, response)
-    expect_raises HttpBadRequest do
-      view_controller.call_action "hello"
+
+  describe "#call_action" do
+    controller = create_controller_instance(IndexController) 
+
+    it "should raise exception if action not found" do
+      expect_raises ControllerActionNotFound do
+        controller.call_action "hell"
+      end
+    end
+
+    it "should return Http::Response" do
+      controller.call_action "hello"
+      controller.response.should be_a Http::Response
+      controller.response.body.should eq "Hello"
+      controller.response.status.should eq 200
+
+      controller.call_action("bye")
+      controller.response.should be_a Http::Response
+      controller.response.status.should eq 200
+      controller.response.body.should eq "Bye"
     end
   end
 
-  it "redirects with 'redirect_to' method" do
-    headers           = HTTP::Headers.new
-    headers["Accept"] = ["text/html"]
-    base_request = HTTP::Request.new("GET", "/", headers, "Test")
-    request      = Http::Request.new(base_request)
-    response     = Http::Response.new(404, "Not found")
-    view_controller =  ViewController.new
-    view_controller.set_env(request, response)
-    view_controller.call_action "redirect"
-    response.status.should eq 303
+
+  describe "#respond_to" do
+    controller = create_controller_instance(ViewController)
+
+    it "raises HttpBadRequest exception if request not processed" do
+      controller.request.header "Accept", "image/jpg"
+      expect_raises HttpBadRequest do
+        controller.respond_to do |format|
+          format.html {}
+        end
+      end
+    end
+    
+    # TODO : Move theese to integration tests
+    it "can renders view in block" do
+      controller.request.header "Accept", "text/html"
+      controller.call_action "hello"
+      controller.response.body.should eq "Hello, Andrew"
+    end
+
+    it "can redirect in block" do
+      controller.call_action "redirect"
+      controller.response.status.should eq 303
+    end
+  end
+
+
+  describe Support::ControllerHelpers do
+    pending "pending for specs" {}
+  end
+
+
+  describe Base::Controller::Formatter do
+
+    describe "#html" do
+      request, response = HttpHlp.get_env
+
+      it "yields to the block if request.accept is 'text/html'" do
+        request.headers["Accept"] = "text/html"
+        formatter = Base::Controller::Formatter.new(request, response)
+        formatter.html {}
+        formatter.processed.should eq true
+
+        request.headers["Accept"] = "text/plain"
+        formatter = Base::Controller::Formatter.new(request, response)
+        formatter.html {}
+        formatter.processed.should eq false
+      end
+    end
+
+
+    describe "#any" do
+      request, response = HttpHlp.get_env
+
+      it "yields to the block regardless of value of request.accept" do
+        request.headers["Accept"] = "text/html"
+        formatter = Base::Controller::Formatter.new(request, response)
+        formatter.any {}
+        formatter.processed.should eq true
+
+        request.headers["Accept"] = "text/plain"
+        formatter = Base::Controller::Formatter.new(request, response)
+        formatter.any {}
+        formatter.processed.should eq true
+      end
+    end
   end
 end
