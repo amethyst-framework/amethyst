@@ -3,7 +3,7 @@ class MiddlewareStack
   include Sugar::Klass
   singleton_INSTANCE
   include Enumerable(Class)
-  
+
   def initialize()
     @middlewares   = [] of Middleware::Base.class
   end
@@ -14,7 +14,7 @@ class MiddlewareStack
       mdware = instantiate mdware
       app = mdware.build(app)
     end
-    puts self if App.settings.environment == "development"
+    puts self if Base::App.settings.environment == "development"
     app
   end
 
@@ -38,7 +38,7 @@ class MiddlewareStack
       msg += "use #{mdware}\n"
     end
     io << msg
-  end 
+  end
 end
 
 # TODO: Implement insert_before, delete, etc.
