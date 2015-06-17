@@ -33,6 +33,7 @@ class Router
 
   # Return true if path route exists, and sets @matched_route
   def exists?(path, method)
+    raise Exceptions::HttpNotImplemented.new(method) unless Http::METHODS.includes?(method)
     exists = false
     @routes.each do |route|
       if route.matches?(path, method)
@@ -41,7 +42,7 @@ class Router
         break
       end
     end
-    return exists
+    exists
   end
 
   def process_named_route(request : Http::Request, response : Http::Response)
@@ -72,7 +73,8 @@ class Router
   # Actually, performs a routing 
   def call(request : Http::Request) : Http::Response
     response = Http::Response.new(404, "Not found")
-    if exists? request.path, request.method
+    exists = exists? request.path, request.method
+    if exists
       response = process_named_route(request, response)
     else
       response = process_default_route(request, response)

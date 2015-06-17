@@ -9,7 +9,7 @@ describe MiddlewareStack do
       mdwstack.use TestMiddleware
 
       App.settings.configure do |conf|
-        conf.environment = "development"
+        conf.environment = "production"
       end
       App.routes.register IndexController
       app = mdwstack.build_middleware
