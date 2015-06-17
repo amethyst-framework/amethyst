@@ -14,25 +14,25 @@ class Route
 
   # Adds a HTTP request method for route to respond to
   def add_request_method(method : String)
-    raise Exceptions::UnsupportedHttpMethod.new(method) unless Http::METHODS.includes?(method) 
+    raise Exceptions::UnsupportedHttpMethod.new(method) unless Http::METHODS.includes?(method)
     @methods << method
   end
 
   # Cheks whether path matches a route pattern and HTTP method
   def matches?(path, method)
-    raise HttpNotImplemented.new(method) unless Http::METHODS.includes?(method)
+    raise Exceptions::HttpNotImplemented.new(method) unless Http::METHODS.includes?(method)
     path = path.gsub(/\/$/, "") unless path == "/"
     return false unless path.split("/").length == @length
     regex = Regex.new(@pattern.to_s.gsub(/(:\w*)/, ".*"))
     matches = false
     if path.match(regex)
-      raise HttpMethodNotAllowed.new(method, @methods) unless @methods.includes?(method)
+      raise Exceptions::HttpMethodNotAllowed.new(method, @methods) unless @methods.includes?(method)
       matches = true
     end
     matches
   end
 
-  # Returns hash of params of given path 
+  # Returns hash of params of given path
   def params(path)
     params        = {} of String => String
     path_items    = path.split("/")
