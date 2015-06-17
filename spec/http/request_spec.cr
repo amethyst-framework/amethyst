@@ -17,6 +17,7 @@ describe Request do
     end
   end
 
+
   describe "#get? #post? #put? delete?" do
     it "checks if http method is 'GET'" do
       request = HttpHlp.req("GET", "/")
@@ -49,8 +50,12 @@ describe Request do
     it "returns query string, if exists" do
       request = HttpHlp.req("GET", "/index/path.html?p1=v1&p2=v2")
       request.query_string.should eq "p1=v1&p2=v2"
+    end
 
-      request.path = "/index/"
+    it "returns nil if query_string not presented" do
+      request = HttpHlp.req("GET", "/index/")
+      request.query_string.should eq nil
+      request.path = "/index"
       request.query_string.should eq nil
     end
   end
@@ -66,12 +71,14 @@ describe Request do
     end
   end
 
+
   describe "#query_parameters" do
     it "returns query (GET) parameters" do
       request = HttpHlp.req("GET", "/index?user=user&name=name")
       request.query_parameters.should eq Hash{"user" : "user", "name" : "name"}
     end
   end
+
 
   describe "#request_parameters" do
     it "returns request (POST) parameters" do
@@ -81,6 +88,7 @@ describe Request do
       request.request_parameters.should eq Hash{ "user" => "Andrew", "id" => "5"}
     end
   end
+
 
   describe "#path_parameters" do
     it "returns path parameters" do
@@ -92,6 +100,7 @@ describe Request do
       request.path_parameters.should eq Hash{ "id" => "55"}
     end
   end
+
 
   describe "#accept" do
 
