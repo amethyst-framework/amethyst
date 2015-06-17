@@ -37,13 +37,6 @@ describe Router do
     end
   end
 
-  describe "#call" do
-    it "returns HTTP::Response" do
-      request = HttpHlp.req("GET", "/index")
-      router.call(request).should be_a Http::Response
-    end
-  end
-
   describe "#exists?" do
     it "return true if route path exists" do
       router.exists?("/index", "GET").should eq true
@@ -66,19 +59,27 @@ describe Router do
     end
   end
 
-  it "routes to default route if named route doesn't exists" do
-    router     = Router.new
-    request    = HttpHlp.req("GET", "/index/hello")
-    response   = HttpHlp.res(200, "Ok")
-    controller = create_controller_instance(IndexController)
-    controller.set_env(request, response)
-    router.draw do
-      register IndexController
+  describe "#call" do
+
+    it "returns HTTP::Response" do
+      request = HttpHlp.req("GET", "/index")
+      router.call(request).should be_a Http::Response
     end
 
-    response = router.call(request)
-    response.should be_a Http::Response
-    response.body.should eq "Hello"
+    it "routes to default route if named route doesn't exists" do
+      router     = Router.new
+      request    = HttpHlp.req("GET", "/index/hello")
+      response   = HttpHlp.res(200, "Ok")
+      controller = create_controller_instance(IndexController)
+      controller.set_env(request, response)
+      router.draw do
+        register IndexController
+      end
+
+      response = router.call(request)
+      response.should be_a Http::Response
+      response.body.should eq "Hello"
+    end
   end
 
   it "raises HttpNotImplemented if method is not implemented" do

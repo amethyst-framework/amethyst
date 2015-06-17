@@ -2,97 +2,111 @@ require "./spec_helper"
 
 describe Request do
 
-  headers           = HTTP::Headers.new
-  headers["Accept"] = ["text/plain"]
-  base_request      = HTTP::Request.new("GET", "/", headers, "Test")
-  req               = Request.new(base_request)
+  describe "#initialize" do
+    headers           = HTTP::Headers.new
+    headers["Accept"] = ["text/plain"]
+    base_request      = HTTP::Request.new("GET", "/", headers, "Test")
+    request           = Request.new(base_request)
 
-  it "instantiates properly" do
-    req.method.should             eq "GET"
-    req.path.should               eq "/"
-    req.headers["Accept"].should  eq "text/plain"
-    req.body.should               eq "Test"
-    req.version.should            eq "HTTP/1.1"
-  end
-
-  it "checks http methods" do
-    base_request = HTTP::Request.new("GET", "/", headers, "Test")
-    req          = Request.new(base_request)
-    req.get?.should eq true
-
-    base_request = HTTP::Request.new("POST", "/", headers, "Test")
-    req          = Request.new(base_request)
-    req.post?.should eq true
-
-    base_request = HTTP::Request.new("PUT", "/", headers, "Test")
-    req          = Request.new(base_request)
-    req.put?.should eq true
-
-    base_request = HTTP::Request.new("DELETE", "/", headers, "Test")
-    req          = Request.new(base_request)
-    req.delete?.should eq true
-
-    base_request = HTTP::Request.new("PUT", "/", headers, "Test")
-    req          = Request.new(base_request)
-    req.get?.should eq false
-  end
-
-  it "returns query string, if exists" do
-    q_base_request = HTTP::Request.new("GET", "/index/path.html?p1=v1&p2=v2", headers, "Test")
-    q_req          = Request.new(q_base_request)
-    q_req.query_string.should eq "p1=v1&p2=v2"
-    q_req.path = "/index/"
-    q_req.query_string.should eq nil
-  end
-
-  it "returns path without query string" do
-    path_request = HTTP::Request.new("GET", "/index", headers, "Test")
-    path_req     = Request.new(path_request)
-    path_req.path.should eq "/index"
-    path_request = HTTP::Request.new("GET", "/index?user_id=1", headers, "Test")
-    path_req     = Request.new(path_request)
-    path_req.path.should eq "/index"
-  end
-
-  it "returns query parameters" do
-    qp_request = HTTP::Request.new("GET", "/index?user=user&name=name", headers, "Test")
-    qp_req = Request.new(qp_request)
-    qp_req.query_parameters.should eq Hash{"user" : "user", "name" : "name"}
-  end
-
-  it "returns query (GET) parameters" do
-    base_request = HTTP::Request.new("GET", "/index?user=Andrew&id=5", headers, "Test")
-    request      = Request.new(base_request)
-    request.query_parameters.should eq Hash{ "user" => "Andrew", "id" => "5"}
-  end
-
-  it "returns request (POST) parameters" do
-    base_request = HTTP::Request.new("GET", "/", headers, "Test")
-    request      = Request.new(base_request)
-    request.body = "user=Andrew&id=5"
-    request.content_type = "application/x-www-form-urlencoded"
-    request.request_parameters.should eq Hash{ "user" => "Andrew", "id" => "5"}
-  end
-
-
-  it "returns path parameters" do
-    base_request = HTTP::Request.new("GET", "/users/55", headers, "Test")
-    request      = Request.new(base_request)
-    App.routes.draw do
-      get "/users/:id", "index#users"
-      register IndexController
+    it "instantiate Request object properly" do
+      request.method.should             eq "GET"
+      request.path.should               eq "/"
+      request.headers["Accept"].should  eq "text/plain"
+      request.body.should               eq "Test"
+      request.version.should            eq "HTTP/1.1"
     end
-    request.path_parameters.should eq Hash{ "id" => "55"}
   end
 
-  it "negotiates mime-types through 'Accept' header" do
-    base_request = HTTP::Request.new("GET", "/users/55", headers, "Test")
-    request      = Request.new(base_request)
-    accept = "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0"
-    request.header "Accept", accept
-    request.accept.should eq "text/html"
-    accept = "application/xhtml+xml,application/xml;q=0.9,image/webp"
-    request.header "Accept", accept
-    request.accept.should eq "application/xhtml+xml"
+  describe "#get? #post? #put? delete?" do
+    it "checks if http method is 'GET'" do
+      request = HttpHlp.req("GET", "/")
+      request.get?.should eq true
+    end
+
+    it "checks if http method is 'POST'" do
+      request = HttpHlp.req("POST", "/")
+      request.post?.should eq true
+    end
+
+    it "checks if http method is 'PUT'" do
+      request = HttpHlp.req("PUT", "/")
+      request.put?.should eq true
+    end
+
+    it "checks if http method is 'POST'" do
+      request = HttpHlp.req("DELETE", "/")
+      request.delete?.should eq true
+    end
+
+    it "checks if http method is not 'POST'" do
+      request = HttpHlp.req("PUT", "/")
+      request.get?.should eq false
+    end
+  end
+
+
+  describe "#query_string" do
+    it "returns query string, if exists" do
+      request = HttpHlp.req("GET", "/index/path.html?p1=v1&p2=v2")
+      request.query_string.should eq "p1=v1&p2=v2"
+
+      request.path = "/index/"
+      request.query_string.should eq nil
+    end
+  end
+
+
+  describe "#path" do
+    it "returns path without query string" do
+      request = HttpHlp.req("GET", "/index")
+      request.path.should eq "/index"
+
+      request = HttpHlp.req("GET", "/index?user_id=1")
+      request.path.should eq "/index"
+    end
+  end
+
+  describe "#query_parameters" do
+    it "returns query (GET) parameters" do
+      request = HttpHlp.req("GET", "/index?user=user&name=name")
+      request.query_parameters.should eq Hash{"user" : "user", "name" : "name"}
+    end
+  end
+
+  describe "#request_parameters" do
+    it "returns request (POST) parameters" do
+      request = HttpHlp.req("GET", "/")
+      request.body = "user=Andrew&id=5"
+      request.content_type = "application/x-www-form-urlencoded"
+      request.request_parameters.should eq Hash{ "user" => "Andrew", "id" => "5"}
+    end
+  end
+
+  describe "#path_parameters" do
+    it "returns path parameters" do
+      request = HttpHlp.req("GET", "/users/55")
+      App.routes.draw do
+        get "/users/:id", "index#users"
+        register IndexController
+      end
+      request.path_parameters.should eq Hash{ "id" => "55"}
+    end
+  end
+
+  describe "#accept" do
+
+    it "returns 'text/html' if Accept header contains '*/*'" do
+      request = HttpHlp.req("GET", "/users/55")
+      accept_string = "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0"
+      request.header "Accept", accept_string
+      request.accept.should eq "text/html"
+    end
+
+    it "returns first mime-type if Accept doesn't contain '*/*" do
+      request = HttpHlp.req("GET", "/users/55")
+      accept_string = "application/xhtml+xml,application/xml;q=0.9,image/webp"
+      request.header "Accept", accept_string
+      request.accept.should eq "application/xhtml+xml"
+    end
   end
 end

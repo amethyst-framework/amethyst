@@ -80,6 +80,7 @@ class Request
   # For now, if '*/*' is specified, then 'html/text', else first type in the list will be returned
   # This is a workaround, need to be fixed in future
   def accept
+    @accept unless @accept.empty?
     entries = headers["Accept"].split ","
     entries.map do |e|
       if e.includes? ";"
@@ -92,6 +93,7 @@ class Request
     else
       @accept = entries.first
     end
+    @accept
   end
 
   # Parses params from a given string
