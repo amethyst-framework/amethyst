@@ -12,9 +12,20 @@ class TestController < Controller
   end
 end
 
-App.settings.configure do |conf|
-  conf.environment = "development"
+class TestMiddleware < Middleware::Base
+
+  def call(request) : Http::Response
+    request.body = "Request is being processed"
+    response = HTTP::Response.new(200, "Ok")
+    @app.call(request)
+  end
 end
+
+App.settings.configure do |conf|
+  conf.environment = "production"
+end
+
+App.use TestMiddleware
 
 App.routes.draw do
   get  "/user/:id", "test#user"

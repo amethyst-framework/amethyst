@@ -6,19 +6,47 @@ require "../src/all"
 
 class TestMiddleware < Middleware::Base
 
-  def call(request)
-    request.body = "Request is being processed"
-    response = HTTP::Response.new(200, "Ok")
-    @app.call(request)
+  def call(request) : Http::Response
+    response = @app.call(request)
+    response.body = "Request is processed"
+    response
   end
 end
 
 def create_controller_instance(controller : Base::Controller.class) 
-  headers      = HTTP::Headers.new
-  base_request = HTTP::Request.new("GET", "/", headers, "Test")
-  request      = Http::Request.new(base_request)
-  response     = Http::Response.new(404, "Not Found")
-  controller = IndexController.new
+  request, response = HttpHlp.get_env
+  controller = controller.new
   controller.set_env(request, response)
   controller
+end
+
+class HttpHlp
+  property :req
+  property :res
+
+  def initialize
+    @req  = self.class.req("GET", "/")
+    @res = self.class.res(200, "OK")
+  end
+
+  def self.get_env
+    instance = new
+    return instance.req, instance.res
+  end
+
+  def get_env
+    return req, res 
+  end
+
+  def self.req(method, path)
+    headers      = HTTP::Headers.new
+    base_request = HTTP::Request.new(method, path, headers, "Test")
+    request      = Http::Request.new(base_request)
+    request
+  end
+
+  def self.res(code, body)
+    response     = Http::Response.new(code, body)
+    response
+  end
 end

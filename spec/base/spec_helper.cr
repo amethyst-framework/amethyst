@@ -12,15 +12,6 @@ class IndexController < Base::Controller
   end
 end
 
-class TestMiddleware < Middleware::Base
-
-  def call(request) : Http::Response
-    request.body = "Request is being processed"
-    response = HTTP::Response.new(200, "Ok")
-    @app.call(request)
-  end
-end
-
 class ViewController < Controller
   actions :index, :hello, :redirect
 
@@ -43,41 +34,5 @@ class ViewController < Controller
   end
 end
 
-def create_controller_instance(controller : Base::Controller.class) 
-  request, response = HttpHlp.get_env
-  controller = controller.new
-  controller.set_env(request, response)
-  controller
-end
 
-class HttpHlp
-  property :req
-  property :res
 
-  def initialize
-    @req  = self.class.req("GET", "/")
-    @res = self.class.res(200, "OK")
-  end
-
-  def self.get_env
-    instance = new
-    return instance.req, instance.res
-  end
-
-  def get_env
-    return req, res 
-  end
-
-  def self.req(method, path)
-    headers      = HTTP::Headers.new
-    base_request = HTTP::Request.new(method, path, headers, "Test")
-    request      = Http::Request.new(base_request)
-    request
-  end
-
-  def self.res(code, body)
-    response     = Http::Response.new(code, body)
-    response
-  end
-
-end
