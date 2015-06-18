@@ -68,4 +68,15 @@ describe Params do
 			params.has_keys?(keys).should eq false
 		end
 	end
+
+  describe "#merge" do
+    it "#merges with hash of other Params object and return new Params" do
+      params = Params.new
+      params2 = Params.new
+      params.from_hash Hash{ "id" => 5, "name" => "name", "foo" => "bar"}
+      params2.from_hash Hash{ "id" => 9, "name" => "foo", "foo" => "bar", "page" => 90 }
+      merged = params.merge params2
+      merged.should eq Hash{ "id" => "9", "name" => "foo", "foo" => "bar", "page" => "90" }
+    end
+  end
 end

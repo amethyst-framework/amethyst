@@ -3,6 +3,7 @@ abstract class Controller
   property :request
   property :response
   property :body
+  getter   :params
 
   include Support::ControllerHelpers
   include Sugar::View
@@ -50,6 +51,10 @@ abstract class Controller
     @response :: Http::Response
     @actions = {} of String => ->
     add_actions
+  end
+
+  def params
+    request.parameters
   end
 
   def set_env(@request, @response)
