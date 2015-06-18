@@ -33,7 +33,7 @@ Here is classic 'Hello World' in Amethyst
 ```crystal
 require "amethyst"
 
-class WordController < Base::Controller
+class WorldController < Base::Controller
   actions :hello
 
   view "hello", "#{__DIR__}/views", name
@@ -47,9 +47,9 @@ end
 
 class HelloWorldApp < Base::App
   routes.draw do
-    all "/",      "word#hello" 
-    get "/hello", "word#hello" 
-    register WordController
+    all "/",      "world#hello" 
+    get "/hello", "world#hello" 
+    register WorldController
   end
 end
 
