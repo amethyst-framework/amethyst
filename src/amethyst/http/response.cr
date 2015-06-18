@@ -2,6 +2,7 @@ class Response
   property :body
   property :status
   property :headers
+  property :cookies
 
   include Support::HeaderHelper
 
@@ -16,8 +17,10 @@ class Response
     return HTTP::Response.new(@status, @body, headers = @headers, version = @version)
   end
 
-  def set_cookie(cookie : String)
-    headers["Set-Cookie"] = cookie
+  def cookie(key, value, secure=false)
+    cookie_string = "#{CGI.escape(key)}=#{CGI.escape(value)}"
+    cookie_string += "; secure" if secure
+    headers.add "Set-Cookie", cookie_string
   end
 
   def log

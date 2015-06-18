@@ -58,6 +58,7 @@ class Request
   def query_parameters
     @query_parameters unless @query_parameters.empty?
     @query_parameters.from_hash(parse_parameters query_string)
+    @query_parameters
   end
 
   # returns path parameters: '/users/:id'
@@ -74,6 +75,7 @@ class Request
     if content_type == "application/x-www-form-urlencoded"
       @request_parameters.from_hash(parse_parameters @body)
     end
+    @request_parameters
   end
 
   # For now, if '*/*' is specified, then 'html/text', else first type in the list will be returned
@@ -99,10 +101,16 @@ class Request
   private def parse_parameters(params_string)
     hash = {} of String => String
     params = params_string.to_s.split("&")
-    params.each do |param|
-      if match = /^(?<key>[^=]*)(=(?<value>.*))?$/.match(param)
-        key, value = param.split("=").map { |s| CGI.unescape(s) }
-        hash[key] = value
+    unless params.empty?
+      params.each do |param|
+        if match = /^(?<key>[^=]*)(=(?<value>.*))?$/.match(param)
+          begin
+            key, value = param.split("=").map { |s| CGI.unescape(s) }
+          rescue IndexOutOfBounds
+            value = ""
+          end
+          hash[key as String] = value
+        end
       end
     end
     hash
@@ -113,14 +121,14 @@ class Request
     {
       "http method"     : @method,
       "path"            : path,
-      "query string"    : query_string,
+      "query string"    : query_string.hash,
       "protocol"        : protocol,
       "host"            : host,
       "port"            : port,
       "version"         : @version,
-      "query params"    : query_parameters,
-      "path parameters" : path_parameters,
-      "post parameters" : request_parameters,
+      "query params"    : query_parameters.hash,
+      "path parameters" : path_parameters.hash,
+      "post parameters" : request_parameters.hash,
       "content type"    : content_type
     }
   end

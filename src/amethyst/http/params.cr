@@ -1,7 +1,12 @@
 class Params
+	getter :hash
 
 	def initialize(default="")
 		@params = Hash(String, String).new(default)
+	end
+
+	def hash
+		@params
 	end
 
 	def [](key)

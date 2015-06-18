@@ -118,4 +118,11 @@ describe Request do
       request.accept.should eq "application/xhtml+xml"
     end
   end
+
+  describe "#parse_parameters" do
+    it "sets parameter value to empty String if value" do
+      request = HttpHlp.req("GET", "/index?id=45&name=")
+      request.request_parameters[:id].should eq ""
+    end
+  end
 end

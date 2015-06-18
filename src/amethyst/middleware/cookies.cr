@@ -5,7 +5,7 @@ class Cookies < Middleware::Base
     cookies_hash = {} of String => String
     cookies = cookies_string.split(";")
     cookies.each do |cookie|
-      key, value = cookie.split("=")
+      key, value = cookie.strip.split("=")
       key   = CGI.unescape(key)
       value = CGI.unescape(value)
       cookies_hash[key.strip] = value.strip
