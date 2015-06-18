@@ -18,7 +18,7 @@ class Response
   end
 
   def cookie(key, value, secure=false)
-    cookie_string = "#{CGI.escape(key)}=#{CGI.escape(value)}"
+    cookie_string = "#{CGI.escape(key.to_s)}=#{CGI.escape(value.to_s)}"
     cookie_string += "; secure" if secure
     headers.add "Set-Cookie", cookie_string
   end

@@ -5,6 +5,8 @@ class TestController < Controller
 
   def index
     html "Hello world!<img src='/assets/amethyst.jpg'>"
+    response.cookie "session", "Amethyst"
+    response.cookie "name", "Andrew"
   end
 
   def user
@@ -13,7 +15,7 @@ class TestController < Controller
 end
 
 App.settings.configure do |conf|
-  conf.environment = "production"
+  conf.environment = "development"
 end
 
 App.routes.draw do

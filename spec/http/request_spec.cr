@@ -119,8 +119,17 @@ describe Request do
     end
   end
 
+  describe "#cookies" do
+    # TODO : Implement class Cookie based on Http::Params
+    it "parses 'Cookie' header and returns a cookie Params" do
+      req = HttpHlp.req("GET", "/")
+      req.headers.add "Cookie", "id=22; name=Amethyst"
+      req.cookies["name"].should eq "Amethyst"
+    end
+  end
+
   describe "#parse_parameters" do
-    it "sets parameter value to empty String if value" do
+    it "sets parameter value to empty String if value is not set" do
       request = HttpHlp.req("GET", "/index?id=45&name=")
       request.request_parameters[:id].should eq ""
     end

@@ -20,7 +20,11 @@ describe Response do
   end
 
   describe "#cookie" do
-  	it "should add a 'Set-" do
+  	it "should add a proper 'Set-Cookie" do
+  		response = HttpHlp.res(200, "Ok")
+  		response.cookie "id", 22
+  		response.cookie "name", "Amethyst"
+  		response.headers["Set-Cookie"].should eq "id=22,name=Amethyst"
   	end
   end
 end

@@ -6,7 +6,6 @@ class Request
   property :method
   property :headers
   property :body
-  property :cookies
   getter   :version
   setter   :path
 
@@ -95,6 +94,25 @@ class Request
       @accept = entries.first
     end
     @accept
+  end
+
+  def cookies
+    @cookies unless @cookies.empty?
+    cookie_string = headers["Cookie"]
+    @cookies.from_hash(parse_cookies cookie_string)
+    @cookies
+  end
+
+  private def parse_cookies(cookies_string)
+    cookies_hash = {} of String => String
+    cookies = cookies_string.split(";")
+    cookies.each do |cookie|
+      key, value = cookie.strip.split("=")
+      key   = CGI.unescape(key)
+      value = CGI.unescape(value)
+      cookies_hash[key.strip] = value.strip
+    end
+    cookies_hash
   end
 
   # Parses params from a given string

@@ -17,7 +17,6 @@ describe Base::App do
 
     it "should set default middleware" do
       Middleware::MiddlewareStack::INSTANCE.includes?(Middleware::ShowExceptions).should be_true
-      Middleware::MiddlewareStack::INSTANCE.includes?(Middleware::Cookies).should be_true
       Middleware::MiddlewareStack::INSTANCE.includes?(Middleware::Static).should be_true
     end
   end
