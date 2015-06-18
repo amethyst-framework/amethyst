@@ -18,10 +18,10 @@ class Request
     @headers = base_request.headers
     @body    = base_request.body
     @version = base_request.version
-    @query_parameters   = {} of String => String
-    @path_parameters    = {} of String => String
-    @request_parameters = {} of String => String
-    @cookies = {} of String => String
+    @query_parameters   = Http::Params.new
+    @path_parameters    = Http::Params.new
+    @request_parameters = Http::Params.new
+    @cookies            = Http::Params.new
     @accept = ""
   end
 
@@ -57,14 +57,14 @@ class Request
   # returns "GET" parameters: '/index?user=Andrew&id=5'
   def query_parameters
     @query_parameters unless @query_parameters.empty?
-    @query_parameters = parse_parameters query_string
+    @query_parameters.from_hash(parse_parameters query_string)
   end
 
   # returns path parameters: '/users/:id'
   def path_parameters
     @path_parameters unless @path_parameters.empty?
     if Base::App.routes.exists? path, method
-      @path_parameters = Base::App.routes.matched_route.params path
+      @path_parameters.from_hash(Base::App.routes.matched_route.params path)
     end
     @path_parameters
   end
@@ -72,9 +72,8 @@ class Request
   # returns POST parameters
   def request_parameters
     if content_type == "application/x-www-form-urlencoded"
-      @query_parameters = parse_parameters @body
+      @request_parameters.from_hash(parse_parameters @body)
     end
-    @query_parameters
   end
 
   # For now, if '*/*' is specified, then 'html/text', else first type in the list will be returned

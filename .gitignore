@@ -2,6 +2,7 @@
 /libs/
 /.crystal/
 /doc/
+/.work/
 
 
 # Libraries don't need dependency lock
