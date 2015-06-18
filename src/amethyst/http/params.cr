@@ -24,5 +24,13 @@ class Params
 		@params.inspect
 	end
 
+	def has_keys?(keys_array : Array)
+		has = true
+		keys_array.each do |key|
+			has = false unless @params.has_key? key.to_s
+		end
+		has
+	end
+
 	forward_missing_to @params
 end

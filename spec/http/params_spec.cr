@@ -25,7 +25,7 @@ describe Params do
 			params = Params.new
 			params.from_hash Hash{ "id" => 5, :name => "Amethyst"}
 			params["id"].should eq "5"
-			# params["name"].should eq "Amethyst"
+			params["name"].should eq "Amethyst"
 			params.length.should eq 2
 		end
 	end
@@ -50,6 +50,22 @@ describe Params do
 			params = Params.new
 			params[:id] = 5
 			params["id"].should eq "5"
+		end
+	end
+
+	describe "#has_keys?" do
+		it "should return true if all keys in array exists in @params" do
+			params = Params.new
+			params.from_hash({ "id" => 5, "name" => "name", "foo" => "bar"} )
+			keys = [:id, :name]
+			params.has_keys?(keys).should eq true
+		end
+
+		it "should return false if at least one key in array doesn't exist in @params" do
+			params = Params.new
+			params.from_hash({ "id" => 5, "name" => "name", "foo" => "bar"} )
+			keys = [:id, :age]
+			params.has_keys?(keys).should eq false
 		end
 	end
 end
