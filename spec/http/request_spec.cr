@@ -122,9 +122,22 @@ describe Request do
   describe "#cookies" do
     # TODO : Implement class Cookie based on Http::Params
     it "parses 'Cookie' header and returns a cookie Params" do
-      req = HttpHlp.req("GET", "/")
-      req.headers.add "Cookie", "id=22; name=Amethyst"
-      req.cookies["name"].should eq "Amethyst"
+      request = HttpHlp.req("GET", "/")
+      request.headers.add "Cookie", "id=22; name=Amethyst"
+      request.cookies["name"].should eq "Amethyst"
+    end
+  end
+
+  describe "#parameters" do
+    it "contains all parameters" do
+      request = HttpHlp.req("GET", "/users/95?id=22&name=Amethyst&page=90")
+      request.body = "user=Andrew&id=5"
+      request.content_type = "application/x-www-form-urlencoded"
+      App.routes.draw do
+        get "/users/:id", "index#users"
+        register IndexController
+      end
+      request.parameters.should eq Hash{"user" => "Andrew", "id" => "95", "name" => "Amethyst", "page" => "90"}
     end
   end
 

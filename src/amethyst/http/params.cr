@@ -9,6 +9,13 @@ class Params
 		@params
 	end
 
+	def merge(other : Params)
+		merged_hash = @params.merge other.hash
+		merged_params = Params.new
+		merged_params.from_hash(merged_hash)
+		merged_params
+	end
+
 	def [](key)
 		@params[key.to_s]
 	end

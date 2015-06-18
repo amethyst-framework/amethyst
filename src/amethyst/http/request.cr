@@ -96,6 +96,12 @@ class Request
     @accept
   end
 
+  def parameters
+    parameters = query_parameters.merge request_parameters 
+    parameters = parameters.merge path_parameters
+    parameters
+  end
+
   def cookies
     @cookies unless @cookies.empty?
     cookie_string = headers["Cookie"]
