@@ -47,6 +47,7 @@ class Router
 
   def process_named_route(request : Http::Request, response : Http::Response)
     controller = @matched_route.controller
+    
     controller_instance = @controllers_instances[controller] ||=  @controllers.fetch(controller).new
     controller_instance.set_env(request, response)
     response = @controllers_instances[controller].call_action(@matched_route.action)
@@ -57,9 +58,11 @@ class Router
     Regex.new(regexp).match("request.path")
     match = Regex.new(regexp).match(request.path)
     if match
+      p @controllers
       controller = match["controller"] as String
       action     = match["action"]     as String
       controller = controller.capitalize+"Controller"
+      p controller
       if @controllers.has_key? controller
         controller_instance = @controllers_instances[controller] ||=  @controllers.fetch(controller).new
         controller_instance.set_env(request, response)

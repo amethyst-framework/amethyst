@@ -81,6 +81,7 @@ class Request
   # This is a workaround, need to be fixed in future
   def accept
     @accept unless @accept.empty?
+    return "text/html" unless headers["Accept"]?
     entries = headers["Accept"].split ","
     entries.map do |e|
       if e.includes? ";"
