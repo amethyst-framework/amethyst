@@ -3,7 +3,6 @@ class Route
   getter :controller
   getter :action
   getter :length
-  getter :params
   getter :methods
 
   def initialize(@pattern, @controller, @action)
