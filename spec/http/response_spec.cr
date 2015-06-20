@@ -30,7 +30,6 @@ describe Response do
     it "should add a proper complex cookie to 'Set-Cookie' header" do
       response = HttpHlp.res(200, "Ok")
       response.cookie "id", 22, http_only: true, secure: true, path: "/", domain: "test.com"
-      p response.headers["Set-Cookie"]
       response.headers["Set-Cookie"].should eq "id=22; domain=test.com; path=/; secure; HttpOnly"
     end
   end

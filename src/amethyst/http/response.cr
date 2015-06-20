@@ -12,7 +12,7 @@ class Response
   def set(@status, @body)
   end
 
-  def status(status : Int32)
+  def status=(status : Int32)
     @status = status
   end
 

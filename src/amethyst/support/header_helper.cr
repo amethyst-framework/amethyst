@@ -12,7 +12,7 @@ module HeaderHelper
 
   # Returns true if header exists and vice versa
   def has_header?(key)
-    @headers[key]?
+    @headers.has_key? key
   end
 
   # Returns 'Content-type' header as string

@@ -120,7 +120,6 @@ describe Request do
   end
 
   describe "#cookies" do
-    # TODO : Implement class Cookie based on Http::Params
     it "parses 'Cookie' header and returns a cookie Params" do
       request = HttpHlp.req("GET", "/")
       request.headers.add "Cookie", "id=22; name=Amethyst"
