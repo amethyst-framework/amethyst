@@ -126,6 +126,11 @@ describe Request do
       request.headers.add "Cookie", "id=22; name=Amethyst"
       request.cookies["name"].should eq "Amethyst"
     end
+
+    it "return empty Params if header 'Cookie' is not sended by browser" do
+      request = HttpHlp.req("GET", "/")
+      request.cookies["name"].should eq ""
+    end
   end
 
   describe "#parameters" do

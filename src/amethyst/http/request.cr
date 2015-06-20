@@ -105,8 +105,9 @@ class Request
 
   def cookies
     @cookies unless @cookies.empty?
-    cookie_string = headers["Cookie"]
-    @cookies.from_hash(parse_cookies cookie_string)
+    if cookie_string = headers["Cookie"]?
+      @cookies.from_hash(parse_cookies cookie_string)
+    end
     @cookies
   end
 
