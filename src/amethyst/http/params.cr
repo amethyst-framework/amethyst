@@ -45,10 +45,11 @@ class Params
 	end
 
   def to_s(io : IO)
-    msg = "\n{"
+    msg = "\n{\n"
     @params.each do |k,v|
-      msg+="#{k} => #{v}"
+      msg+="#{k} => #{v}\n"
     end
+    msg +="\n}"
     io << msg
   end
 
