@@ -11,8 +11,6 @@ class Static < Middleware::Base
     else
       app_path = Base::App.settings.app_dir
       path_to_file = app_path+request.path
-      p app_path
-      p path_to_file
       dir = File.dirname(path_to_file)
       response = Http::Response.new(404, "File not found")
       if static_dir_exists?(dir)
