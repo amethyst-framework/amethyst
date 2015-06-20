@@ -7,6 +7,8 @@ require "./amethyst/support"
 require "./amethyst/exceptions"
 require "./amethyst/version"
 
+require "mime"
+
 # All modules classes and inner modules loads to global namespace
 include Amethyst
 include Amethyst::Base

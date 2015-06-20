@@ -2,6 +2,7 @@ class Config
   property :environment
   property :app_dir
   property :namespace
+  property :static_dirs
 
   # Simple configuration class for App
   
@@ -13,6 +14,7 @@ class Config
     @app_dir     = ""
     @namespace   = ""
     @raise_http_method_exceptions = true
+    @static_dirs = [] of String
   end
   
   def self.configure(&block)

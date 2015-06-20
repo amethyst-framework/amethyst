@@ -7,6 +7,8 @@ require "./amethyst/support"
 require "./amethyst/exceptions"
 require "./amethyst/version"
 
+require "mime"
+
 # Include all Amethyst modules to global namespace
 # But, you can use Amethyst::Modulename approach too
 include Amethyst

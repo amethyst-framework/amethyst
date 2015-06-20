@@ -12,8 +12,7 @@ describe Base::App do
     end
 
     it "should set app directory" do
-      dir = "#{__FILE__}"
-      Base::App.settings.app_dir.should eq File.dirname(dir)
+      Base::App.settings.app_dir.should eq ENV["PWD"]
     end
 
     it "should set default middleware" do
@@ -26,7 +25,7 @@ describe Base::App do
   describe "#get_app_namespace" do
     it "should return namespace of initialized app" do
       my_app = My::Inner::App.new
-      My::Inner::App.settings.namespace.should eq "My::Inner"
+      My::Inner::App.settings.namespace.should eq "My::Inner::"
     end
 
     it "should return empty string if app is in global namespace" do

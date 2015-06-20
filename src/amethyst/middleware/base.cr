@@ -1,7 +1,7 @@
 # Base middleware class
 abstract class Base 
 
-def initialize()
+def initialize
   @app = self
 end
 
