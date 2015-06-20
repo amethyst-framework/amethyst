@@ -2,13 +2,12 @@ class App
   property :port
   property :name
   getter   :routes
-  getter   :namespace
 
   def initialize(app_path= __FILE__, app_type={{@type.name.stringify}})
-    @namespace = get_app_namespace(app_type)
     @port = 8080
     @name = File.basename(app_path).gsub(/.\w+\Z/, "")
-    self.class.settings.app_dir  = File.dirname(app_path)
+    self.class.settings.app_dir   = File.dirname(app_path)
+    self.class.settings.namespace = get_app_namespace(app_type)
     set_default_middleware
     @app = Middleware::MiddlewareStack::INSTANCE.build_middleware
     @http_handler  = Base::Handler.new(@app)
@@ -55,7 +54,7 @@ class App
     namespace = ""
     if modules.length > 1
       modules.delete(modules.last)
-      namespace = modules.join sep
+      namespace = modules.join(sep)+sep
     end
     namespace
   end

@@ -1,6 +1,7 @@
 class Config
   property :environment
   property :app_dir
+  property :namespace
 
   # Simple configuration class for App
   
@@ -10,6 +11,7 @@ class Config
   def initialize
     @enviroment  = "production"
     @app_dir     = ""
+    @namespace   = ""
     @raise_http_method_exceptions = true
   end
   

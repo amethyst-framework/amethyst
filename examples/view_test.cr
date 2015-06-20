@@ -45,7 +45,7 @@ end
 class MyApp < Base::App
 
   settings.configure do |conf|
-    conf.environment = "development"
+    conf.environment = "production"
   end
 
   routes.draw do

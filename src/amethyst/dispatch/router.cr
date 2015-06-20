@@ -59,7 +59,7 @@ class Router
     if match
       controller = match["controller"] as String
       action     = match["action"]     as String
-      controller = controller.capitalize+"Controller"
+      controller = Base::App.settings.namespace+controller.capitalize+"Controller"
       if @controllers.has_key? controller
         controller_instance = @controllers_instances[controller] ||=  @controllers.fetch(controller).new
         controller_instance.set_env(request, response)

@@ -26,12 +26,12 @@ describe Base::App do
   describe "#get_app_namespace" do
     it "should return namespace of initialized app" do
       my_app = My::Inner::App.new
-      my_app.namespace.should eq "My::Inner"
+      My::Inner::App.settings.namespace.should eq "My::Inner"
     end
 
     it "should return empty string if app is in global namespace" do
       global_app = GlobalApp.new
-      global_app.namespace.should eq ""
+      GlobalApp.settings.namespace.should eq ""
     end
   end
 
