@@ -1,5 +1,6 @@
 require "../src/all"
 
+module Say
 class TimeLogger < Middleware::Base
 
   def call(request)
@@ -17,15 +18,15 @@ class TestController < Controller
   actions :index, :user, :hello, :redirect
 
   def index
-    html "Hello world!<img src='/assets/amethyst.jpg'>"
+    html "Hello world!<img src='/assets/amethyst.png'>"
   end
 
   view "hello", "#{__DIR__}/views", name
   def hello
-    name = "Andrew"
+    @name = "Andrew"
     respond_to do |format|
-      format.any  { render "hello", name } 
-      format.html { render "hello", name }
+      format.any  { render "hello", @name } 
+      format.html { render "hello", @name }
     end
   end
 
@@ -56,5 +57,6 @@ class MyApp < Base::App
 
   use TimeLogger
 end
+end
 
-MyApp.new.serve
+Say::MyApp.new.serve

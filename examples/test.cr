@@ -4,7 +4,7 @@ class TestController < Controller
   actions :index, :user
 
   def index
-    html "Hello world!<img src='/assets/amethyst.jpg'>"
+    html "Hello world!<img src='/assets/amethyst.png'>"
     response.cookie "session", "Amethyst"
     response.cookie "name", "Andrew"
   end

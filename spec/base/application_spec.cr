@@ -3,6 +3,7 @@ require "./spec_helper"
 
 describe Base::App do
 
+
   describe "#initialize" do
     app = Base::App.new
 
@@ -21,6 +22,20 @@ describe Base::App do
     end
   end
 
+
+  describe "#get_app_namespace" do
+    it "should return namespace of initialized app" do
+      my_app = My::Inner::App.new
+      my_app.namespace.should eq "My::Inner"
+    end
+
+    it "should return empty string if app is in global namespace" do
+      global_app = GlobalApp.new
+      global_app.namespace.should eq ""
+    end
+  end
+
+
   describe "shortcuts" do
     it "self.settings" do
       Base::App.settings.should be Base::Config::INSTANCE
@@ -38,6 +53,7 @@ describe Base::App do
       Base::App.middleware.should be Middleware::MiddlewareStack::INSTANCE
     end
   end
+
 
   describe "self#use" do
     Base::App.use TestMiddleware

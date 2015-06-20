@@ -43,7 +43,8 @@ class Router
     end
     exists
   end
-
+  
+  # Process regular routes (which are in @routes)
   def process_named_route(request : Http::Request, response : Http::Response)
     controller = @matched_route.controller
     controller_instance = @controllers_instances[controller] ||=  @controllers.fetch(controller).new
@@ -72,9 +73,7 @@ class Router
   # Actually, performs a routing 
   def call(request : Http::Request) : Http::Response
     response = Http::Response.new(404, "Not found")
-    puts to_s
-    exists = exists? request.path, request.method
-    if exists
+    if exists = exists? request.path, request.method
       response = process_named_route(request, response)
     else
       response = process_default_route(request, response)

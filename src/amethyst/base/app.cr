@@ -2,8 +2,10 @@ class App
   property :port
   property :name
   getter   :routes
+  getter   :namespace
 
-  def initialize(app_path= __FILE__)
+  def initialize(app_path= __FILE__, app_type={{@type.name.stringify}})
+    @namespace = get_app_namespace(app_type)
     @port = 8080
     @name = File.basename(app_path).gsub(/.\w+\Z/, "")
     self.class.settings.app_dir  = File.dirname(app_path)
@@ -42,6 +44,20 @@ class App
     puts run_string
     server = HTTP::Server.new port, @http_handler
     server.listen
+  end
+
+  private def get_app_namespace(app_type)
+    if app_type == "<Program>"
+      return ""
+    end
+    sep = "::"
+    modules = app_type.split(sep)
+    namespace = ""
+    if modules.length > 1
+      modules.delete(modules.last)
+      namespace = modules.join sep
+    end
+    namespace
   end
 
   # Sets default middleware for app

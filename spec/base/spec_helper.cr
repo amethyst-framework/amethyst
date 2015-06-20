@@ -34,5 +34,14 @@ class ViewController < Controller
   end
 end
 
+module My
+  module Inner
+    class App < Base::App
+    end
+  end
+end
+
+class GlobalApp < Base::App
+end
 
 
