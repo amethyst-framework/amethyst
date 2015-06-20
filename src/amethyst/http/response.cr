@@ -17,9 +17,12 @@ class Response
     return HTTP::Response.new(@status, @body, headers = @headers, version = @version)
   end
 
-  def cookie(key, value, secure=false)
+  def cookie(key, value, secure=false, http_only=false, path="", domain="")
     cookie_string = "#{CGI.escape(key.to_s)}=#{CGI.escape(value.to_s)}"
-    cookie_string += "; secure" if secure
+    cookie_string += "; domain=#{domain}" unless domain.empty?
+    cookie_string += "; path=#{path}" unless path.empty?
+    cookie_string += "; secure"  if secure
+    cookie_string += "; HttpOnly" if http_only
     headers.add "Set-Cookie", cookie_string
   end
 

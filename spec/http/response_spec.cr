@@ -20,11 +20,18 @@ describe Response do
   end
 
   describe "#cookie" do
-  	it "should add a proper 'Set-Cookie" do
+  	it "should add a proper simple cookies to 'Set-Cookie' header" do
   		response = HttpHlp.res(200, "Ok")
   		response.cookie "id", 22
   		response.cookie "name", "Amethyst"
   		response.headers["Set-Cookie"].should eq "id=22,name=Amethyst"
   	end
+
+    it "should add a proper complex cookie to 'Set-Cookie' header" do
+      response = HttpHlp.res(200, "Ok")
+      response.cookie "id", 22, http_only: true, secure: true, path: "/", domain: "test.com"
+      p response.headers["Set-Cookie"]
+      response.headers["Set-Cookie"].should eq "id=22; domain=test.com; path=/; secure; HttpOnly,name=Amethyst"
+    end
   end
 end
