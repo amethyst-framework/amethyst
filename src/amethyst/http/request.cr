@@ -4,7 +4,7 @@ METHODS = %w(GET POST PUT DELETE)
 
 class Request
   property :method
-  property :headers
+  getter   :headers
   property :body
   getter   :version
   setter   :path
@@ -104,8 +104,8 @@ class Request
   end
 
   def cookies
-    @cookies unless @cookies.empty?
-    if cookie_string = headers["Cookie"]?
+    if headers["Cookie"]?
+      cookie_string = headers["Cookie"]
       @cookies.from_hash(parse_cookies cookie_string)
     end
     @cookies

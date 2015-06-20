@@ -130,6 +130,7 @@ describe Request do
     it "return empty Params if header 'Cookie' is not sended by browser" do
       request = HttpHlp.req("GET", "/")
       request.cookies["name"].should eq ""
+      request.cookies.should be_a Http::Params
     end
   end
 
