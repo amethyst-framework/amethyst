@@ -44,5 +44,13 @@ class Params
 		has
 	end
 
+  def to_s(io : IO)
+    msg = "\n{"
+    @params.each do |k,v|
+      msg+="#{k} => #{v}"
+    end
+    io << msg
+  end
+
 	forward_missing_to @params
 end
