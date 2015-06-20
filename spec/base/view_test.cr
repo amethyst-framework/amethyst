@@ -6,7 +6,6 @@ describe Base::View do
 		it "should create button form" do
 			view = Base::View.new
 			button = view.button_to "Send", controller: :user, action: :login
-			print button
 		end
 	end
 end

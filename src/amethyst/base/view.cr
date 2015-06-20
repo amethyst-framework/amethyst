@@ -5,7 +5,7 @@ class View
   def button_to(value="", controller="", action="", method="post")
     html = "\n
     <form method='#{method}' action='/#{controller}/#{action}' class='button_to'>\n
-      <input value='value' type='submit' />\n
+      <input value='#{value}' type='submit' />\n
     </form>\n"
   end
   
