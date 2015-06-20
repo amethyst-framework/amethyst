@@ -31,7 +31,8 @@ class TestController < Controller
   end
 
   def user
-    html "Hello from user #{request.path_parameters["id"]}"
+    html "Hello from user #{request.path_parameters["id"]} \n
+    #{Base::App.settings.app_dir}"
   end
 
   def redirect
