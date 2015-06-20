@@ -1,8 +1,8 @@
 class Response
   property :body
-  property :status
   property :headers
   property :cookies
+  getter   :status
 
   include Support::HeaderHelper
 
@@ -10,6 +10,10 @@ class Response
   end
 
   def set(@status, @body)
+  end
+
+  def status(status : Int32)
+    @status = status
   end
 
   # "builds" an HTTP::Response from self
