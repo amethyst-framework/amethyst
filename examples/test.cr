@@ -5,9 +5,7 @@ class TestController < Controller
 
   def index
     html "Hello world!<img src='/examples/assets/amethyst.png'>  #{Base::App.settings.app_dir}"
-
-    response.cookie "session", "Amethyst"
-    response.cookie "name", "Andrew"
+    puts #{request.cookies}
   end
 
   def user
