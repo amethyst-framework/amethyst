@@ -1,21 +1,6 @@
 require "spec"
 require "../../src/all"
 
-class IndexController < Base::Controller
-  actions :hello, :bye, :hello_you
-  def hello
-    html "Hello"
-  end
-
-  def hello_you
-    html "Hello, you!"
-  end
-
-  def bye
-    html "Bye"
-  end
-end
-
 class ViewController < Controller
   actions :index, :hello, :redirect
 

@@ -3,7 +3,7 @@ include Sugar::View
 class View
 
   def button_to(value="", controller="", action="", method="post")
-    html = "
+    html = " 
     <form method='#{method}' action='/#{controller}/#{action}' class='button_to'>
       <input value='#{value}' type='submit' />
     </form>"
@@ -13,6 +13,10 @@ class View
     response = StringIO.new
     to_s(response)
     response.to_s
+  end
+
+  macro method_missing(name)
+    @controller.@{{name.id}}
   end
 end
 
