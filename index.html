@@ -28,11 +28,17 @@
         </ul>
       </header>
       <section>
-        <p><img src="http://s019.radikal.ru/i635/1506/28/bac4764b9e03.png" alt="Amethyst-logo"></p>
+        <h1>
+<a id="" class="anchor" href="#" aria-hidden="true"><span class="octicon octicon-link"></span></a><img src="http://s019.radikal.ru/i635/1506/28/bac4764b9e03.png" alt="Amethyst-logo">
+</h1>
 
-<p>Amethyst is a web framework written in <a href="https://github.com/manastech/crystal">Crystal</a> language. The goals of Amethyst are to be fast as Node.js and comfortable as Rails. Note, Amethyst is at early stage of developing, so a lot of features are missing yet. However, it works :). Why I called it "Amethyst"? Because Crystal  has a light purple color at GitHub like <a href="http://en.wikipedia.org/wiki/Amethyst">amethyst gemstone</a>.</p>
+<p><a href="https://travis-ci.org/Codcore/Amethyst"><img src="https://travis-ci.org/Codcore/Amethyst.svg" alt="Build Status"></a>  <a href="https://gitter.im/Codcore/Amethyst?utm_source=badge&amp;utm_medium=badge&amp;utm_campaign=pr-badge&amp;utm_content=badge"><img src="https://badges.gitter.im/Join%20Chat.svg" alt="Join the chat at https://gitter.im/Codcore/Amethyst"></a></p>
 
-<p>Latest version - <a href="https://github.com/Codcore/Amethyst/releases/tag/v0.0.7">0.0.7</a></p>
+<p>Amethyst is a web framework written in <a href="https://github.com/manastech/crystal">Crystal</a> language. The goals of Amethyst are to be fast like Node.js and provide agility in application development as Rails do. Why I called it "Amethyst"? Because Crystal  has a light purple color at GitHub like <a href="http://en.wikipedia.org/wiki/Amethyst">amethyst gemstone</a>.</p>
+
+<p>Latest version - <a href="https://github.com/Codcore/Amethyst/releases/tag/v0.1.3">0.1.3</a></p>
+
+<p><a href="https://github.com/Codcore/amethyst-examples">Amethyst examples</a></p>
 
 <p>For detailed information, see docs on our <a href="https://github.com/Codcore/Amethyst/wiki">wiki</a> below:</p>
 
@@ -52,37 +58,79 @@
 
 <ul>
 <li>class-based controllers with method-based actions</li>
+<li>views for actions (*.ecr) (with some magic behind the scene done for you)</li>
 <li>middleware support</li>
 <li>simple REST routing</li>
+<li>default routes for controller</li>
 <li>path, GET and POST params inside actions</li>
-<li>base cookies support</li>
+<li>basic cookies support</li>
 <li>static files serving</li>
 <li>http logger and timer for developers</li>
-<li>simple environments support
-## Example
-Here is classic 'Hello World' in Amethyst</li>
+<li>simple environments support</li>
 </ul>
+
+<h2>
+<a id="example" class="anchor" href="#example" aria-hidden="true"><span class="octicon octicon-link"></span></a>Example</h2>
+
+<p>Here is classic 'Hello World' in Amethyst</p>
 
 <div class="highlight highlight-crystal"><pre><span class="pl-k">require</span> <span class="pl-s"><span class="pl-pds">"</span>amethyst<span class="pl-pds">"</span></span>
 
-<span class="pl-k">class</span> <span class="pl-en">WordController<span class="pl-e"> &lt; Base::Controller</span></span>
+<span class="pl-k">class</span> <span class="pl-en">WorldController<span class="pl-e"> &lt; Base::Controller</span></span>
   actions <span class="pl-c1">:hello</span>
 
+  view <span class="pl-s"><span class="pl-pds">"</span>hello<span class="pl-pds">"</span></span>, <span class="pl-s"><span class="pl-pds">"</span><span class="pl-pse">#{</span><span class="pl-s1">__DIR__</span><span class="pl-pse"><span class="pl-s1">}</span></span>/views<span class="pl-pds">"</span></span>, name
   <span class="pl-k">def</span> <span class="pl-en">hello</span>
-    html <span class="pl-s"><span class="pl-pds">"</span>&lt;h1&gt;Hello, world!<span class="pl-pds">"</span></span>
+    name <span class="pl-k">=</span> <span class="pl-s"><span class="pl-pds">"</span>World<span class="pl-pds">"</span></span>
+    respond_to <span class="pl-k">do </span>|<span class="pl-smi">format</span>|
+      format.html { render <span class="pl-s"><span class="pl-pds">"</span>hello<span class="pl-pds">"</span></span>, name }
+    <span class="pl-k">end</span>
   <span class="pl-k">end</span>
 <span class="pl-k">end</span>
 
 <span class="pl-k">class</span> <span class="pl-en">HelloWorldApp<span class="pl-e"> &lt; Base::App</span></span>
   routes.draw <span class="pl-k">do</span>
-    all <span class="pl-s"><span class="pl-pds">"</span>/<span class="pl-pds">"</span></span>,      <span class="pl-s"><span class="pl-pds">"</span>word#hello<span class="pl-pds">"</span></span> 
-    get <span class="pl-s"><span class="pl-pds">"</span>/hello<span class="pl-pds">"</span></span>, <span class="pl-s"><span class="pl-pds">"</span>word#hello<span class="pl-pds">"</span></span> 
-    register <span class="pl-c1">WordController</span>
+    all <span class="pl-s"><span class="pl-pds">"</span>/<span class="pl-pds">"</span></span>,      <span class="pl-s"><span class="pl-pds">"</span>world#hello<span class="pl-pds">"</span></span> 
+    get <span class="pl-s"><span class="pl-pds">"</span>/hello<span class="pl-pds">"</span></span>, <span class="pl-s"><span class="pl-pds">"</span>world#hello<span class="pl-pds">"</span></span> 
+    register <span class="pl-c1">WorldController</span>
   <span class="pl-k">end</span>
 <span class="pl-k">end</span>
 
 app <span class="pl-k">=</span> <span class="pl-c1">HelloWorldApp</span>.<span class="pl-k">new</span>
-app.serve</pre></div>
+app.serve
+
+<span class="pl-c"># /views/hello.ecr</span>
+<span class="pl-c1">Hello</span>, <span class="pl-k">&lt;</span><span class="pl-k">%=</span> <span class="pl-smi">@name</span> <span class="pl-s"><span class="pl-pds">%&gt;</span></span></pre></div>
+
+<h2>
+<a id="development" class="anchor" href="#development" aria-hidden="true"><span class="octicon octicon-link"></span></a>Development</h2>
+
+<p>Feel free to fork project and make pull-requests. Stick to standart project structure and name conventions:</p>
+
+<pre><code>src/
+  amethyst/
+    module1/       # module1 files
+      class1.cr
+      ...
+      module1.cr   # loads all module1 files into namespace Amethyst::Module1
+    module2/
+      class1.cr    # describe class Class1 (module, struct, i.e)
+      ...
+      module2.cr   # loads all module2 files into namespace Amethyst::Module2
+    file_module.cr # module that consists of one file
+  amethyst.cr      # requires module1.cr, module2.cr, file_module.cr
+
+spec/
+  module1/
+    class1_spec.cr # specs for Module1::Class
+    spec_helper.cr # loads main spec_helper
+  module2/
+    class2_spec.cr
+  spec_helper      # loads "amethyst/all"
+
+examples/          # examples to play with
+                   # don't forget to require "..src/amethyst" or "..src/all"
+</code></pre>
 
 <h2>
 <a id="contributing" class="anchor" href="#contributing" aria-hidden="true"><span class="octicon octicon-link"></span></a>Contributing</h2>
@@ -102,7 +150,7 @@ app.serve</pre></div>
 
 <ul>
 <li>
-<a href="https://github.com/%5Byour-github-name%5D">Andrew Yaroshuk</a> Codcore - creator, maintainer</li>
+<a href="https://github.com/Codcore%5D">Andrew Yaroshuk</a> Codcore - creator, maintainer</li>
 </ul>
       </section>
       <footer>
