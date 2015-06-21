@@ -80,6 +80,21 @@ describe Router do
       response.should be_a Http::Response
       response.body.should eq "Hello"
     end
+
+    it "recognize default route with underscores and hyphens" do
+      router     = Router.new
+      request    = HttpHlp.req("GET", "/index/hello_you")
+      response   = HttpHlp.res(200, "Ok")
+      controller = create_controller_instance(IndexController)
+      controller.set_env(request, response)
+      router.draw do
+        register IndexController
+      end
+
+      response = router.call(request)
+      response.should be_a Http::Response
+      response.body.should eq "Hello, you!"
+    end
   end
 
   it "raises HttpNotImplemented if method is not implemented" do
