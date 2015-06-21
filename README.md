@@ -39,11 +39,11 @@ require "amethyst"
 class WorldController < Base::Controller
   actions :hello
 
-  view "hello", "#{__DIR__}/views", name
+  view "hello", "#{__DIR__}/views"
   def hello
-    name = "World"
+    @name = "World"
     respond_to do |format|
-      format.html { render "hello", name }
+      format.html { render "hello" }
     end
   end
 end
@@ -60,7 +60,7 @@ app = HelloWorldApp.new
 app.serve
 
 # /views/hello.ecr
-Hello, <%= @name %>
+Hello, <%= name %>
 ```
 
 
