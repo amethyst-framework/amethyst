@@ -8,11 +8,11 @@ class ViewController < Controller
     html "Hello world!<img src='/assets/amethyst.jpg'>"
   end
 
-  view "hello", "#{__DIR__}/views/", name
+  view "hello", "#{__DIR__}/views/"
   def hello
-    name = "Andrew"
+    @name = "Andrew"
     respond_to do |format|
-      format.html { render "hello", name }
+      format.html { render "hello" }
     end
   end
 
