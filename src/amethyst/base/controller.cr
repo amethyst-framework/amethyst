@@ -44,6 +44,28 @@ abstract class Controller
     end
   end
 
+  macro before_action(method_before, only=[] of Symbol)
+    {% for action in only %}
+      def before_{{action.id}}_{{method_before.id}}
+      @before_actions["{{action.id}}"] = [] of (->) unless @before_actions["{{action.id}}"]?
+      @before_actions["{{action.id}}"] << ->{{method_before.id}}
+      end
+    {% end %}
+ 
+{{debug()}}
+  end
+
+  macro register_before_action_hooks
+  {% method_names = @type.methods.map(&.name.stringify) %}
+      {%
+        before_hooks = method_names.select(&.starts_with?("before_"))
+      %}
+  
+  {% for method in before_hooks %}
+    {{method.id}}
+  {% end %}
+  end
+
   # Creates a hash for controller actions
   # Then, invokes actions method to add actions to the hash
   def initialize()
@@ -51,6 +73,8 @@ abstract class Controller
     @response :: Http::Response
     @actions = {} of String => ->
     add_actions
+    @before_actions = {} of String => Array
+    register_before_action_hooks
   end
 
   def params
@@ -70,6 +94,11 @@ abstract class Controller
   # NameController.call_action("show")
   def call_action(action)
     raise Exceptions::ControllerActionNotFound.new(action, self.class.name) unless @actions.has_key? action
+    if before_callbacks = @before_actions[action]?
+      before_callbacks.each do |callback| 
+        callback.call
+      end
+    end
     @actions[action].call
     @response
   end
