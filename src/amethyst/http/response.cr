@@ -21,12 +21,15 @@ class Response
     return HTTP::Response.new(@status, @body, headers = @headers, version = @version)
   end
 
-  def cookie(key, value, secure=false, http_only=false, path="", domain="")
+  def cookie(key, value, secure=false, http_only=false, path="", domain="", expires="")
     cookie_string = "#{CGI.escape(key.to_s)}=#{CGI.escape(value.to_s)}"
-    cookie_string += "; domain=#{domain}" unless domain.empty?
-    cookie_string += "; path=#{path}" unless path.empty?
-    cookie_string += "; secure"  if secure
-    cookie_string += "; HttpOnly" if http_only
+    cookie_string = String.build do |string|
+      string <<  "; domain=#{domain}" unless domain.to_s.empty?
+      string << "; path=#{path}" unless path.to_s.empty?
+      string << "; secure"  if secure
+      string << "; HttpOnly" if http_only
+      string << "; Expires=#{expires}" unless expires.to_s.empty?
+    end
     headers.add "Set-Cookie", cookie_string
   end
 
