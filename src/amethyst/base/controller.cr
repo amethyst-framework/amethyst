@@ -1,3 +1,5 @@
+require "benchmark"
+
 abstract class Controller
   getter   :actions
   property :request
@@ -7,6 +9,7 @@ abstract class Controller
 
   include Support::ControllerHelpers
   include Sugar::View
+  include Support::Sendable
 
   class Formatter
     getter :processed
@@ -97,7 +100,7 @@ abstract class Controller
         callback.call
       end
     end
-    @actions[action].call
+    send action
     @response
   end
 
