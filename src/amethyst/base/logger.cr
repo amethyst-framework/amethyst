@@ -13,9 +13,11 @@ class Logger
   end
 
   def log_paragraph(name)
-    heading = "\n\n"
-    heading += @symbol.to_s*4 
-    heading += "/ #{name} \\"
+    heading = String.build do |string|
+      string << "\n\n"
+      string << (@symbol.to_s*4)
+      string << "/ #{name} \\"
+    end
     heading = heading.ljust(@justify+1, @symbol)
     heading += "\n"
     puts heading
@@ -23,11 +25,13 @@ class Logger
 
   def log_heading(name : String, level=1, indent=@indent)
     indent     = level*indent
-    justify    = @justify 
-    heading = "\n"
-    heading += " "*indent
-    heading += @symbol.to_s*4
-    heading += " #{name.upcase} "
+    justify    = @justify
+    heading = String.build do |string|
+      string << "\n"
+      string << " "*indent
+      string << (@symbol.to_s*4)
+      string << " #{name.upcase} "
+    end
     heading = heading.ljust(justify, @symbol)
     print heading
   end
@@ -78,11 +82,13 @@ class Logger
 
   def log_subheading(name : String, level=1, indent=@indent)
     indent     = level*indent
-    justify    = @justify 
-    subheading = "\n"
-    subheading += " "*indent
-    subheading += @symbol.to_s*4
-    subheading += " #{name.downcase} "
+    justify    = @justify
+    subheading = String.build do |string|
+      string << "\n"
+      string << " "*indent
+      string << (@symbol.to_s*4)
+      string << " #{name.downcase} "
+    end
     subheading = subheading.ljust(justify, @symbol)
     print subheading
   end
