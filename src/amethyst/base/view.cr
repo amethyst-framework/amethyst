@@ -2,10 +2,10 @@ include Sugar::View
 
 class View
 
-  def button_to(value="", controller="", action="", method="post", html_class="button_to")
+  def button_to(value="", controller="", action="", method="post", form_class="button_to", button_class="")
     html = "
-    <form method='#{method}' action='/#{controller}/#{action}'>
-      <input value='#{value}' type='submit' class='#{html_class}' />
+    <form method='#{method}' action='/#{controller}/#{action}' class='#{form_class}'>
+      <input value='#{value}' type='submit' class='#{button_class}' />
     </form>"
   end
 
