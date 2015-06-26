@@ -44,24 +44,22 @@ abstract class Controller
     end
   end
 
-  macro before_action(method_before, only=[] of Symbol)
+  macro before_action(callback, only=[] of Symbol)
+    {% if only.empty? %}
+      {% only = @type.methods.map(&.name.stringify) %}
+    {% end %}
     {% for action in only %}
-      def before_{{action.id}}_{{method_before.id}}
-      @before_actions["{{action.id}}"] = [] of (->) unless @before_actions["{{action.id}}"]?
-      @before_actions["{{action.id}}"] << ->{{method_before.id}}
+      def _before_{{action.id}}_{{callback.id}}
+      @before_callbacks["{{action.id}}"] = [] of (->) unless @before_callbacks["{{action.id}}"]?
+      @before_callbacks["{{action.id}}"] << ->{{callback.id}}
       end
     {% end %}
- 
-{{debug()}}
   end
 
-  macro register_before_action_hooks
+  macro register_before_action_callbacks
   {% method_names = @type.methods.map(&.name.stringify) %}
-      {%
-        before_hooks = method_names.select(&.starts_with?("before_"))
-      %}
-  
-  {% for method in before_hooks %}
+      {% before_callbacks = method_names.select(&.starts_with?("_before_")) %}
+  {% for method in before_callbacks %}
     {{method.id}}
   {% end %}
   end
@@ -73,8 +71,8 @@ abstract class Controller
     @response :: Http::Response
     @actions = {} of String => ->
     add_actions
-    @before_actions = {} of String => Array
-    register_before_action_hooks
+    @before_callbacks = {} of String => Array
+    register_before_action_callbacks
   end
 
   def params
@@ -94,7 +92,7 @@ abstract class Controller
   # NameController.call_action("show")
   def call_action(action)
     raise Exceptions::ControllerActionNotFound.new(action, self.class.name) unless @actions.has_key? action
-    if before_callbacks = @before_actions[action]?
+    if before_callbacks = @before_callbacks[action]?
       before_callbacks.each do |callback| 
         callback.call
       end
