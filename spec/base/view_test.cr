@@ -8,7 +8,7 @@ describe Base::View do
 			button = view.button_to "Send", controller: :user, action: :login
 		  button.should eq "
     <form method='post' action='/user/login' class='button_to'>
-      <input value='Send' type='submit' />
+      <input value='Send' type='submit' class='' />
     </form>"	
 		end
 	end
