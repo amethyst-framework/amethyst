@@ -29,7 +29,7 @@ module Sendable
   end
 
 def send(method, args={} of Symbol => String)
-    create_send
+    #create_send
   end
 end
 
