@@ -5,6 +5,7 @@ require "mime"
 require "../base/"
 require "../sugar/"
 
+
 # Load files into module namespace
 module Amethyst
   module Middleware
