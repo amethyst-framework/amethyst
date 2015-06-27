@@ -90,13 +90,13 @@ abstract class Controller
     yield formatter
     raise Exceptions::HttpBadRequest.new() unless formatter.processed
   end
-  
+
   # Works like Ruby's send(:method) to invoke controller action:
   # NameController.call_action("show")
   def call_action(action)
     raise Exceptions::ControllerActionNotFound.new(action, self.class.name) unless @actions.has_key? action
     if before_callbacks = @before_callbacks[action]?
-      before_callbacks.each do |callback| 
+      before_callbacks.each do |callback|
         callback.call
       end
     end

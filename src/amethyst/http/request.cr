@@ -98,7 +98,7 @@ class Request
   end
 
   def parameters
-    parameters = query_parameters.merge request_parameters 
+    parameters = query_parameters.merge request_parameters
     parameters = parameters.merge path_parameters
     parameters
   end
@@ -143,7 +143,7 @@ class Request
   end
 
   # Sets properties to log
-  def log 
+  def log
     {
       "http method"     : @method,
       "path"            : path,
