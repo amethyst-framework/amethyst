@@ -98,7 +98,7 @@ class Request
   end
 
   def parameters
-    parameters = query_parameters.merge request_parameters 
+    parameters = query_parameters.merge request_parameters
     parameters = parameters.merge path_parameters
     parameters
   end
@@ -131,7 +131,8 @@ class Request
         if match = /^(?<key>[^=]*)(=(?<value>.*))?$/.match(param)
           begin
             key, value = param.split("=").map { |s| CGI.unescape(s) }
-          rescue IndexOutOfBounds
+          #rescue IndexOutOfBounds
+          rescue IndexError # in latest HEAD no more IndexOutOfBounds
             value = ""
           end
           hash[key as String] = value
@@ -142,7 +143,7 @@ class Request
   end
 
   # Sets properties to log
-  def log 
+  def log
     {
       "http method"     : @method,
       "path"            : path,
