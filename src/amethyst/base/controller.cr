@@ -53,7 +53,7 @@ abstract class Controller
     {% end %}
     {% for action in only %}
       def _before_{{action.id}}_{{callback.id}}
-      @before_callbacks["{{action.id}}"] = [] of (->) unless @before_callbacks["{{action.id}}"]?
+      @before_callbacks["{{action.id}}"] = [] of (-> Bool) unless @before_callbacks["{{action.id}}"]?
       @before_callbacks["{{action.id}}"] << ->{{callback.id}}
       end
     {% end %}
@@ -72,7 +72,7 @@ abstract class Controller
   def initialize()
     @request :: Http::Request
     @response :: Http::Response
-    @actions = {} of String => ->
+    @actions = {} of String => -> 
     add_actions
     @before_callbacks = {} of String => Array
     register_before_action_callbacks
@@ -96,11 +96,11 @@ abstract class Controller
   def call_action(action)
     raise Exceptions::ControllerActionNotFound.new(action, self.class.name) unless @actions.has_key? action
     if before_callbacks = @before_callbacks[action]?
-      before_callbacks.each do |callback|
-        callback.call
+      result = before_callbacks.each do |callback|
+        break false unless callback.call
       end
     end
-    send action
+    @actions[action].call if result
     @response
   end
 

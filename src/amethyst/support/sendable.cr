@@ -28,7 +28,7 @@ module Sendable
     end
   end
 
-def send(method, args={} of Symbol => String)
+  def send(method, args={} of Symbol => String)
     create_send
   end
 end
