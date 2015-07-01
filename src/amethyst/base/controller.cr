@@ -95,12 +95,13 @@ abstract class Controller
   # NameController.call_action("show")
   def call_action(action)
     raise Exceptions::ControllerActionNotFound.new(action, self.class.name) unless @actions.has_key? action
+    callback_result = true
     if before_callbacks = @before_callbacks[action]?
-      result = before_callbacks.each do |callback|
+      callback_result = before_callbacks.each do |callback|
         break false unless callback.call
       end
     end
-    @actions[action].call if result
+    @actions[action].call if callback_result
     @response
   end
 
