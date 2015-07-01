@@ -131,8 +131,8 @@ class Request
         if match = /^(?<key>[^=]*)(=(?<value>.*))?$/.match(param)
           begin
             key, value = param.split("=").map { |s| CGI.unescape(s) }
-          #rescue IndexOutOfBounds
-          rescue IndexError # in latest HEAD no more IndexOutOfBounds
+          rescue IndexOutOfBounds
+          #rescue IndexError # in latest HEAD no more IndexOutOfBounds
             value = ""
           end
           hash[key as String] = value
