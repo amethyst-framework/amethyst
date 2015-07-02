@@ -1,3 +1,4 @@
+class ControllerException < AmethystException; end
 class ControllerActionNotFound < ControllerException
   getter :action
   getter :controller
