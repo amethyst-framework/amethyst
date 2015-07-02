@@ -5,6 +5,7 @@ Amethyst is a web framework written in [Crystal](https://github.com/manastech/cr
 
 Latest version - [0.1.7](https://github.com/Codcore/Amethyst/releases/tag/v0.1.7)
 Note that Amethyst is at it early stages, so it lacks for whole bunch of things. But you can give a hand with contributing.
+* [Roadmap](https://github.com/Codcore/Amethyst/wiki/Roadmap)
 
 [Amethyst examples](https://github.com/Codcore/amethyst-examples)
 
@@ -17,6 +18,7 @@ For detailed information, see docs on our [wiki](https://github.com/Codcore/Amet
 * [Middleware](https://github.com/Codcore/Amethyst/wiki/Middleware)
 * [Static files](https://github.com/Codcore/Amethyst/wiki/StaticFiles)
 * [Applications](https://github.com/Codcore/Amethyst/wiki/Applications)
+
 
 [Here are some benchmarking results](https://gist.github.com/Codcore/0c7a331b69eed542fb78)
 
