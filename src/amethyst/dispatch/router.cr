@@ -7,7 +7,7 @@ class Router
   include Sugar::Klass
   singleton_INSTANCE
 
-  # This macro is a hack that allows to instansiate controllers through 
+  # This macro is a hack that allows to instansiate controllers through
   # @controllers.fetch("ControllerName").new
   macro register_controller(klass_name)
     @controllers["#{{{klass_name.id}}}"] = {{klass_name.id}}
@@ -15,7 +15,7 @@ class Router
 
   def initialize()
     @routes      = [] of Dispatch::Route
-    @controllers = {} of String => Base::Controller.class 
+    @controllers = {} of String => Base::Controller.class
     @matched_route :: Dispatch::Route
     @controllers_instances = {} of String => Base::Controller
   end
@@ -23,7 +23,7 @@ class Router
   # Adds controller to hash @controllers and make it available for app
   def register(controller)
     register_controller controller
-  end 
+  end
 
   # It allows to 'draw' routes like you can do in Rails routes.rb
   def draw(&block)
@@ -43,7 +43,7 @@ class Router
     end
     exists
   end
-  
+
   # Process regular routes (which are in @routes)
   def process_named_route(request : Http::Request, response : Http::Response)
     controller = @matched_route.controller
@@ -69,7 +69,7 @@ class Router
     end
   end
 
-  # Actually, performs a routing 
+  # Actually, performs a routing
   def call(request : Http::Request) : Http::Response
     response = Http::Response.new(404, "Not found")
     if exists = exists? request.path, request.method

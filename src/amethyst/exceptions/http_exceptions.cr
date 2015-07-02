@@ -7,6 +7,20 @@ class HttpException < AmethystException
   end
 end
 
+class UnknownContentType < AmethystException
+
+  def initialize(@ext)
+    super("Unknown content-type for file extension #{@ext}")
+  end
+end
+
+class UnsupportedHttpMethod < AmethystException
+
+  def initialize(@ext)
+    super("Method #{@method} is not supported. Use #{Http::METHODS.join(" ")}")
+  end
+end
+
 class HttpNotFound < HttpException
 
   def initialize
