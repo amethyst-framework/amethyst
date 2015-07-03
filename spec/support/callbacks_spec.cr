@@ -20,7 +20,7 @@ describe Support::Callbacks::CallbackSequence do
       callback_sequence.before(->{ 1; true }).before(->{ 2; true })
       callback_sequence.after(->{ 1; true }).after(->{ 2; true })
       result = callback_sequence.call { "Done" }
-      result.should eq true
+      result.should eq "Done" 
     end
 
     it "calls callbacks and returns false if at least one callback returns false" do

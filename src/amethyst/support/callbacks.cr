@@ -28,7 +28,7 @@ module Callbacks
 				break result = false  unless before_callback.call
 			end
 			if result
-				block.call
+				result = yield
         @after.each do |after_callback| 
 				  break result = false unless after_callback.call
 				end
@@ -36,6 +36,9 @@ module Callbacks
 			result
 		end
 	end
+
+  
+
 end
 
 
