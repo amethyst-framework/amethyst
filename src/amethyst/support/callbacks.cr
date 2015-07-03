@@ -37,13 +37,14 @@ module Callbacks
 		end
 	end
 
-  macro define_callbacks(*callbacks)
+   macro define_callbacks(*callbacks)
     {% for callback in callbacks %}
-      @@{{callback.id}}_callbacks = CallbackSequence.new
-      def self._{{callback.id}}_callbacks
-      	@@{{callback.id}}_callbacks
+      @{{callback.id}}_callbacks = CallbackSequence.new
+      def _{{callback.id}}_callbacks
+      	@{{callback.id}}_callbacks
       end
     {% end %}
+		{{debug()}}
   end
 
   macro proc_from_method_name_symbol(symbol)
@@ -51,8 +52,12 @@ module Callbacks
   end
 
   macro set_callback(callback, kind, method)
-    _{{callback.id}}_callbacks.{{kind.id}}(proc_from_method_name_symbol {{method}})
+	  def _set_{{kind.id}}_{{method.id}}_{{callback.id}}
+	    @{{callback.id}}_callbacks.{{kind.id}}(->{{method.id}})
+	  end
+	  {{debug()}}
   end
+
 
 end
 

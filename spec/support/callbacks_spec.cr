@@ -39,8 +39,9 @@ describe Support::Callbacks::CallbackSequence do
 
   describe "define_callbacks" do
     it "should create class varible contains CallbackSequence" do
-      CallbacksDefineTest._first_callbacks.should be_a Callbacks::CallbackSequence
-      CallbacksDefineTest._second_callbacks.should be_a Callbacks::CallbackSequence
+      callback_sequence = CallbacksDefineTest.new
+      callback_sequence._first_callbacks.should be_a Callbacks::CallbackSequence
+      callback_sequence._second_callbacks.should be_a Callbacks::CallbackSequence
     end
   end
 end
