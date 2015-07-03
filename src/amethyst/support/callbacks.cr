@@ -7,12 +7,12 @@ module Callbacks
 			@after  = [] of -> Bool
 		end
 
-		def before(before : Symbol)
+		def before(before)
       @before.unshift(before)
       self
     end
 
-    def after(after : Symbol)
+    def after(after)
       @after.push(after)
       self
     end
