@@ -37,7 +37,14 @@ module Callbacks
 		end
 	end
 
-  
+  macro define_callbacks(*callbacks)
+    {% for callback in callbacks %}
+      @@{{callback.id}}_callbacks = CallbackSequence.new
+      def self._{{callback.id}}_callbacks
+      	@@{{callback.id}}_callbacks
+      end
+    {% end %}
+  end
 
 end
 

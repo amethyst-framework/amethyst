@@ -1,5 +1,10 @@
 require "./spec_helper"
 
+class CallbacksDefineTest
+  include Callbacks
+  define_callbacks :first, :second
+end
+
 describe Support::Callbacks::CallbackSequence do
 
   describe "#after #before" do
@@ -29,6 +34,13 @@ describe Support::Callbacks::CallbackSequence do
       callback_sequence.after(->{ 1; false }).after(->{ 2; true })
       result = callback_sequence.call {}
       result.should eq false
+    end
+  end
+
+  describe "define_callbacks" do
+    it "should create class varible contains CallbackSequence" do
+      CallbacksDefineTest._first_callbacks.should be_a Callbacks::CallbackSequence
+      CallbacksDefineTest._first_callbacks.should be_a Callbacks::CallbackSequence
     end
   end
 end
