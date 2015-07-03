@@ -7,12 +7,12 @@ module Callbacks
 			@after  = [] of -> Bool
 		end
 
-		def before(before : Proc)
+		def before(before : Symbol)
       @before.unshift(before)
       self
     end
 
-    def after(after : Proc)
+    def after(after : Symbol)
       @after.push(after)
       self
     end
@@ -44,6 +44,14 @@ module Callbacks
       	@@{{callback.id}}_callbacks
       end
     {% end %}
+  end
+
+  macro proc_from_method_name_symbol(symbol)
+    ->{{symbol.id}}
+  end
+
+  macro set_callback(callback, kind, method)
+    _{{callback.id}}_callbacks.{{kind.id}}(proc_from_method_name_symbol {{method}})
   end
 
 end
