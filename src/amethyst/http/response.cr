@@ -6,7 +6,7 @@ class Response
 
   include Support::HeaderHelper
 
-  def initialize(@status=nil, @body="" : String, @headers=HTTP::Headers.new, @version="HTTP/1.1")
+  def initialize(@status=nil, @body="" : String, @headers=HTTP::Headers.new)
   end
 
   def set(@status, @body)
@@ -18,7 +18,7 @@ class Response
 
   # "builds" an HTTP::Response from self
   def build
-    return HTTP::Response.new(@status, @body, headers = @headers, version = @version)
+    return HTTP::Response.new(@status, @body, headers = @headers)
   end
 
   def cookie(key, value, secure=false, http_only=false, path="", domain="", expires="")
