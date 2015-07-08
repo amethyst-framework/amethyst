@@ -39,10 +39,13 @@ module Callbacks
 
 	macro run_callbacks(callback, &block)
 	  callback_sequence = _{{callback.id}}_callbacks
-	  callback_sequence.call do
+    {% methods = @type.methods.map(&.name.stringify).select(&.starts_with?("_set_"+callback.id.stringify)) %}
+    {% for method in methods %}
+      {{method.id}}
+    {% end %}
+    callback_sequence.call do
 	  	{{yield}}
 	  end
-	  {{debug()}}
 	end
 
   macro define_callbacks(*callbacks)
@@ -51,12 +54,12 @@ module Callbacks
       	@{{callback.id}}_callbacks ||= CallbackSequence.new
       end
     {% end %}
-		{{debug()}}
   end
 
   macro set_callback(callback, kind, method)
-	  _{{callback.id}}_callbacks.{{kind.id}}(->{{method.id}})
-	  {{debug()}}
+    def _set_{{callback.id}}_{{kind.id}}_{{method.id}}
+	    _{{callback.id}}_callbacks.{{kind.id}}(->{{method.id}})
+	  end
   end
 
 end
@@ -66,10 +69,7 @@ end
 #   include Callbacks
   
 #   define_callbacks :on_hello
-  
-#   def initialize
-#     set_callback :on_hello, :after, :callback
-#   end
+#   set_callback :on_hello, :after, :callback
   
 #   def run_callback
 #     run_callbacks :on_hello do
