@@ -37,29 +37,53 @@ module Callbacks
 		end
 	end
 
-   macro define_callbacks(*callbacks)
+	macro run_callbacks(callback, &block)
+	  callback_sequence = _{{callback.id}}_callbacks
+	  callback_sequence.call do
+	  	{{yield}}
+	  end
+	  {{debug()}}
+	end
+
+  macro define_callbacks(*callbacks)
     {% for callback in callbacks %}
-      @{{callback.id}}_callbacks = CallbackSequence.new
       def _{{callback.id}}_callbacks
-      	@{{callback.id}}_callbacks
+      	@{{callback.id}}_callbacks ||= CallbackSequence.new
       end
     {% end %}
 		{{debug()}}
   end
 
-  macro proc_from_method_name_symbol(symbol)
-    ->{{symbol.id}}
-  end
-
   macro set_callback(callback, kind, method)
-	  def _set_{{kind.id}}_{{method.id}}_{{callback.id}}
-	    @{{callback.id}}_callbacks.{{kind.id}}(->{{method.id}})
-	  end
+	  _{{callback.id}}_callbacks.{{kind.id}}(->{{method.id}})
 	  {{debug()}}
   end
 
-
 end
 
+
+# class Hello
+#   include Callbacks
+  
+#   define_callbacks :on_hello
+  
+#   def initialize
+#     set_callback :on_hello, :after, :callback
+#   end
+  
+#   def run_callback
+#     run_callbacks :on_hello do
+#       p "method"
+#     end
+#   end
+  
+#   def callback
+#     p "hello"
+#     true
+#   end
+# end
+
+# hello = Hello.new
+# hello.run_callback
 
 			
