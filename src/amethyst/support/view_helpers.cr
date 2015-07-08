@@ -1,4 +1,4 @@
-class ViewHelpers
+module ViewHelpers
 
   def button_to(value="", controller="", action="", method="post", form_class="button_to", button_class="")
     html = "

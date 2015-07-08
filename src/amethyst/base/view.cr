@@ -1,7 +1,7 @@
 include Sugar::View
-include Support
 
-class View < ViewHelpers
+class View
+  include Support::ViewHelpers
 
   def render
     response = StringIO.new
