@@ -1,13 +1,7 @@
 include Sugar::View
+include Support
 
-class View
-
-  def button_to(value="", controller="", action="", method="post", form_class="button_to", button_class="")
-    html = "
-    <form method='#{method}' action='/#{controller}/#{action}' class='#{form_class}'>
-      <input value='#{value}' type='submit' class='#{button_class}' />
-    </form>"
-  end
+class View < ViewHelpers
 
   def render
     response = StringIO.new
