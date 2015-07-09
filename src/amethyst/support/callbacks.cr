@@ -56,6 +56,8 @@ module Callbacks
     {% end %}
   end
 
+  # sets method for callback
+  # set_callback :callback, :after, :after_method
   macro set_callback(callback, kind, method)
     def _set_{{callback.id}}_{{kind.id}}_{{method.id}}
 	    _{{callback.id}}_callbacks.{{kind.id}}(->{{method.id}})

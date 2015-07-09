@@ -3,6 +3,18 @@ require "./spec_helper"
 class CallbacksDefineTest
   include Callbacks
   define_callbacks :first, :second
+  set_callback :first, :before, :before_method
+
+  def callback
+    run_callbacks :first do
+      true
+    end
+  end
+
+  def before_method
+    @a = 5+8
+    true
+  end
 end
 
 describe Support::Callbacks::CallbackSequence do
@@ -17,6 +29,7 @@ describe Support::Callbacks::CallbackSequence do
       callback_sequence.length.should eq 4
     end
   end
+
 
   describe "#call" do
 
@@ -36,12 +49,20 @@ describe Support::Callbacks::CallbackSequence do
       result.should eq false
     end
   end
+end
 
-  describe "define_callbacks" do
-    it "should create class varible contains CallbackSequence" do
-      callback_sequence = CallbacksDefineTest.new
-      callback_sequence._first_callbacks.should be_a Callbacks::CallbackSequence
-      callback_sequence._second_callbacks.should be_a Callbacks::CallbackSequence
-    end
+describe "macro define_callbacks" do
+  it "should create method that returns CallbackSequence" do
+    callback_sequence = CallbacksDefineTest.new
+    callback_sequence._first_callbacks.should be_a Callbacks::CallbackSequence
+    callback_sequence._second_callbacks.should be_a Callbacks::CallbackSequence
+  end
+end
+
+describe "macro set_callbacks" do
+  it "should create class varible contains CallbackSequence" do
+    callback_sequence = CallbacksDefineTest.new
+    callback_sequence._first_callbacks.should be_a Callbacks::CallbackSequence
+    callback_sequence._second_callbacks.should be_a Callbacks::CallbackSequence
   end
 end
