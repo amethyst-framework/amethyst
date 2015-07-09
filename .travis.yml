@@ -1,6 +1,7 @@
 install:
   - git clone https://github.com/manastech/crystal.git
+  - cd crystal
   - make
 script:
-  - .build/crystal deps
-  - .build/crystal spec
+  - bin/crystal deps
+  - bin/crystal spec
