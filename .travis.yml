@@ -1,1 +1,6 @@
-language: crystal
+install:
+  - git clone https://github.com/manastech/crystal.git
+  - make
+script:
+  - .build/crystal deps
+  - .build/crystal spec
