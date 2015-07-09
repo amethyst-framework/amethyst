@@ -19,5 +19,5 @@ install:
   - git clone https://github.com/Codcore/Amethyst.git
   - cd Amethyst
 script:
-  - /bin/crystal deps
-  - /bin/crystal spec
+  - ../crystal/bin/crystal deps
+  - ../crystal/bin/crystal spec
