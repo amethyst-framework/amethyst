@@ -16,7 +16,7 @@ install:
   - cd crystal
   - make
   - cd ..
-  - git clone https://github.com/Codcore/Amethyst.git
+  - git clone -b crystal-head https://github.com/Codcore/Amethyst.git
   - cd Amethyst
 script:
   - ../crystal/bin/crystal deps
