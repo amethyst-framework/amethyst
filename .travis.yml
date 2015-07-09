@@ -15,6 +15,9 @@ install:
   - git clone https://github.com/manastech/crystal.git
   - cd crystal
   - make
+  - cd ..
+  - git clone https://github.com/Codcore/Amethyst.git
+  - cd Amethyst
 script:
-  - bin/crystal deps
-  - bin/crystal spec
+  - /bin/crystal deps
+  - /bin/crystal spec
