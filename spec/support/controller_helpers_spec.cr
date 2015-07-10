@@ -8,15 +8,15 @@ class HelpersTestController < Base::Controller
 		end
 
 		def text_test
-			html "Hello world"
+			text "Hello world"
 		end
 
 		def json_test
-			html "Hello world"
+			json "Hello world"
 		end
 
 		def redirect_to_test
-			html "Hello world"
+			redirect_to "google.com"
 		end
 	end
 
@@ -25,10 +25,37 @@ describe Support::ControllerHelpers do
 	helpers_test_controller = create_controller_instance HelpersTestController
 
 	describe "#html" do
-		it "should set status, body and header" do
+		it "should set status, body and 'Content-Type' header" do
 			helpers_test_controller.html_test
 			helpers_test_controller.body.should eq "Not found"
 			helpers_test_controller.response.status.should eq 404
+			helpers_test_controller.response.headers["Content-Type"].should eq "text/html"
+		end
+	end
+
+	describe "#text" do
+		it "should set status, body and 'Content-Type' header" do
+			helpers_test_controller.text_test
+			helpers_test_controller.body.should eq "Hello world"
+			helpers_test_controller.response.status.should eq 200
+			helpers_test_controller.response.headers["Content-Type"].should eq "text/plain"
+		end
+	end
+
+	describe "#html" do
+		it "should set status, body and 'Content-Type' header" do
+			helpers_test_controller.json_test
+			helpers_test_controller.body.should eq "Hello world"
+			helpers_test_controller.response.status.should eq 200
+			helpers_test_controller.response.headers["Content-Type"].should eq "application/json"
+		end
+	end
+
+	describe "#redirect_to" do
+		it "should set status, body and 'Content-Type' header" do
+			helpers_test_controller.redirect_to_test
+			helpers_test_controller.response.status.should eq 303
+			helpers_test_controller.response.headers["Location"].should eq "google.com"
 		end
 	end
 end

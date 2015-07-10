@@ -63,11 +63,6 @@ describe Base::Controller do
   end
 
 
-  describe Support::ControllerHelpers do
-    pending "pending for specs" {}
-  end
-
-
   describe Base::Controller::Formatter do
 
     describe "#html" do
