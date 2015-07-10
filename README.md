@@ -1,4 +1,5 @@
 #![Amethyst-logo](http://s019.radikal.ru/i635/1506/28/bac4764b9e03.png)
+[![Pledgie](https://pledgie.com/campaigns/29689.png?skin_name=chrome)](https://pledgie.com/campaigns/29689)
 [![Build Status](https://travis-ci.org/Codcore/Amethyst.svg)](https://travis-ci.org/Codcore/Amethyst)  [![Join the chat at https://gitter.im/Codcore/Amethyst](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/Codcore/Amethyst?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
 Amethyst is a web framework written in [Crystal](https://github.com/manastech/crystal) language. The goals of Amethyst are to be extremely fast and provide agility in application development as Rails do. Why I called it "Amethyst"? Because Crystal  has a light purple color at GitHub like [amethyst gemstone](http://en.wikipedia.org/wiki/Amethyst).
@@ -71,31 +72,7 @@ Hello, <%= name %>
 
 ## Development
 
-Feel free to fork project and make pull-requests. Stick to standart project structure and name conventions:
-
-    src/
-      amethyst/
-        module1/       # module1 files
-          class1.cr
-          ...
-          module1.cr   # loads all module1 files into namespace Amethyst::Module1
-        module2/
-          class1.cr    # describe class Class1 (module, struct, i.e)
-          ...
-          module2.cr   # loads all module2 files into namespace Amethyst::Module2
-        file_module.cr # module that consists of one file
-      amethyst.cr      # requires module1.cr, module2.cr, file_module.cr
-
-    spec/
-      module1/
-        class1_spec.cr # specs for Module1::Class
-        spec_helper.cr # loads main spec_helper
-      module2/
-        class2_spec.cr
-      spec_helper      # loads "amethyst/all"
-
-    examples/          # examples to play with
-                       # don't forget to require "..src/amethyst" or "..src/all"
+Feel free to fork project and make pull-requests.
 
 
 ## Contributing
@@ -112,3 +89,8 @@ I would be glad for any help with contributing.
 ## Contributors
 
 - [Andrew Yaroshuk](https://github.com/Codcore]) Codcore - creator, maintainer
+
+## Support
+Amethyst is not a commercial project,it is developed on pure enthusiasm, so if you want to support Amethyst developing, you can help with donating.
+
+[![Pledgie](https://pledgie.com/campaigns/29689.png?skin_name=chrome)](https://pledgie.com/campaigns/29689)
