@@ -38,6 +38,10 @@ abstract class Controller
     end
   end
 
+  def body
+    response.body
+  end
+
   # This hack creates procs from controller actions, and adds it to the @actions
   macro actions(*actions)
     private def add_actions
