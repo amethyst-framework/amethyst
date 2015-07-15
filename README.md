@@ -40,7 +40,7 @@ For now, next things are implemented:
 ## Example
 Here is classic 'Hello World' in Amethyst
 ```crystal
-require "amethyst"
+require "Amethyst/amethyst"
 
 class WorldController < Base::Controller
   actions :hello
