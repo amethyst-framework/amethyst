@@ -26,7 +26,7 @@ For detailed information, see docs on our [wiki](https://github.com/Codcore/Amet
 For now, next things are implemented:
 * class-based controllers with method-based actions
 * views for actions (*.ecr)
-* filters for action 
+* filters for action
 * middleware support
 * simple REST routing
 * default routes for controller
@@ -56,8 +56,8 @@ end
 
 class HelloWorldApp < Base::App
   routes.draw do
-    all "/",      "world#hello" 
-    get "/hello", "world#hello" 
+    all "/",      "world#hello"
+    get "/hello", "world#hello"
     register WorldController
   end
 end
@@ -69,6 +69,21 @@ app.serve
 Hello, <%= name %>
 ```
 
+## Using amethyst-bin to quickly generate your application
+
+[amethyst-bin](https://github.com/Sdogruyol/amethyst-bin) is an executable shell script to help you
+quickly generate your Amethyst application.
+
+It handles installing the base dependencies, views / controllers folder generation and main application file generation.
+
+```
+curl https://raw.githubusercontent.com/Sdogruyol/amethyst-bin/master/amethyst > amethyst && chmod +x amethyst
+./amethyst sample
+```
+
+Voila! Your app is ready now you can run it
+
+```cd sample && crystal run src/sample.cr```
 
 ## Development
 
