@@ -53,7 +53,7 @@ describe Base::Controller do
     it "can renders view in block" do
       controller.request.header "Accept", "text/html"
       controller.call_action "hello"
-      controller.response.body.should eq "Hello, Andrew"
+      controller.response.body.should eq "Hello, Andrew\n"
     end
 
     it "can redirect in block" do
