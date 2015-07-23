@@ -28,7 +28,7 @@ class TestMiddleware < Middleware::Base
   end
 end
 
-def create_controller_instance(controller : Base::Controller.class) 
+def create_controller_instance(controller : Base::Controller.class)
   request, response = HttpHlp.get_env
   controller = controller.new
   controller.set_env(request, response)
@@ -50,7 +50,7 @@ class HttpHlp
   end
 
   def get_env
-    return req, res 
+    return req, res
   end
 
   def self.req(method, path)

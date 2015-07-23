@@ -23,7 +23,7 @@ describe MiddlewareStack do
       mdwstack = MiddlewareStack.new
       request  = HttpHlp.req("GET", "/")
       mdwstack.use TestMiddleware
-      
+
       mdwstack.build_middleware
       mdwstack.includes?(TestMiddleware).should eq true
     end

@@ -1,9 +1,9 @@
 #require "./spec_helper"
 
 #class AssertionsTest < Minitest::Test
-  
+
 #  describe Request do
-#      let(:headers) do 
+#      let(:headers) do
 #        headers = HTTP::Headers.new
 #        headers["Content-type"] = ["text/plain"]
 #        headers

@@ -19,7 +19,7 @@ abstract class Controller
       @request   = request
       @processed = false
     end
-    
+
     # Do stuff in block if client accepts text/html
     def html(&block)
       if @request.accept == "text/html"
@@ -76,7 +76,7 @@ abstract class Controller
   def initialize()
     @request :: Http::Request
     @response :: Http::Response
-    @actions = {} of String => -> 
+    @actions = {} of String => ->
     add_actions
     @before_callbacks = {} of String => Array
     register_before_action_callbacks

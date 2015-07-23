@@ -5,7 +5,7 @@ class Config
   property :static_dirs
 
   # Simple configuration class for App
-  
+
   include Sugar::Klass
   singleton_INSTANCE
 
@@ -16,13 +16,13 @@ class Config
     @raise_http_method_exceptions = true
     @static_dirs = [] of String
   end
-  
+
   def self.configure(&block)
     yield INSTANCE
   end
 
   # Configures application with given block
   def configure(&block)
-    with self yield self 
+    with self yield self
   end
 end

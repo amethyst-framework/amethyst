@@ -9,7 +9,7 @@ class HttpLogger < Middleware::Base
 
   def log_request(request)
     logger.indent = 3
-    logger.log_object request, "Request" 
+    logger.log_object request, "Request"
     logger.indent = 6
     logger.log_subheading "headers"
     logger.log_hash request.headers, skip = ["Cookie"]
@@ -33,7 +33,7 @@ class HttpLogger < Middleware::Base
     log_request request
     log_cookies(request.headers)
     response = @app.call(request)
-    logger.log_paragraph self 
+    logger.log_paragraph self
     log_response response
     logger.indent = 6
     logger.log_subheading "headers"

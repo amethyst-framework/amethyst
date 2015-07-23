@@ -32,5 +32,3 @@ end
 
 class GlobalApp < Base::App
 end
-
-
