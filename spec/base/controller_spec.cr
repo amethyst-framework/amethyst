@@ -3,7 +3,7 @@ require "./spec_helper"
 describe Base::Controller do
 
   describe "#initialize" do
-    controller = create_controller_instance(IndexController) 
+    controller = create_controller_instance(IndexController)
 
     it "adds actions to @actions hash as procs" do
       controller.actions.should be_a Hash
@@ -15,7 +15,7 @@ describe Base::Controller do
 
 
   describe "#call_action" do
-    controller = create_controller_instance(IndexController) 
+    controller = create_controller_instance(IndexController)
 
     it "should raise exception if action not found" do
       expect_raises ControllerActionNotFound do
@@ -48,12 +48,12 @@ describe Base::Controller do
         end
       end
     end
-    
+
     # TODO : Move theese to integration tests
     it "can renders view in block" do
       controller.request.header "Accept", "text/html"
       controller.call_action "hello"
-      controller.response.body.should eq "Hello, Andrew"
+      controller.response.body.should eq "Hello, Andrew\n"
     end
 
     it "can redirect in block" do

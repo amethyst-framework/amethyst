@@ -1,15 +1,15 @@
 require "./spec_helper"
 
 describe Response do
-  
+
   response = Response.new(404, "Not Found")
 
   describe "#header" do
-  	it "sets header" do
-  		response.header "Content-Type", "text/html"
-  		response.headers.length.should eq 1
-  		response.headers["Content-Type"].should eq "text/html"
-  	end
+    it "sets header" do
+      response.header "Content-Type", "text/html"
+      response.headers.length.should eq 1
+      response.headers["Content-Type"].should eq "text/html"
+    end
   end
 
 
@@ -20,12 +20,12 @@ describe Response do
   end
 
   describe "#cookie" do
-  	it "should add a proper simple cookies to 'Set-Cookie' header" do
-  		response = HttpHlp.res(200, "Ok")
-  		response.cookie "id", 22
-  		response.cookie "name", "Amethyst"
-  		response.headers["Set-Cookie"].should eq "id=22,name=Amethyst"
-  	end
+    it "should add a proper simple cookies to 'Set-Cookie' header" do
+      response = HttpHlp.res(200, "Ok")
+      response.cookie "id", 22
+      response.cookie "name", "Amethyst"
+      response.headers["Set-Cookie"].should eq "id=22,name=Amethyst"
+    end
 
     it "should add a proper complex cookie to 'Set-Cookie' header" do
       response = HttpHlp.res(200, "Ok")

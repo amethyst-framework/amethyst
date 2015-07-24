@@ -15,7 +15,7 @@ describe Route do
 
   matched_route   = Route.new("/index", "IndexController", "all")
   matched_route.add_request_method("DELETE")
-  
+
   describe "#initialize" do
 
     it "instantiates route properly" do
@@ -31,7 +31,7 @@ describe Route do
       paramered_route.length.should eq 4
     end
   end
-  
+
   describe "#matches?" do
 
     it "matches a given path with strict route" do

@@ -36,7 +36,7 @@ class Response
   def log
     if headers.has_key?("Content-type") && (headers["Content-type"] == ("text/html"||"text/plain"))
       body = @body
-    else 
+    else
       body = ""
     end
     {

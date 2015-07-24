@@ -45,5 +45,3 @@ describe HeaderHelper do
     end
   end
 end
-
-

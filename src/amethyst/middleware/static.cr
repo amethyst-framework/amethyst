@@ -23,7 +23,7 @@ class Static < Middleware::Base
 
   def static_dir_exists?(dirpath)
     dirpath = dirpath.split "/"
-    dirpath = dirpath.join "/" 
+    dirpath = dirpath.join "/"
     exists = false
     @static_dirs.each do |dir|
       dir = dir.split "/"

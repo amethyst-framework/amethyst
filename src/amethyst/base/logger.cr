@@ -42,7 +42,7 @@ class Logger
       value = false if value.to_s.empty?
       name  = name.to_s
       next if skip.includes? name
-      next unless value && skip_empty_values 
+      next unless value && skip_empty_values
       @indent.times { print " " }
       name = name.capitalize
       name = name.ljust(justify, ' ')

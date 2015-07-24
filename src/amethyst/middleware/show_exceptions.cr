@@ -1,6 +1,6 @@
 class ShowExceptions < Middleware::Base
 
-  def call(request : Http::Request) 
+  def call(request : Http::Request)
     begin
       response = @app.call(request)
     rescue httpexception : Exceptions::HttpException
