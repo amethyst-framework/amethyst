@@ -5,11 +5,8 @@ describe Base::View do
   describe "#button_to" do
     it "should create button form" do
       view = Base::View.new
-      button = view.button_to "Send", controller: :user, action: :login
-      button.should eq "
-    <form method='post' action='/user/login' class='button_to'>
-      <input value='Send' type='submit' class='' />
-    </form>"
+      button = view.button_to "send", controller: :user, action: :login
+      button.should eq "<form method=\"post\"action=\"/user/login\"class=\"button_to\"><input value=\"send\"type=\"submit\"class=\"\"></input></form>"
     end
   end
 end
