@@ -3,7 +3,7 @@ module ViewHelpers
 
   def button_to(value="", controller="", action="", method="post", form_class="button_to", button_class="")
     HTML::Builder.new.build do
-      form({ method: method, action: "/#{controller}/#{action}" class: form_class }) do
+      form({ method: method, action: "/#{controller}/#{action}", class: form_class }) do
         input({ value: value, type: "submit", class: button_class }) {}
       end
     end
