@@ -15,6 +15,10 @@ class HelpersTestController < Base::Controller
       json "Hello world"
     end
 
+    def json_test_with_hash
+      json({hello: "World"})
+    end
+
     def redirect_to_test
       redirect_to "google.com"
     end
@@ -42,10 +46,17 @@ describe Support::ControllerHelpers do
     end
   end
 
-  describe "#html" do
+  describe "#json" do
     it "should set status, body and 'Content-Type' header" do
       helpers_test_controller.json_test
       helpers_test_controller.body.should eq "Hello world"
+      helpers_test_controller.response.status.should eq 200
+      helpers_test_controller.response.headers["Content-Type"].should eq "application/json"
+    end
+
+    it "should set status, body and 'Content-Type' header" do
+      helpers_test_controller.json_test_with_hash
+      helpers_test_controller.body.should eq "{\"hello\":\"World\"}"
       helpers_test_controller.response.status.should eq 200
       helpers_test_controller.response.headers["Content-Type"].should eq "application/json"
     end
