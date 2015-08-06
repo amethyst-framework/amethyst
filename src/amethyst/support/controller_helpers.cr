@@ -14,6 +14,11 @@ module ControllerHelpers
     @response.header("Content-Type", "application/json")
   end
 
+  private def json(body: Hash, status=200)
+    @response.set(status, body.to_json)
+    @response.header("Content-Type", "application/json")
+  end
+
   private def redirect_to(location : String)
     @response.header "Location", location
     @response.status = 303
