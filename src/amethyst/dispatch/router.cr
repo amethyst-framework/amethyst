@@ -55,6 +55,7 @@ class Router
   def process_default_route(request : Http::Request, response : Http::Response)
     regexp = "^\/(?<controller>[a-z]*)\/(?<action>[a-z,_,-]*)"
     match = Regex.new(regexp).match(request.path)
+
     if match
       controller = match["controller"] as String
       action     = match["action"]     as String

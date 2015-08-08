@@ -1,7 +1,5 @@
 require "./spec_helper"
 
-
-
 describe Route do
 
   strict_route  = Route.new("/index/", "IndexController", "hello")

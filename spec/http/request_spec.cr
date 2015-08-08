@@ -17,7 +17,6 @@ describe Request do
     end
   end
 
-
   describe "#get? #post? #put? delete?" do
     it "checks if http method is 'GET'" do
       request = HttpHlp.req("GET", "/")
@@ -44,7 +43,6 @@ describe Request do
       request.get?.should eq false
     end
   end
-
 
   describe "#query_string" do
     it "returns query string, if exists" do

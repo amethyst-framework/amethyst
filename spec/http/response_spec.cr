@@ -12,7 +12,6 @@ describe Response do
     end
   end
 
-
   describe "#build" do
     it "should return HTTP::Response" do
       response.build.should be_a HTTP::Response
