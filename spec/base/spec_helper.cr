@@ -1,4 +1,3 @@
-require "spec"
 require "../../src/all"
 
 class ViewController < Controller

@@ -13,7 +13,6 @@ describe Base::Controller do
     end
   end
 
-
   describe "#call_action" do
     controller = create_controller_instance(IndexController)
 
@@ -36,7 +35,6 @@ describe Base::Controller do
     end
   end
 
-
   describe "#respond_to" do
     controller = create_controller_instance(ViewController)
 
@@ -49,8 +47,8 @@ describe Base::Controller do
       end
     end
 
-    # TODO : Move theese to integration tests
-    it "can renders view in block" do
+    # TODO : Move these to integration tests
+    it "can render view in block" do
       controller.request.header "Accept", "text/html"
       controller.call_action "hello"
       controller.response.body.should eq "Hello, Andrew\n"
@@ -61,7 +59,6 @@ describe Base::Controller do
       controller.response.status.should eq 303
     end
   end
-
 
   describe Base::Controller::Formatter do
 
@@ -80,7 +77,6 @@ describe Base::Controller do
         formatter.processed.should eq false
       end
     end
-
 
     describe "#any" do
       request, response = HttpHlp.get_env

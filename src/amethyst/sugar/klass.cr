@@ -4,10 +4,7 @@ module Klass
       instance = Class.allocate
       instance.initialize(*args)
       instance
-    end
-    #private def self.new
-      #super
-    #end
+    end  
   end
 
   macro singleton_INSTANCE

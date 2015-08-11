@@ -1,5 +1,3 @@
-require "benchmark"
-
 abstract class Controller
   getter   :actions
   property :request
@@ -64,11 +62,11 @@ abstract class Controller
   end
 
   macro register_before_action_callbacks
-  {% method_names = @type.methods.map(&.name.stringify) %}
-      {% before_callbacks = method_names.select(&.starts_with?("_before_")) %}
-  {% for method in before_callbacks %}
-    {{method.id}}
-  {% end %}
+    {% method_names = @type.methods.map(&.name.stringify) %}
+        {% before_callbacks = method_names.select(&.starts_with?("_before_")) %}
+    {% for method in before_callbacks %}
+      {{method.id}}
+    {% end %}
   end
 
   # Creates a hash for controller actions
