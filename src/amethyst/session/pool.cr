@@ -14,6 +14,8 @@
 #
 # Get the session details:
 # session_pool.get_session(session_id)
+require "secure_random"
+
 class Pool
   property :pool
   
@@ -24,12 +26,12 @@ class Pool
     @pool = {} of String => Hash
   end
 
-  def generate_sid(cookie="")
+  def generate_sid
     sid = loop do
       sid = Base64.urlsafe_encode64(SecureRandom.random_bytes(128))
       break sid unless @pool.has_key?(sid)
     end
-    @pool[sid] = {cookie: cookie.to_s}
+    @pool[sid] = {} of Symbol => String
     sid
   end
 
@@ -37,7 +39,7 @@ class Pool
     if @pool.has_key?(sid)
       @pool[sid]
     else
-      @pool[sid] = {cookie: ""}
+      @pool[sid] = {} of Symbol => String
     end
   end
 
