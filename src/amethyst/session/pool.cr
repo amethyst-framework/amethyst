@@ -34,17 +34,16 @@ class Pool
   end
 
   def get_session(sid)
-    if @pool.has_key?(sid.to_s)
-      @pool[sid.to_s]
-    else
-      sid = generate_sid
+    if @pool.has_key?(sid)
       @pool[sid]
+    else
+      @pool[sid] = {cookie: ""}
     end
   end
 
   def destroy_session(sid)
-    if @pool.has_key?(sid.to_s)
-      @pool.delete(sid.to_s)
+    if @pool.has_key?(sid)
+      @pool.delete(sid)
     end
   end
 
