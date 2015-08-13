@@ -40,6 +40,16 @@ abstract class Controller
     response.body
   end
 
+  def session
+    session_id = request.cookies["sid"]
+    return Base::App.session.get_session(session_id)
+  end
+
+  def destroy_session
+    session_id = request.cookies["sid"]
+    return Base::App.session.destroy_session(session_id)
+  end
+
   # This hack creates procs from controller actions, and adds it to the @actions
   macro actions(*actions)
     private def add_actions
