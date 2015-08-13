@@ -28,7 +28,7 @@ class Session < Middleware::Base
     end
 
     unless session_id
-      session_id = @session_pool.generate_sid("sid")
+      session_id = @session_pool.generate_sid
       cookies << "sid=" + session_id
       request.headers["Cookie"] = cookies.join(";")
       return false, session_id
