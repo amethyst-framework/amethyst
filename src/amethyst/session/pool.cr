@@ -14,10 +14,12 @@
 #
 # Get the session details:
 # session_pool.get_session(session_id)
-
 class Pool
   property :pool
-
+  
+  include Sugar::Klass
+  singleton_INSTANCE
+  
   def initialize
     @pool = {} of String => Hash
   end
