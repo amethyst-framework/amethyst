@@ -14,7 +14,10 @@ class Session < Middleware::Base
   end 
 
   def get_session(request)
-    cookies = request.headers["Cookie"].split(";")
+    cookies = [] of String
+    if request.headers.has_key?("Cookie")
+      cookies = request.headers["Cookie"].split(";")
+    end
     
     session_id = nil
     cookies.each do |cookie|
