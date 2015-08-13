@@ -28,6 +28,11 @@ class App
     Base::Logger::INSTANCE
   end
 
+  # Shortcut for Session Pool
+  def self.session
+    Session::Pool::INSTANCE
+  end
+
   # Shortcut for MiddlewareStack instance
   def self.middleware
     Middleware::MiddlewareStack::INSTANCE
@@ -40,6 +45,7 @@ class App
   def serve(port=8080)
     @port = port.to_i
     run_string    = "[Amethyst #{VERSION}] serving application \"#{@name}\" at http://127.0.0.1:#{@port}" #TODO move to Logger class
+    puts run_string
     App.logger.log_string run_string
     server = HTTP::Server.new port, @http_handler
     server.listen
@@ -66,6 +72,7 @@ class App
       self.class.use Middleware::HttpLogger
       self.class.use Middleware::TimeLogger
     end
+    self.class.use Middleware::Session
     self.class.use Middleware::Static
   end
 end

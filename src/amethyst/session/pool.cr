@@ -14,35 +14,38 @@
 #
 # Get the session details:
 # session_pool.get_session(session_id)
+require "secure_random"
 
 class Pool
   property :pool
-
+  
+  include Sugar::Klass
+  singleton_INSTANCE
+  
   def initialize
     @pool = {} of String => Hash
   end
 
-  def generate_sid(cookie="")
+  def generate_sid
     sid = loop do
       sid = Base64.urlsafe_encode64(SecureRandom.random_bytes(128))
       break sid unless @pool.has_key?(sid)
     end
-    @pool[sid] = {cookie: cookie.to_s}
+    @pool[sid] = {} of Symbol => String
     sid
   end
 
   def get_session(sid)
-    if @pool.has_key?(sid.to_s)
-      @pool[sid.to_s]
-    else
-      sid = generate_sid
+    if @pool.has_key?(sid)
       @pool[sid]
+    else
+      @pool[sid] = {} of Symbol => String
     end
   end
 
   def destroy_session(sid)
-    if @pool.has_key?(sid.to_s)
-      @pool.delete(sid.to_s)
+    if @pool.has_key?(sid)
+      @pool.delete(sid)
     end
   end
 
