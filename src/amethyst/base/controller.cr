@@ -40,13 +40,13 @@ abstract class Controller
     response.body
   end
 
-  def get_session
-    session_id = request.cookies["session_id"]
+  def session
+    session_id = request.cookies["sid"]
     return Base::App.session.get_session(session_id)
   end
 
   def destroy_session
-    session_id = request.cookies["session_id"]
+    session_id = request.cookies["sid"]
     return Base::App.session.destroy_session(session_id)
   end
 
