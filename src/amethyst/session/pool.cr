@@ -18,17 +18,17 @@ require "secure_random"
 
 class Pool
   property :pool
-  
+
   include Sugar::Klass
   singleton_INSTANCE
-  
+
   def initialize
     @pool = {} of String => Hash
   end
 
   def generate_sid
     sid = loop do
-      sid = Base64.urlsafe_encode64(SecureRandom.random_bytes(128))
+      sid = Base64.urlsafe_encode(SecureRandom.random_bytes(128))
       break sid unless @pool.has_key?(sid)
     end
     @pool[sid] = {} of Symbol => String
