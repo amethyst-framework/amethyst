@@ -88,7 +88,7 @@ module Amethyst
         @response :: Http::Response
         @actions = {} of String => ->
         add_actions
-        @before_callbacks = {} of String => Array(Proc(Void))
+        @before_callbacks = {} of String => Array(Proc(Bool))
         register_before_action_callbacks
       end
 
