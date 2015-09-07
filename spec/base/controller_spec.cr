@@ -6,7 +6,7 @@ describe Base::Controller do
     controller = create_controller_instance(IndexController)
 
     it "adds actions to @actions hash as procs" do
-      controller.actions.should be_a Hash
+      controller.actions.should be_a Hash(String, Proc(Void))
       controller.actions.length.should eq 3
       controller.actions["hello"].should eq ->controller.hello
       controller.actions["bye"].should be_a Proc(Void)

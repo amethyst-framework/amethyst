@@ -14,7 +14,7 @@ describe Pool do
   describe "#get_session" do
     it "should return a session hash" do
       sid = session_pool.generate_sid
-      session_pool.get_session(sid).should be_a Hash
+      session_pool.get_session(sid).should be_a Hash(Symbol, String)
     end
 
     it "should return the value saved in the session by key" do
