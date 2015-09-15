@@ -16,37 +16,41 @@
 # session_pool.get_session(session_id)
 require "secure_random"
 
-class Pool
-  property :pool
+module Amethyst
+  module Session
+    class Pool
+      property :pool
 
-  include Sugar::Klass
-  singleton_INSTANCE
+      include Sugar::Klass
+      singleton_INSTANCE
 
-  def initialize
-    @pool = {} of String => Hash
-  end
+      def initialize
+        @pool = {} of String => Hash
+      end
 
-  def generate_sid
-    sid = loop do
-      sid = Base64.urlsafe_encode(SecureRandom.random_bytes(128))
-      break sid unless @pool.has_key?(sid)
+      def generate_sid
+        sid = loop do
+          sid = Base64.urlsafe_encode(SecureRandom.random_bytes(128))
+          break sid unless @pool.has_key?(sid)
+        end
+        @pool[sid] = {} of Symbol => String
+        sid
+      end
+
+      def get_session(sid)
+        if @pool.has_key?(sid)
+          @pool[sid]
+        else
+          @pool[sid] = {} of Symbol => String
+        end
+      end
+
+      def destroy_session(sid)
+        if @pool.has_key?(sid)
+          @pool.delete(sid)
+        end
+      end
+
     end
-    @pool[sid] = {} of Symbol => String
-    sid
   end
-
-  def get_session(sid)
-    if @pool.has_key?(sid)
-      @pool[sid]
-    else
-      @pool[sid] = {} of Symbol => String
-    end
-  end
-
-  def destroy_session(sid)
-    if @pool.has_key?(sid)
-      @pool.delete(sid)
-    end
-  end
-
 end

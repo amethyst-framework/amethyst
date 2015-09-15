@@ -1,12 +1,11 @@
 # Dependencies
 require "uri"
 require "http"
-
+require "./*"
+require "../support/*"
 # Amethyst dependencies
-require "../support"
 
 module Amethyst
   module Http
-    require "./*"
   end
 end

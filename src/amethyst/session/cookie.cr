@@ -1,4 +1,7 @@
+module Amethyst
+  module Session
+    class Cookie
 
-class Cookie
-
+    end
+  end
 end

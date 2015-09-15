@@ -1,44 +1,47 @@
-class MiddlewareStack
+module Amethyst
+  module Middleware
+    class MiddlewareStack
 
-  include Sugar::Klass
-  singleton_INSTANCE
-  include Enumerable(Class)
+      include Sugar::Klass
+      singleton_INSTANCE
+      include Enumerable(Class)
 
-  def initialize()
-    @middlewares   = [] of Middleware::Base.class
-  end
+      def initialize()
+        @middlewares   = [] of Middleware::Base.class
+      end
 
-  def build_middleware
-    app = Dispatch::Router::INSTANCE
-    @middlewares.reverse.each do |mdware|
-      mdware = instantiate mdware
-      app = mdware.build(app)
+      def build_middleware
+        app = Dispatch::Router::INSTANCE
+        @middlewares.reverse.each do |mdware|
+          mdware = instantiate mdware
+          app = mdware.build(app)
+        end
+        puts self if Base::App.settings.environment == "development"
+        app
+      end
+
+      def use(middleware)
+        @middlewares << middleware
+      end
+
+      def each
+        0.upto(@middlewares.length-1) do |i|
+          yield @middlewares[i]
+        end
+      end
+
+      def includes?(middleware)
+        @middlewares.includes? middleware
+      end
+
+      def to_s(io : IO)
+        msg = "\n"
+        @middlewares.each do |mdware|
+          msg += "use #{mdware}\n"
+        end
+        io << msg
+      end
     end
-    puts self if Base::App.settings.environment == "development"
-    app
-  end
-
-  def use(middleware)
-    @middlewares << middleware
-  end
-
-  def each
-    0.upto(@middlewares.length-1) do |i|
-      yield @middlewares[i]
-    end
-  end
-
-  def includes?(middleware)
-    @middlewares.includes? middleware
-  end
-
-  def to_s(io : IO)
-    msg = "\n"
-    @middlewares.each do |mdware|
-      msg += "use #{mdware}\n"
-    end
-    io << msg
   end
 end
-
 # TODO: Implement insert_before, delete, etc.

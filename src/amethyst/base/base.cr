@@ -9,12 +9,12 @@ require "../middleware"
 require "../dispatch"
 require "../session"
 require "../sugar"
-require "../support"
+# require "../support"
 require "../exceptions"
-
+require "./*"
 # Load files into module namespace
 module Amethyst
   module Base
-    require "./*"
+
   end
 end
