@@ -1,4 +1,5 @@
 require "./*"
+require "../support/*"
 
 module Amethyst
   module Http

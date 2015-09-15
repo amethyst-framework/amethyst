@@ -1,16 +1,21 @@
-include Sugar::View
 
-class View
-  include Support::ViewHelpers
 
-  def render
-    response = StringIO.new
-    to_s(response)
-    response.to_s
-  end
+module Amethyst
+  module Base
+    class View
+      include Amethyst::Support::ViewHelpers
+      include Amethyst::Sugar::View
 
-  macro method_missing(name)
-    @controller.@{{name.id}}
+      def render
+        response = StringIO.new
+        to_s(response)
+        response.to_s
+      end
+
+      macro method_missing(name)
+        @controller.@{{name.id}}
+      end
+    end
   end
 end
 

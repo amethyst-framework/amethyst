@@ -1,28 +1,32 @@
-class Config
-  property :environment
-  property :app_dir
-  property :namespace
-  property :static_dirs
+module Amethyst
+  module Base
+    class Config
+      property :environment
+      property :app_dir
+      property :namespace
+      property :static_dirs
 
-  # Simple configuration class for App
+      # Simple configuration class for App
 
-  include Sugar::Klass
-  singleton_INSTANCE
+      include Amethyst::Sugar::Klass
+      singleton_INSTANCE
 
-  def initialize
-    @enviroment  = "production"
-    @app_dir     = ""
-    @namespace   = ""
-    @raise_http_method_exceptions = true
-    @static_dirs = [] of String
-  end
+      def initialize
+        @enviroment  = "production"
+        @app_dir     = ""
+        @namespace   = ""
+        @raise_http_method_exceptions = true
+        @static_dirs = [] of String
+      end
 
-  def self.configure(&block)
-    yield INSTANCE
-  end
+      def self.configure(&block)
+        yield INSTANCE
+      end
 
-  # Configures application with given block
-  def configure(&block)
-    with self yield self
+      # Configures application with given block
+      def configure(&block)
+        with self yield self
+      end
+    end
   end
 end

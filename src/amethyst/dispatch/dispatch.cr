@@ -2,7 +2,7 @@
 require "http"
 
 # Amethyst dependencies
-require "../http"
+# require "../http"
 require "../sugar"
 require "./*"
 # Load files into module namespace
