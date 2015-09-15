@@ -1,3 +1,5 @@
+require "../sugar/*"
+
 module Amethyst
   module Base
     class Config

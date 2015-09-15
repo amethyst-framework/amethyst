@@ -1,4 +1,3 @@
-require "./middleware"
 module Amethyst
   module Middleware
     class Session < Middleware::Base

@@ -1,3 +1,5 @@
+require "../support/*"
+
 module Amethyst
   module Base
     abstract class Controller

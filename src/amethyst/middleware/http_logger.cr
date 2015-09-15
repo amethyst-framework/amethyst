@@ -1,5 +1,3 @@
-require "./middleware"
-
 module Amethyst
   module Middleware
     class HttpLogger < Middleware::Base
