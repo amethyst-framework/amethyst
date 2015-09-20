@@ -1,0 +1,7 @@
+name: amethyst
+version: 0.1.7
+
+dependencies:
+  mime:
+    github: spalger/crystal-mime
+    branch: master
