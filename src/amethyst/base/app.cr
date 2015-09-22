@@ -60,7 +60,7 @@ module Amethyst
         sep = "::"
         modules = app_type.split(sep)
         namespace = ""
-        if modules.length > 1
+        if modules.size > 1
           modules.delete(modules.last)
           namespace = modules.join(sep)+sep
         end

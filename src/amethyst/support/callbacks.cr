@@ -20,7 +20,7 @@ module Amethyst
         end
 
         def length
-          @before.length+@after.length
+          @before.size+@after.size
         end
 
         # invokes before callbacks each by one, than run code and invokes after callbacks

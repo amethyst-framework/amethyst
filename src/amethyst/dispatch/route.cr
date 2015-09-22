@@ -9,7 +9,7 @@ module Amethyst
 
       def initialize(@pattern, @controller, @action)
         @pattern = @pattern.gsub(/\/$/, "\$") unless @pattern == "/"
-        @length  = @pattern.split("/").length
+        @length  = @pattern.split("/").size
         @methods = [] of String
       end
 
@@ -23,7 +23,7 @@ module Amethyst
       def matches?(path, method)
         raise Exceptions::HttpNotImplemented.new(method) unless Http::METHODS.includes?(method)
         path = path.gsub(/\/$/, "") unless path == "/"
-        return false unless path.split("/").length == @length
+        return false unless path.split("/").size == @length
         regex = Regex.new(@pattern.to_s.gsub(/(:\w*)/, ".*"))
         matches = false
         if path.match(regex)
@@ -38,7 +38,7 @@ module Amethyst
         params        = {} of String => String
         path_items    = path.split("/")
         pattern_items = @pattern.split("/")
-        path_items.length.times do |i|
+        path_items.size.times do |i|
           if pattern_items[i].match(/(:\w*)/)
             params[pattern_items[i].gsub(/:/, "")] = path_items[i]
           end

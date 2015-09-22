@@ -22,7 +22,7 @@ describe Router do
   describe "#register" do
     it "registers controller" do
       router.register(IndexController)
-      router.controllers.length.should eq 1
+      router.controllers.size.should eq 1
       router.controllers["IndexController"].is_a?(Class).should eq true
     end
   end

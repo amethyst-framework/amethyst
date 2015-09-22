@@ -7,7 +7,7 @@ describe Response do
   describe "#header" do
     it "sets header" do
       response.header "Content-Type", "text/html"
-      response.headers.length.should eq 1
+      response.headers.size.should eq 1
       response.headers["Content-Type"].should eq "text/html"
     end
   end
