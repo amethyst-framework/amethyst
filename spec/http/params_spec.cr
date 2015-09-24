@@ -18,7 +18,7 @@ describe Params do
       params = Params.new
       params.from_hash Hash{ "id" => "5", "name" => "Amethyst"}
       params["id"].should eq "5"
-      params.length.should eq 2
+      params.size.should eq 2
     end
 
     it "should cast keys and values to String" do
@@ -26,7 +26,7 @@ describe Params do
       params.from_hash Hash{ "id" => 5, :name => "Amethyst"}
       params["id"].should eq "5"
       params["name"].should eq "Amethyst"
-      params.length.should eq 2
+      params.size.should eq 2
     end
   end
 

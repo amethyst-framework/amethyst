@@ -21,7 +21,7 @@ module Amethyst
           {% for m in methods %}
           {% args = m.args %}
         when "{{m.name.id}}"
-          raise WrongNumberOfArguments.new({{m.name.stringify}}, args.length, {{m.args.length}}) unless args.length == {{m.args.length}}
+          raise WrongNumberOfArguments.new({{m.name.stringify}}, args.size, {{m.args.size}}) unless args.size == {{m.args.size}}
           {{m.name.id}}{% unless args.empty? %}(
           {% for arg in args %}{{arg.id}}=args[:{{arg.id}}],{% end %}){% end %}
           {% end %}
