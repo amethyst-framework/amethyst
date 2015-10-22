@@ -16,7 +16,7 @@ module Amethyst
         @response.header("Content-Type", "application/json")
       end
 
-      private def json(body: Hash, status=200)
+      private def json(body : Hash, status=200)
         @response.set(status, body.to_json)
         @response.header("Content-Type", "application/json")
       end
