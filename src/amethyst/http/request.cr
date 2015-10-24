@@ -1,4 +1,4 @@
-require "cgi"
+require "uri"
 
 module Amethyst
   module Http
@@ -117,8 +117,8 @@ module Amethyst
         cookies = cookies_string.split(";")
         cookies.each do |cookie|
           key, value = cookie.strip.split("=")
-          key   = CGI.unescape(key)
-          value = CGI.unescape(value)
+          key   = URI.unescape(key)
+          value = URI.unescape(value)
           cookies_hash[key.strip] = value.strip
         end
         cookies_hash
@@ -132,7 +132,7 @@ module Amethyst
           params.each do |param|
             if match = /^(?<key>[^=]*)(=(?<value>.*))?$/.match(param)
               begin
-                key, value = param.split("=").map { |s| CGI.unescape(s) }
+                key, value = param.split("=").map { |s| URI.unescape(s) }
               rescue IndexError
                 value = ""
               end
