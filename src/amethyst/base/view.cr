@@ -6,7 +6,7 @@ module Amethyst
       include Support::ViewHelpers
 
       def render
-        response = StringIO.new
+        response = String.new
         to_s(response)
         response.to_s
       end
