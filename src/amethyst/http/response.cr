@@ -25,7 +25,7 @@ module Amethyst
 
       def cookie(key, value, secure=false, http_only=false, path="", domain="", expires="")
         cookie_string = String.build do |string|
-          string << "#{CGI.escape(key.to_s)}=#{CGI.escape(value.to_s)}"
+          string << "#{URI.escape(key.to_s)}=#{URI.escape(value.to_s)}"
           string <<  "; domain=#{domain}" unless domain.to_s.empty?
           string << "; path=#{path}" unless path.to_s.empty?
           string << "; secure"  if secure
