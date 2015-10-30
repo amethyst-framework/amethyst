@@ -10,6 +10,7 @@ module Amethyst
       property :body
       getter   :version
       setter   :path
+      getter   :query_string
 
       include Support::HeaderHelper
 
@@ -19,6 +20,7 @@ module Amethyst
         @headers = base_request.headers
         @body    = base_request.body
         @version = base_request.version
+        @query_string       = base_request.query
         @query_parameters   = Http::Params.new
         @path_parameters    = Http::Params.new
         @request_parameters = Http::Params.new
@@ -36,11 +38,6 @@ module Amethyst
       # Force path to always return a String
       def path
         return URI.parse(@path).path.to_s
-      end
-
-      # Returns path query string. If it doesn't exists, returns "nil"
-      def query_string
-        URI.parse(@path).query
       end
 
       def host
