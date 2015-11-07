@@ -17,6 +17,7 @@ module Amethyst
         class {{name.id.capitalize}}View < Base::View
           def initialize(controller)
             @controller = controller
+            @response = Http::Response.new
           end
           ecr_file "{{path.id}}/{{name.id}}.ecr"
         end
