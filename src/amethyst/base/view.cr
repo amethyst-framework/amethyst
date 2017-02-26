@@ -12,7 +12,7 @@ module Amethyst
       end
 
       macro method_missing(name)
-        @controller.@{{name.id}}
+        @controller.{{name.id}}
       end
     end
   end

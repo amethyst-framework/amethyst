@@ -15,7 +15,7 @@ module Amethyst
 
       macro view(name, path=__DIR__)
         class {{name.id.capitalize}}View < Base::View
-          def initialize(controller)
+          def initialize(controller : Base::Controller)
             @controller = controller
           end
           ECR.def_to_s "{{path.id}}/{{name.id}}.ecr"
