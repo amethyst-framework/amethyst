@@ -61,10 +61,9 @@ module Amethyst
 
       # returns path parameters: '/users/:id'
       def path_parameters
-        @path_parameters unless @path_parameters.empty?
-        if Base::App.routes.exists? path, method
-          @path_parameters.from_hash(Base::App.routes.matched_route.params path)
-        end
+        return @path_parameters unless @path_parameters.empty?
+        route = Base::App.routes.get_named_route path, method
+        @path_parameters.from_hash(route.params path) if route
         @path_parameters
       end
 
