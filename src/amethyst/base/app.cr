@@ -2,8 +2,11 @@ module Amethyst
   module Base
     class App
       property :port
-      property :name
+      property :name : String
       getter   :routes
+
+      @app : Middleware::Base | Dispatch::Router
+      @http_handler : Base::Handler
 
       def initialize(app_path= __FILE__, app_type={{@type.name.stringify}})
         @port = 8080

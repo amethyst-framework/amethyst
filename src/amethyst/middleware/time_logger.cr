@@ -6,7 +6,7 @@ module Amethyst
       end
 
       def call(request) : Http::Response
-        logger = Base::App.logger
+        logger = Amethyst::Base::App.logger
         t_req = Time.now
         response = @app.call(request)
         t_res  = Time.now

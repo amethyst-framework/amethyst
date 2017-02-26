@@ -2,6 +2,7 @@
 module Amethyst
   module Middleware
     abstract class Base
+      @app : Middleware::Base | Dispatch::Router
 
       def initialize(@app = self)
       end

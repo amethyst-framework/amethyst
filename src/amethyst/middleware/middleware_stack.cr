@@ -11,12 +11,12 @@ module Amethyst
       end
 
       def build_middleware
-        app = Dispatch::Router::INSTANCE
+        app = Dispatch::Router.instance
         @middlewares.reverse.each do |mdware|
           mdware = instantiate mdware
           app = mdware.build(app)
         end
-        puts self if Base::App.settings.environment == "development"
+        puts self if Amethyst::Base::App.settings.environment == "development"
         app
       end
 
