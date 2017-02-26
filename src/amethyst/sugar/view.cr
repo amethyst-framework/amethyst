@@ -10,7 +10,7 @@ module Amethyst
       end
 
       macro view_file(file, a=__DIR__)
-        ecr_file "{{a.id}}/{{file.id}}.ecr"
+        ECR.def_to_s "{{a.id}}/{{file.id}}.ecr"
       end
 
       macro view(name, path=__DIR__)
@@ -18,7 +18,7 @@ module Amethyst
           def initialize(controller)
             @controller = controller
           end
-          ecr_file "{{path.id}}/{{name.id}}.ecr"
+          ECR.def_to_s "{{path.id}}/{{name.id}}.ecr"
         end
       end
 
@@ -33,7 +33,7 @@ module Amethyst
             @controller = controller
             @view = view
           end
-          ecr_file "{{path.id}}/{{name.id}}.ecr"
+          ECR.def_to_s "{{path.id}}/{{name.id}}.ecr"
         end
       end
 
