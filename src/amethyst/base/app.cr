@@ -11,33 +11,33 @@ module Amethyst
         self.class.settings.app_dir   = ENV["PWD"]
         self.class.settings.namespace = get_app_namespace(app_type)
         set_default_middleware
-        @app = Middleware::MiddlewareStack::INSTANCE.build_middleware
+        @app = Middleware::MiddlewareStack.instance.build_middleware
         @http_handler  = Base::Handler.new(@app)
       end
 
       # Shortcut for Config
       def self.settings
-        Base::Config::INSTANCE
+        Base::Config.instance
       end
 
       # Shortcut for Router
       def self.routes
-        Dispatch::Router::INSTANCE
+        Dispatch::Router.instance
       end
 
       # Shortcut for Logger instance
       def self.logger
-        Base::Logger::INSTANCE
+        Base::Logger.instance
       end
 
       # Shortcut for Session Pool
       def self.session
-        Session::Pool::INSTANCE
+        Session::Pool.instance
       end
 
       # Shortcut for MiddlewareStack instance
       def self.middleware
-        Middleware::MiddlewareStack::INSTANCE
+        Middleware::MiddlewareStack.instance
       end
 
       def self.use(middleware : Middleware::Base.class)

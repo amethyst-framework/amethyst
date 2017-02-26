@@ -15,8 +15,8 @@ describe Base::App do
     end
 
     it "should set default middleware" do
-      Middleware::MiddlewareStack::INSTANCE.includes?(Middleware::ShowExceptions).should be_true
-      Middleware::MiddlewareStack::INSTANCE.includes?(Middleware::Static).should be_true
+      Middleware::MiddlewareStack.instance.includes?(Middleware::ShowExceptions).should be_true
+      Middleware::MiddlewareStack.instance.includes?(Middleware::Static).should be_true
     end
   end
 
@@ -34,19 +34,19 @@ describe Base::App do
 
   describe "shortcuts" do
     it "self.settings" do
-      Base::App.settings.should be Base::Config::INSTANCE
+      Base::App.settings.should be Base::Config.instance
     end
 
     it "self.routes" do
-      Base::App.routes.should be Dispatch::Router::INSTANCE
+      Base::App.routes.should be Dispatch::Router.instance
     end
 
     it "self.logger" do
-      Base::App.logger.should be Base::Logger::INSTANCE
+      Base::App.logger.should be Base::Logger.instance
     end
 
     it "self.middleware" do
-      Base::App.middleware.should be Middleware::MiddlewareStack::INSTANCE
+      Base::App.middleware.should be Middleware::MiddlewareStack.instance
     end
   end
 

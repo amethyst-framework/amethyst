@@ -2,7 +2,7 @@ require "./spec_helper"
 
 describe Pool do
 
-  session_pool = Pool::INSTANCE
+  session_pool = Pool.instance
 
   describe "#generate_sid" do
     it "should return a unique id" do
