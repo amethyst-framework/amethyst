@@ -2,6 +2,8 @@ require "./middleware"
 module Amethyst
   module Middleware
     class TimeLogger < Middleware::Base
+      def initialize(@app = self)
+      end
 
       def call(request) : Http::Response
         logger = Base::App.logger

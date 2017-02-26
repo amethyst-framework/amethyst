@@ -1,6 +1,8 @@
 module Amethyst
   module Middleware
     class ShowExceptions < Middleware::Base
+      def initialize(@app = self)
+      end
 
       def call(request : Http::Request)
         begin

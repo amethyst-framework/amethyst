@@ -2,9 +2,8 @@ module Amethyst
   module Middleware
     class Static < Middleware::Base
 
-      def initialize
+      def initialize(@app = self)
         @static_dirs = Base::App.settings.static_dirs
-        @app = self
       end
 
       def call(request) : Http::Response

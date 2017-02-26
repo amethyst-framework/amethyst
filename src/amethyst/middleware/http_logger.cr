@@ -1,11 +1,11 @@
 require "./middleware"
+
 module Amethyst
   module Middleware
     class HttpLogger < Middleware::Base
       getter :logger
 
-      def initialize
-        super()
+      def initialize(@app = self)
         @logger = Base::App.logger
       end
 
