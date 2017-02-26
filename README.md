@@ -1,6 +1,6 @@
-#![Amethyst-logo](http://s019.radikal.ru/i635/1506/28/bac4764b9e03.png)
-[![Pledgie](https://pledgie.com/campaigns/29689.png?skin_name=chrome)](https://pledgie.com/campaigns/29689)
-[![Build Status](https://travis-ci.org/Codcore/amethyst.svg)](https://travis-ci.org/Codcore/amethyst)  [![Join the chat at https://gitter.im/Codcore/Amethyst](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/Codcore/Amethyst?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+[//]: # #![Amethyst-logo](http://s019.radikal.ru/i635/1506/28/bac4764b9e03.png)
+[//]: # [![Pledgie](https://pledgie.com/campaigns/29689.png?skin_name=chrome)](https://pledgie.com/campaigns/29689)
+[//]: # [![Build Status](https://travis-ci.org/Codcore/amethyst.svg)](https://travis-ci.org/Codcore/amethyst)  [![Join the chat at https://gitter.im/Codcore/Amethyst](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/Codcore/Amethyst?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
 Amethyst is a web framework written in the [Crystal](https://github.com/manastech/crystal) language. The goals of Amethyst are to be extremely fast and to provide agility in application development, much like Rails. Why did I call it "Amethyst"? Because Github uses a light purple color for the Crystal language similar to the [amethyst gemstone](http://en.wikipedia.org/wiki/Amethyst).
 
@@ -105,7 +105,7 @@ I would be glad for any help with contributing.
 
 - [Andrew Yaroshuk](https://github.com/Codcore) Codcore - creator, maintainer
 
-## Support
-Amethyst is not a commercial project,it is developed on pure enthusiasm, so if you want to support Amethyst developing, you can help with donating.
+[//] # ## Support
+[//] # Amethyst is not a commercial project,it is developed on pure enthusiasm, so if you want to support Amethyst developing, you can help with donating.
 
-[![Pledgie](https://pledgie.com/campaigns/29689.png?skin_name=chrome)](https://pledgie.com/campaigns/29689)
+[//] # [![Pledgie](https://pledgie.com/campaigns/29689.png?skin_name=chrome)](https://pledgie.com/campaigns/29689)
