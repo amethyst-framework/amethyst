@@ -4,7 +4,7 @@ module Amethyst
       getter :status
       getter :msg
 
-      def initialize(@status, @msg)
+      def initialize(@status : Int32, @msg : String)
         super()
       end
     end
@@ -18,7 +18,7 @@ module Amethyst
 
     class UnsupportedHttpMethod < AmethystException
 
-      def initialize(@ext)
+      def initialize(@method : String)
         super("Method #{@method} is not supported. Use #{Http::METHODS.join(" ")}")
       end
     end
@@ -41,7 +41,9 @@ module Amethyst
       getter :method
       getter :allowed
 
-      def initialize(@method, allowed : Array)
+      @allowed : String
+
+      def initialize(@method : String, allowed : Array(String))
         @allowed = allowed.join(",")
         super(405, "Method #{method} not allowed. Allowed : #{@allowed}")
       end
@@ -50,7 +52,7 @@ module Amethyst
     class HttpNotImplemented < HttpException
       getter :method
 
-      def initialize(@method)
+      def initialize(@method : String)
         super(501, "Method #{@method} not implemented")
       end
     end
