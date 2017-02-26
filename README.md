@@ -2,6 +2,9 @@
 [//]: # [![Pledgie](https://pledgie.com/campaigns/29689.png?skin_name=chrome)](https://pledgie.com/campaigns/29689)
 [//]: # [![Build Status](https://travis-ci.org/Codcore/amethyst.svg)](https://travis-ci.org/Codcore/amethyst)  [![Join the chat at https://gitter.im/Codcore/Amethyst](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/Codcore/Amethyst?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
+**Changelog**
+* Updated to Crystal 0.21.0
+
 Amethyst is a web framework written in the [Crystal](https://github.com/manastech/crystal) language. The goals of Amethyst are to be extremely fast and to provide agility in application development, much like Rails. Why did I call it "Amethyst"? Because Github uses a light purple color for the Crystal language similar to the [amethyst gemstone](http://en.wikipedia.org/wiki/Amethyst).
 
 Latest version - [0.1.7](https://github.com/Codcore/Amethyst/releases/tag/v0.1.7)
