@@ -32,7 +32,7 @@ module Amethyst
         unless ctype = Mime.from_ext(ext)
           raise Exceptions::UnknownContentType.new(ext)
         else
-          headers["Content-type"] = ctype as String
+          headers["Content-type"] = ctype.as(String)
         end
       end
 

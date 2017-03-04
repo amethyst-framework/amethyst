@@ -2,9 +2,9 @@
 module Amethyst
   module Middleware
     abstract class Base
+      @app : Middleware::Base | Dispatch::Router
 
-      def initialize
-        @app = self
+      def initialize(@app = self)
       end
 
       def call(request : Http::Request) : Http::Response

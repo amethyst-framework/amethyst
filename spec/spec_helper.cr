@@ -40,8 +40,8 @@ class HttpHlp
   property :res
 
   def initialize
-    @req  = self.class.req("GET", "/")
-    @res = self.class.res(200, "OK")
+    @req  = self.class.req("GET", "/").as(Http::Request)
+    @res = self.class.res(200, "OK").as(Http::Response)
   end
 
   def self.get_env

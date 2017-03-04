@@ -1,15 +1,20 @@
 module Amethyst
   module Base
     class Handler
+      include HTTP::Handler
+
+      @app : Dispatch::Router|Middleware::Base
 
       def initialize(app)
         @app = app
       end
 
-      def call(base_request : HTTP::Request)
-        request  = Http::Request.new(base_request)
+      def call(context : HTTP::Server::Context)
+        request  = Http::Request.new(context.request)
         response = @app.call(request)
-        response.build
+        response.build context.response
+
+        context
       end
     end
   end

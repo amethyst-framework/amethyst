@@ -1,11 +1,12 @@
 require "./middleware"
+
 module Amethyst
   module Middleware
     class Session < Middleware::Base 
+      @session_pool : Amethyst::Session::Pool
 
-      def initialize
-        super()
-        @session_pool = Base::App.session
+      def initialize(@app = self)
+        @session_pool = Amethyst::Base::App.session
       end
 
       def call(request) : Http::Response

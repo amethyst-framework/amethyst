@@ -1,10 +1,10 @@
 module Amethyst
   module Middleware
     class Static < Middleware::Base
+      @static_dirs : Array(String)
 
-      def initialize
-        @static_dirs = Base::App.settings.static_dirs
-        @app = self
+      def initialize(@app = self)
+        @static_dirs = Amethyst::Base::App.settings.static_dirs
       end
 
       def call(request) : Http::Response
@@ -25,7 +25,7 @@ module Amethyst
         @static_dirs.each do |dir|
           dir = dir.split "/"
           dir = dir.join "/"
-          dir = Base::App.settings.app_dir+dir+file
+          dir = Amethyst::Base::App.settings.app_dir+dir+file
           if File.file?(dir)
             result = dir
             break
@@ -34,9 +34,9 @@ module Amethyst
         return result
       end
 
-      private def mime_type(path)
+      private def mime_type(path) : Array(String)
         mime_type = "text/plain"
-        mime_type = Mime.from_ext(File.extname(path).gsub(".", "")) as String
+        mime_type = [Mime.from_ext(File.extname(path).gsub(".", "")).as(String)]
        end
     end
   end

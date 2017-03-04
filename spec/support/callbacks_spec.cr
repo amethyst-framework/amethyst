@@ -16,12 +16,12 @@ class CallbacksDefineTest
   end
 
   def before_method
-    @test_before = 5+8
+    @test_before = (5+8).as(Int32)
     true
   end
 
   def after_method
-    @test_after = 6+9
+    @test_after = (6+9).as(Int32)
     true
   end
 end

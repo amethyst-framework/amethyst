@@ -8,7 +8,8 @@ module Amethyst
 
       include Support::HeaderHelper
 
-      def initialize(@status=nil, @body="" : String, @headers=HTTP::Headers.new)
+      def initialize(@status=501, @body : String = "", @headers=HTTP::Headers.new)
+        @version = "HTTP/1.1" # set default or copy from the request?
       end
 
       def set(@status, @body)
@@ -18,9 +19,11 @@ module Amethyst
         @status = status
       end
 
-      # "builds" an HTTP::Response from self
-      def build
-        return HTTP::Response.new(@status, @body, headers = @headers)
+      # writes self to the provided HTTP::Server::Response
+      def build(response : HTTP::Server::Response)
+        response.status_code = @status
+        response.headers.merge! @headers
+        response.output << @body
       end
 
       def cookie(key, value, secure=false, http_only=false, path="", domain="", expires="")

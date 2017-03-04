@@ -2,8 +2,11 @@ module Amethyst
   module Base
     class App
       property :port
-      property :name
+      property name : String
       getter   :routes
+
+      @app : Middleware::Base | Dispatch::Router
+      @http_handler : Base::Handler
 
       def initialize(app_path= __FILE__, app_type={{@type.name.stringify}})
         @port = 8080
@@ -11,33 +14,33 @@ module Amethyst
         self.class.settings.app_dir   = ENV["PWD"]
         self.class.settings.namespace = get_app_namespace(app_type)
         set_default_middleware
-        @app = Middleware::MiddlewareStack::INSTANCE.build_middleware
+        @app = Middleware::MiddlewareStack.instance.build_middleware
         @http_handler  = Base::Handler.new(@app)
       end
 
       # Shortcut for Config
       def self.settings
-        Base::Config::INSTANCE
+        Base::Config.instance
       end
 
       # Shortcut for Router
       def self.routes
-        Dispatch::Router::INSTANCE
+        Dispatch::Router.instance
       end
 
       # Shortcut for Logger instance
       def self.logger
-        Base::Logger::INSTANCE
+        Base::Logger.instance
       end
 
       # Shortcut for Session Pool
       def self.session
-        Session::Pool::INSTANCE
+        Session::Pool.instance
       end
 
       # Shortcut for MiddlewareStack instance
       def self.middleware
-        Middleware::MiddlewareStack::INSTANCE
+        Middleware::MiddlewareStack.instance
       end
 
       def self.use(middleware : Middleware::Base.class)
@@ -45,11 +48,12 @@ module Amethyst
       end
 
       def serve(port=8080)
+        host = "0.0.0.0"
         @port = port.to_i
-        run_string    = "[Amethyst #{VERSION}] serving application \"#{@name}\" at http://127.0.0.1:#{@port}" #TODO move to Logger class
+        run_string = "[Amethyst #{VERSION}] serving application \"#{@name}\" at http://#{host}:#{@port}" #TODO move to Logger class
         puts run_string
         App.logger.log_string run_string
-        server = HTTP::Server.new port, @http_handler
+        server = HTTP::Server.new host, port, @http_handler
         server.listen
       end
 

@@ -73,7 +73,7 @@ describe Request do
   describe "#query_parameters" do
     it "returns query (GET) parameters" do
       request = HttpHlp.req("GET", "/index?user=user&name=name")
-      request.query_parameters.should eq Hash{"user" : "user", "name" : "name"}
+      request.query_parameters.should eq Hash{"user" => "user", "name" => "name"}
     end
   end
 

@@ -6,13 +6,13 @@ module Amethyst
       include Support::ViewHelpers
 
       def render
-        response = MemoryIO.new
+        response = IO::Memory.new
         to_s(response)
         response.to_s
       end
 
       macro method_missing(name)
-        @controller.@{{name.id}}
+        @controller.{{name.id}}
       end
     end
   end

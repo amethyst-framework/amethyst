@@ -1,12 +1,14 @@
 require "./middleware"
+
 module Amethyst
   module Middleware
     class HttpLogger < Middleware::Base
+      @logger : Amethyst::Base::Logger
+
       getter :logger
 
-      def initialize
-        super()
-        @logger = Base::App.logger
+      def initialize(@app = self)
+        @logger = Amethyst::Base::App.logger
       end
 
       def log_request(request)
@@ -28,7 +30,7 @@ module Amethyst
         logger.log_subheading "Session", level = 3
         logger.indent = 3
         session_id = request.cookies["sid"]
-        logger.log_string Base::App.session.get_session(session_id).to_s, level = 3
+        logger.log_string Amethyst::Base::App.session.get_session(session_id).to_s, level = 3
       end
 
       def log_response(response)

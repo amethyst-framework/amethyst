@@ -1,4 +1,4 @@
-require "html/builder"
+require "html_builder"
 
 module Amethyst
   module Support

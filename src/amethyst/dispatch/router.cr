@@ -3,7 +3,7 @@ module Amethyst
     class Router
       getter :routes
       getter :controllers
-      getter :matched_route
+      getter matched_route : Dispatch::Route | Nil
 
       include Support::RoutesPainter
       include Sugar::Klass
@@ -18,7 +18,7 @@ module Amethyst
       def initialize()
         @routes      = [] of Dispatch::Route
         @controllers = {} of String => Base::Controller.class
-        @matched_route :: Dispatch::Route
+        @matched_route = nil
         @controllers_instances = {} of String => Base::Controller
       end
 
@@ -32,26 +32,18 @@ module Amethyst
         with self yield
       end
 
-      # Return true if path route exists, and sets @matched_route
-      def exists?(path, method)
+      def get_named_route(path, method)
         raise Exceptions::HttpNotImplemented.new(method) unless Http::METHODS.includes?(method)
-        exists = false
-        @routes.each do |route|
-          if route.matches?(path, method)
-            exists = true
-            @matched_route = route
-            break
-          end
-        end
-        exists
+        @routes.find { |route| route.matches? path, method }
       end
 
       # Process regular routes (which are in @routes)
-      def process_named_route(request : Http::Request, response : Http::Response)
-        controller = @matched_route.controller
-        controller_instance = @controllers_instances[controller] ||=  @controllers.fetch(controller).new
+      def process_named_route(route : Dispatch::Route, request : Http::Request, response : Http::Response)
+        controller = route.controller
+        @controllers_instances[controller] ||=  @controllers.fetch(controller).new
+        controller_instance = @controllers_instances[controller]
         controller_instance.set_env(request, response)
-        response = @controllers_instances[controller].call_action(@matched_route.action)
+        response = controller_instance.call_action(route.action)
       end
 
       def process_default_route(request : Http::Request, response : Http::Response)
@@ -59,8 +51,8 @@ module Amethyst
         match = Regex.new(regexp).match(request.path)
 
         if match
-          controller = match["controller"] as String
-          action     = match["action"]     as String
+          controller : String = match["controller"]
+          action : String = match["action"]
           controller = Base::App.settings.namespace+controller.capitalize+"Controller"
           if @controllers.has_key? controller
             controller_instance = @controllers_instances[controller] ||=  @controllers.fetch(controller).new
@@ -75,9 +67,13 @@ module Amethyst
       # Actually, performs a routing
       def call(request : Http::Request) : Http::Response
         response = Http::Response.new(404, "Not found")
-        if exists = exists? request.path, request.method
-          response = process_named_route(request, response)
+
+        route = get_named_route request.path, request.method
+        if route
+          @matched_route = route
+          response = process_named_route(route, request, response)
         else
+          @matched_route = nil
           response = process_default_route(request, response)
         end
       end

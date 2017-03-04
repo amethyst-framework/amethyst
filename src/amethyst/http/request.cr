@@ -5,12 +5,12 @@ module Amethyst
     METHODS = %w(GET POST PUT DELETE)
 
     class Request
-      property :method
-      getter   :headers
-      property :body
-      getter   :version
-      setter   :path
-      getter   :query_string
+      property method : String
+      getter   headers : HTTP::Headers
+      property body : IO | Nil
+      getter   version : String
+      setter   path : String
+      getter   query_string : String | Nil
 
       include Support::HeaderHelper
 
@@ -61,10 +61,9 @@ module Amethyst
 
       # returns path parameters: '/users/:id'
       def path_parameters
-        @path_parameters unless @path_parameters.empty?
-        if Base::App.routes.exists? path, method
-          @path_parameters.from_hash(Base::App.routes.matched_route.params path)
-        end
+        return @path_parameters unless @path_parameters.empty?
+        route = Base::App.routes.get_named_route path, method
+        @path_parameters.from_hash(route.params path) if route
         @path_parameters
       end
 
@@ -103,9 +102,8 @@ module Amethyst
       end
 
       def cookies
-        if (cookie_string = headers["Cookie"]?) && (!headers["Cookie"].empty?)
-          @cookies.from_hash(parse_cookies cookie_string as String)
-        end
+        cookie_string = headers.fetch "Cookie", ""
+        @cookies.from_hash(parse_cookies cookie_string) unless cookie_string.empty?
         @cookies
       end
 
@@ -128,12 +126,11 @@ module Amethyst
         unless params.empty?
           params.each do |param|
             if match = /^(?<key>[^=]*)(=(?<value>.*))?$/.match(param)
-              begin
-                key, value = param.split("=").map { |s| URI.unescape(s) }
-              rescue IndexError
-                value = ""
-              end
-              hash[key as String] = value
+              key, value = param.split("=").map { |s| URI.unescape(s) }
+              key = URI.unescape(key)
+              value = value.nil? ? "" : URI.unescape(value)
+
+              hash[key] = value
             end
           end
         end

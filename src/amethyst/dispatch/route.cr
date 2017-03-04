@@ -4,10 +4,10 @@ module Amethyst
       getter :pattern
       getter :controller
       getter :action
-      getter :length
+      getter length : Int32
       getter :methods
 
-      def initialize(@pattern, @controller, @action)
+      def initialize(@pattern : String, @controller : String, @action : String)
         @pattern = @pattern.gsub(/\/$/, "\$") unless @pattern == "/"
         @length  = @pattern.split("/").size
         @methods = [] of String
