@@ -2,6 +2,7 @@ name: crystal-on-rails
 version: 0.1.7
 
 dependencies:
+  html_builder:
+    github: crystal-lang/html_builder
   mime:
     github: spalger/crystal-mime
-    branch: master
