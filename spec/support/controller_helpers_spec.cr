@@ -16,7 +16,7 @@ class HelpersTestController < Base::Controller
     end
 
     def json_test_with_hash
-      json({hello: "World"})
+      json({:hello => "World"}.as(Hash(Symbol, String)))
     end
 
     def redirect_to_test

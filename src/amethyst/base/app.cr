@@ -2,7 +2,7 @@ module Amethyst
   module Base
     class App
       property :port
-      property :name : String
+      property name : String
       getter   :routes
 
       @app : Middleware::Base | Dispatch::Router

@@ -11,7 +11,7 @@ module Amethyst
 
     class UnknownContentType < AmethystException
 
-      def initialize(@ext)
+      def initialize(@ext : String)
         super("Unknown content-type for file extension #{@ext}")
       end
     end
