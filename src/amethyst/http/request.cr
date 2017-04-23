@@ -125,6 +125,7 @@ module Amethyst
         params = params_string.to_s.split("&")
         unless params.empty?
           params.each do |param|
+            next if param.blank?
             if match = /^(?<key>[^=]*)(=(?<value>.*))?$/.match(param)
               key, value = param.split("=").map { |s| URI.unescape(s) }
               key = URI.unescape(key)
