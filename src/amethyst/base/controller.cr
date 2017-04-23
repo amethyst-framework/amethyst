@@ -1,11 +1,11 @@
 module Amethyst
   module Base
     abstract class Controller
-      getter   :actions
+      getter :actions
       property :request
       property :response
       property :body
-      getter   :params
+      getter :params
 
       include Support::ControllerHelpers
       include Sugar::View
@@ -15,8 +15,8 @@ module Amethyst
         getter :processed
 
         def initialize(request : Http::Request, response : Http::Response)
-          @response  = response
-          @request   = request
+          @response = response
+          @request = request
           @processed = false
         end
 
@@ -61,36 +61,55 @@ module Amethyst
         end
       end
 
-      macro before_action(callback, only=[] of Symbol)
+      macro register_action_callbacks
+        {% method_names = @type.methods.map(&.name.stringify) %}
+            {% callbacks = method_names.select do |name|
+                 name.starts_with?("_before_") || name.starts_with?("_after_")
+               end %}
+        def action_callbacks
+          {% for method in callbacks %}
+            {{method.id}}
+          {% end %}
+        end
+      end
+
+      macro before_action(callback, only = [] of Symbol)
         {% if only.empty? %}
-          {% only = @type.methods.map(&.name.stringify) %}
+          {% only = ["all"] %}
         {% end %}
         {% for action in only %}
           def _before_{{action.id}}_{{callback.id}}
-          @before_callbacks["{{action.id}}"] = [] of (-> Bool) unless @before_callbacks["{{action.id}}"]?
-          @before_callbacks["{{action.id}}"] << ->{{callback.id}}
+            @before_callbacks["{{action.id}}"] = [] of (-> Array(String)) unless @before_callbacks["{{action.id}}"]?
+            @before_callbacks["{{action.id}}"] << ->{{callback.id}}
           end
         {% end %}
+        register_action_callbacks
       end
 
-      macro register_before_action_callbacks
-        {% method_names = @type.methods.map(&.name.stringify) %}
-            {% before_callbacks = method_names.select(&.starts_with?("_before_")) %}
-        {% for method in before_callbacks %}
-          {{method.id}}
+      macro after_action(callback, only = [] of Symbol)
+        {% if only.empty? %}
+          {% only = ["all"] %}
         {% end %}
+        {% for action in only %}
+          def _after_{{action.id}}_{{callback.id}}
+            @after_callbacks["{{action.id}}"] = [] of (-> Array(String)) unless @after_callbacks["{{action.id}}"]?
+            @after_callbacks["{{action.id}}"] << ->{{callback.id}}
+          end
+        {% end %}
+        register_action_callbacks
       end
 
       # Creates a hash for controller actions
       # Then, invokes actions method to add actions to the hash
-      def initialize()
+      def initialize
         @request = Http::Request.new(HTTP::Request.new("", ""))
         @response = Http::Response.new
 
         @actions = {} of String => ->
         add_actions
-        @before_callbacks = {} of String => Array(Proc(Bool))
-        register_before_action_callbacks
+        @before_callbacks = {} of String => Array(Proc(Array(String)))
+        @after_callbacks = {} of String => Array(Proc(Array(String)))
+        action_callbacks
       end
 
       def params
@@ -103,20 +122,17 @@ module Amethyst
       def respond_to(&block)
         formatter = Formatter.new(@request, @response)
         yield formatter
-        raise Exceptions::HttpBadRequest.new() unless formatter.processed
+        raise Exceptions::HttpBadRequest.new unless formatter.processed
       end
 
       # Works like Ruby's send(:method) to invoke controller action:
       # NameController.call_action("show")
       def call_action(action)
         raise Exceptions::ControllerActionNotFound.new(action, self.class.name) unless @actions.has_key? action
-        callback_result = true
-        if before_callbacks = @before_callbacks[action]?
-          callback_result = before_callbacks.each do |callback|
-            break false unless callback.call
-          end
+        if do_callbacks @before_callbacks, action
+          @actions[action].call
+          do_callbacks @after_callbacks, action
         end
-        @actions[action].call if callback_result
         @response
       end
 
@@ -126,6 +142,15 @@ module Amethyst
           msg += "#{action}\n"
         end
         io << msg
+      end
+
+      private def do_callbacks(callbacks, action)
+        [callbacks[action.to_s]?, callbacks["all"]?].compact.each do |callbacks|
+          callbacks.each do |callback|
+            return false unless callback.call
+          end
+        end
+        true
       end
     end
   end
