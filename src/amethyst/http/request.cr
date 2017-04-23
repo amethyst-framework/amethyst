@@ -7,7 +7,7 @@ module Amethyst
     class Request
       property method : String
       getter   headers : HTTP::Headers
-      property body : IO | Nil
+      property body : IO | Nil | String
       getter   version : String
       setter   path : String
       getter   query_string : String | Nil
@@ -125,6 +125,7 @@ module Amethyst
         params = params_string.to_s.split("&")
         unless params.empty?
           params.each do |param|
+            next if param.blank?
             if match = /^(?<key>[^=]*)(=(?<value>.*))?$/.match(param)
               key, value = param.split("=").map { |s| URI.unescape(s) }
               key = URI.unescape(key)

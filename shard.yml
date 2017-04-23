@@ -5,4 +5,5 @@ dependencies:
   html_builder:
     github: crystal-lang/html_builder
   mime:
-    github: spalger/crystal-mime
+    github: jeffreydvp/crystal-mime
+    branch: master

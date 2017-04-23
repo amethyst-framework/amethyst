@@ -6,6 +6,9 @@ module Amethyst
       property :response
       property :body
       getter :params
+      getter :name
+
+      @name : String | Nil
 
       include Support::ControllerHelpers
       include Sugar::View
@@ -152,6 +155,7 @@ module Amethyst
         end
         true
       end
+      register_action_callbacks
     end
   end
 end
