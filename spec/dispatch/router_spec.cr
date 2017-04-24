@@ -1,10 +1,9 @@
 require "./spec_helper"
 
 describe Router do
-
-  router     = Router.new
-  request    = HttpHlp.req("GET", "/index")
-  response   = HttpHlp.res(200, "Ok")
+  router = Router.new
+  request = HttpHlp.req("GET", "/index")
+  response = HttpHlp.res(200, "Ok")
   controller = create_controller_instance(IndexController)
   controller.set_env(request, response)
 
@@ -18,7 +17,6 @@ describe Router do
     end
   end
 
-
   describe "#register" do
     it "registers controller" do
       router.register(IndexController)
@@ -26,7 +24,6 @@ describe Router do
       router.controllers["IndexController"].is_a?(Class).should eq true
     end
   end
-
 
   describe Support::RoutesPainter do
     it "get method adds right route to @routes" do
@@ -38,38 +35,37 @@ describe Router do
   end
 
   describe "#exists?" do
-    it "return true if route path exists" do
-      router.exists?("/index", "GET").should eq true
-    end
+    # it "return true if route path exists" do
+    #   router.exists?("/index", "GET").should eq true
+    # end
 
-    it "return false if route path doesn't exists" do
-      router.exists?("/indexs", "GET").should eq false
-    end
+    # it "return false if route path doesn't exists" do
+    #   router.exists?("/indexs", "GET").should eq false
+    # end
 
-    it "raises HttpMethodNotAllowed if method not allowed" do
-      expect_raises HttpMethodNotAllowed do
-        router.exists?("/index", "PUT")
-      end
-    end
+    # it "raises HttpMethodNotAllowed if method not allowed" do
+    #   expect_raises HttpMethodNotAllowed do
+    #     router.exists?("/index", "PUT")
+    #   end
+    # end
 
-    it "raises HttpNotImplemented if method is not implemented" do
-      expect_raises HttpNotImplemented do
-        router.exists?("/index", "GETSS")
-      end
-    end
+    # it "raises HttpNotImplemented if method is not implemented" do
+    #   expect_raises HttpNotImplemented do
+    #     router.exists?("/index", "GETSS")
+    #   end
+    # end
   end
 
   describe "#call" do
-
     it "returns HTTP::Response" do
       request = HttpHlp.req("GET", "/index")
       router.call(request).should be_a Http::Response
     end
 
     it "routes to default route if named route doesn't exists" do
-      router     = Router.new
-      request    = HttpHlp.req("GET", "/index/hello")
-      response   = HttpHlp.res(200, "Ok")
+      router = Router.new
+      request = HttpHlp.req("GET", "/index/hello")
+      response = HttpHlp.res(200, "Ok")
       controller = create_controller_instance(IndexController)
       controller.set_env(request, response)
       router.draw do
@@ -82,9 +78,9 @@ describe Router do
     end
 
     it "recognize default route with underscores and hyphens" do
-      router     = Router.new
-      request    = HttpHlp.req("GET", "/index/hello_you")
-      response   = HttpHlp.res(200, "Ok")
+      router = Router.new
+      request = HttpHlp.req("GET", "/index/hello_you")
+      response = HttpHlp.res(200, "Ok")
       controller = create_controller_instance(IndexController)
       controller.set_env(request, response)
       router.draw do
@@ -98,9 +94,9 @@ describe Router do
   end
 
   it "raises HttpNotImplemented if method is not implemented" do
-    router     = Router.new
-    request    = HttpHlp.req("GETSS", "/index/hello")
-    response   = HttpHlp.res(200, "Ok")
+    router = Router.new
+    request = HttpHlp.req("GETSS", "/index/hello")
+    response = HttpHlp.res(200, "Ok")
     controller = create_controller_instance(IndexController)
     controller.set_env(request, response)
     router.draw do

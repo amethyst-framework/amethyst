@@ -1,7 +1,6 @@
 module Amethyst
   module Support
     module RoutesPainter
-
       # Describes methods available in App.routes.draw block of router
 
       # Sets a route that should respond to GET HTTP method
@@ -11,7 +10,7 @@ module Amethyst
       def get_controller_and_action(pattern : String, controller_action : String)
         pattern.gsub(/\$/, "\$") unless pattern == "/"
         controller, action = controller_action.split("#")
-        controller = controller.capitalize+"Controller"
+        controller = controller.camelcase + "Controller"
         route = Dispatch::Route.new(pattern, controller, action)
       end
 

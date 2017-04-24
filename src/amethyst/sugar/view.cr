@@ -9,13 +9,13 @@ module Amethyst
         end
       end
 
-      macro view_file(file, a=__DIR__)
+      macro view_file(file, a = __DIR__)
         ECR.def_to_s "{{a.id}}/{{file.id}}.ecr"
       end
 
-      macro view(name, path=__DIR__)
-        class {{name.id.capitalize}}View < Base::View
-          def initialize(controller : Base::Controller)
+      macro view(name, path = __DIR__)
+        class {{name.id.capitalize}}View < Amethyst::Base::View
+          def initialize(controller : Amethyst::Base::Controller)
             @controller = controller
           end
           ECR.def_to_s "{{path.id}}/{{name.id}}.ecr"
@@ -27,7 +27,7 @@ module Amethyst
         @response.body = _view.render
       end
 
-      macro layout(name, path=_DIR_)
+      macro layout(name, path = _DIR_)
         class {{name.id.capitalize}}View < Base::View
           def initialize(controller, view)
             @controller = controller

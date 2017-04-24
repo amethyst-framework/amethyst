@@ -8,6 +8,7 @@ class ViewController < Controller
   end
 
   view "hello", "#{__DIR__}/views/"
+
   def hello
     @name = "Andrew"
     respond_to do |format|
@@ -23,11 +24,13 @@ class ViewController < Controller
 end
 
 module My
+  include Amethyst
+
   module Inner
     class App < Base::App
     end
   end
 end
 
-class GlobalApp < Base::App
+class GlobalApp < Amethyst::Base::App
 end

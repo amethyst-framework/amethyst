@@ -1,7 +1,6 @@
 require "./spec_helper"
 
 describe Response do
-
   response = Response.new(404, "Not Found")
 
   describe "#header" do
@@ -12,11 +11,11 @@ describe Response do
     end
   end
 
-  describe "#build" do
-    it "should return HTTP::Response" do
-      response.build.should be_a HTTP::Response
-    end
-  end
+  # describe "#build" do
+  #   it "should return HTTP::Response" do
+  #     response.build.should be_a HTTP::Response
+  #   end
+  # end
 
   describe "#cookie" do
     it "should add a proper simple cookies to 'Set-Cookie' header" do

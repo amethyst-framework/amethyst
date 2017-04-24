@@ -5,6 +5,6 @@ shards:
     version: 0.2.2
 
   mime:
-    github: spalger/crystal-mime
-    commit: bb69613b93dd059f68d1b508a31f83ca6c8eaace
+    github: jeffreydvp/crystal-mime
+    commit: 5870baffc58f1e3192aa2d366a15157c5506058f
 
