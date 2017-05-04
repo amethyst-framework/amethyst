@@ -21,7 +21,7 @@ describe Router do
     it "registers controller" do
       router.register(IndexController)
       router.controllers.size.should eq 1
-      router.controllers["Amethyst::IndexController"].is_a?(Class).should eq true
+      router.controllers["IndexController"].is_a?(Class).should eq true
     end
   end
 
