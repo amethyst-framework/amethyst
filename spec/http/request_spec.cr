@@ -13,7 +13,7 @@ module Amethyst
           request.method.should eq "GET"
           request.path.should eq "/"
           request.headers["Accept"].should eq "text/plain"
-          request.body.as(String).should eq "Test"
+          request.body.as(IO).gets.should eq "Test"
           request.version.should eq "HTTP/1.1"
         end
       end
