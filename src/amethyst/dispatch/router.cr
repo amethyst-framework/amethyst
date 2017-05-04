@@ -12,7 +12,7 @@ module Amethyst
       # This macro is a hack that allows to instansiate controllers through
       # @controllers.fetch("ControllerName").new
       macro register_controller(klass_name)
-        @controllers["#{{{klass_name.id}}}"] = {{klass_name.id}}
+        @controllers["#{{{klass_name.id}}}".split("::").last] = {{klass_name.id}}
       end
 
       def initialize()

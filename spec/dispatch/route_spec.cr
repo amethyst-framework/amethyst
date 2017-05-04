@@ -47,7 +47,7 @@ describe Route do
       expect_raises HttpMethodNotAllowed do
         matched_route.matches?("/index", "PUT")
       end
-      matched_route.matches?("/indexsd", "DELETE").should eq true
+      matched_route.matches?("/indexsd", "DELETE").should eq false
       matched_route.matches?("/index/", "DELETE").should eq true
       matched_route.matches?("/index/1/ddd/", "DELETE").should eq false
     end
