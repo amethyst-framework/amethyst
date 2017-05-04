@@ -24,7 +24,7 @@ module Amethyst
         raise Exceptions::HttpNotImplemented.new(method) unless Http::METHODS.includes?(method)
         path = path.gsub(/\/$/, "") unless path == "/"
         return false unless path.split("/").size == @length
-        regex = Regex.new(@pattern.to_s.gsub(/(:\w*)/, ".*"))
+        regex = Regex.new("^" + @pattern.to_s.gsub(/(:\w*)/, ".*") + "$")
         matches = false
         if path.match(regex)
           raise Exceptions::HttpMethodNotAllowed.new(method, @methods) unless @methods.includes?(method)
