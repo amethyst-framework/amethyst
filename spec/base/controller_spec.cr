@@ -7,10 +7,10 @@ module Amethyst
       controller = create_controller_instance(IndexController)
 
       it "adds actions to @actions hash as procs" do
-        controller.actions.should be_a Hash(String, Proc(Void))
+        controller.actions.should be_a Hash(String, Proc(Nil))
         controller.actions.size.should eq 3
         controller.actions["hello"].should eq ->controller.hello
-        controller.actions["bye"].should be_a Proc(Void)
+        controller.actions["bye"].should be_a Proc(Nil)
       end
     end
 
