@@ -76,7 +76,7 @@ Start your application:
 
 ```
 crystal deps
-crystal build src/test.cr
+crystal build src/hello.cr
 ```
 
 Go to [http://localhost:8080/](http://localhost:8080/).
