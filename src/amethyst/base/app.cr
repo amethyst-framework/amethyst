@@ -1,4 +1,9 @@
 module Amethyst
+  
+  def self.new(app, app_path=__FILE__)
+    app.new app_path, app.name
+  end
+  
   module Base
     class App
       property :port

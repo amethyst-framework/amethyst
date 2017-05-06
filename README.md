@@ -3,7 +3,7 @@
 [//]: # [![Build Status](https://travis-ci.org/Codcore/amethyst.svg)](https://travis-ci.org/Codcore/amethyst)  [![Join the chat at https://gitter.im/Codcore/Amethyst](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/Codcore/Amethyst?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
 **Changelog**
-* Updated to Crystal 0.21.0
+* Updated to Crystal 0.22.0
 
 Amethyst is a web framework written in the [Crystal](https://github.com/manastech/crystal) language. The goals of Amethyst are to be extremely fast and to provide agility in application development, much like Rails. Why did I call it "Amethyst"? Because Github uses a light purple color for the Crystal language similar to the [amethyst gemstone](http://en.wikipedia.org/wiki/Amethyst).
 
@@ -43,7 +43,7 @@ For now, next things are implemented:
 ## Example
 Here is classic 'Hello World' in Amethyst
 ```crystal
-require "amethyst"
+require "crystal-on-rails/amethyst"
 
 class WorldController < Base::Controller
   actions :hello
@@ -65,12 +65,21 @@ class HelloWorldApp < Base::App
   end
 end
 
-app = HelloWorldApp.new
+app = Amethyst.new HelloWorldApp
 app.serve
 
 # /views/hello.ecr
 Hello, <%= name %>
 ```
+
+Start your application:
+
+```
+crystal deps
+crystal build src/hello.cr
+```
+
+Go to [http://localhost:8080/](http://localhost:8080/).
 
 ## Using amethyst-bin to quickly generate your application
 

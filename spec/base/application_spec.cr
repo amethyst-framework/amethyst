@@ -4,7 +4,7 @@ require "./spec_helper"
 module Amethyst
   describe Base::App do
     describe "#initialize" do
-      app = Base::App.new __FILE__
+      app = Amethyst.new Base::App
 
       it "should set app name" do
         app.name.should eq "application_spec"
@@ -22,12 +22,12 @@ module Amethyst
 
     describe "#get_app_namespace" do
       it "should return namespace of initialized app" do
-        my_app = My::Inner::App.new __FILE__
+        my_app = Amethyst.new My::Inner::App
         My::Inner::App.settings.namespace.should eq "My::Inner::"
       end
 
       it "should return empty string if app is in global namespace" do
-        global_app = GlobalApp.new __FILE__
+        global_app = Amethyst.new GlobalApp
         GlobalApp.settings.namespace.should eq ""
       end
     end
