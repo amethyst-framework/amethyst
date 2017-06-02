@@ -17,6 +17,7 @@ module Amethyst
         class {{name.id.capitalize}}View < Amethyst::Base::View
           def initialize(controller : Amethyst::Base::Controller)
             @controller = controller
+            @response = Http::Response.new
           end
           ECR.def_to_s "{{path.id}}/{{name.id}}.ecr"
         end
