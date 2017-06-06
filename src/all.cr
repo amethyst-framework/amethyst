@@ -6,6 +6,7 @@ require "./amethyst/session"
 require "./amethyst/sugar"
 require "./amethyst/support"
 require "./amethyst/exceptions"
+require "./amethyst/generators"
 require "./amethyst/version"
 
 require "mime"
@@ -15,6 +16,7 @@ include Amethyst
 include Amethyst::Base
 include Amethyst::Dispatch
 include Amethyst::Http
+include Amethyst::Generators
 include Amethyst::Middleware
 include Amethyst::Session
 include Amethyst::Support
