@@ -141,17 +141,17 @@ module Amethyst
       # Sets properties to log
       def log
         {
-          "http method"     : @method,
-          "path"            : path,
-          "query string"    : query_string.hash,
-          "protocol"        : protocol,
-          "host"            : host,
-          "port"            : port,
-          "version"         : @version,
-          "query params"    : query_parameters.hash,
-          "path parameters" : path_parameters.hash,
-          "post parameters" : request_parameters.hash,
-          "content type"    : content_type
+          "http method"     => @method,
+          "path"            => path,
+          "query string"    => query_string.hash,
+          "protocol"        => protocol,
+          "host"            => host,
+          "port"            => port,
+          "version"         => @version,
+          "query params"    => query_parameters.hash,
+          "path parameters" => path_parameters.hash,
+          "post parameters" => request_parameters.hash,
+          "content type"    => content_type
         }
       end
     end
