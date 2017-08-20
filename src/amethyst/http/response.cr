@@ -45,9 +45,9 @@ module Amethyst
           body = ""
         end
         {
-          "status"   :  status,
-          "response" :  body,
-          "version"  :  @version
+          "status"   => status,
+          "response" => body,
+          "version"  => @version
         }
       end
     end
