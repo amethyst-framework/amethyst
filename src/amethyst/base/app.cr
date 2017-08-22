@@ -56,7 +56,6 @@ module Amethyst
         host = "0.0.0.0"
         @port = port.to_i
         run_string = "[Amethyst #{VERSION}] serving application \"#{@name}\" at http://#{host}:#{@port}" #TODO move to Logger class
-        puts run_string
         App.logger.log_string run_string
         server = HTTP::Server.new host, port, @http_handler
         server.listen
