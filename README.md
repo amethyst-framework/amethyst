@@ -1,6 +1,7 @@
 ![Amethyst-logo](http://s019.radikal.ru/i635/1506/28/bac4764b9e03.png)
 [![Pledgie](https://pledgie.com/campaigns/29689.png?skin_name=chrome)](https://pledgie.com/campaigns/29689)
-[![Build Status](https://travis-ci.org/Codcore/amethyst.svg)](https://travis-ci.org/Codcore/amethyst)  [![Join the chat at https://gitter.im/Codcore/Amethyst](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/Codcore/Amethyst?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+[![Build Status](https://travis-ci.org/crystal-community/amethyst.svg?branch=master)](https://travis-ci.org/crystal-community/amethyst)
+[![Join the chat at https://gitter.im/Codcore/Amethyst](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/Codcore/Amethyst?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
 **Changelog**
 * Updated to Crystal 0.22.0
