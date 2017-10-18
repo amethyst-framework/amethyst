@@ -3,6 +3,10 @@
 [![Build Status](https://travis-ci.org/crystal-community/amethyst.svg?branch=master)](https://travis-ci.org/crystal-community/amethyst)
 [![Join the chat at https://gitter.im/Codcore/Amethyst](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/Codcore/Amethyst?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
+:warning: Amethyst is not actively maintained and may have inconsistencies in documentation.
+If you are new to Crystal, please consider to use other well documented and up to date frameworks.
+If you are Crystal enthusiast and ready to help to maintain Amethyst, we are looking forward.
+
 **Changelog**
 * Updated to Crystal 0.22.0
 
@@ -11,8 +15,6 @@ Amethyst is a web framework written in the [Crystal](https://github.com/manastec
 Latest version - [0.1.7](https://github.com/Codcore/Amethyst/releases/tag/v0.1.7)
 Note that Amethyst is at its early stages, so it lacks for whole bunch of things. But you can give a hand with contributing.
 * [Roadmap](https://github.com/Codcore/Amethyst/wiki/Roadmap)
-
-[Amethyst examples](https://github.com/Codcore/amethyst-examples)
 
 For detailed information, see docs on our [wiki](https://github.com/Codcore/Amethyst/wiki) below:
 
@@ -82,26 +84,9 @@ crystal build src/hello.cr
 
 Go to [http://localhost:8080/](http://localhost:8080/).
 
-## Using amethyst-bin to quickly generate your application
-
-[amethyst-bin](https://github.com/Sdogruyol/amethyst-bin) is an executable shell script to help you
-quickly generate your Amethyst application.
-
-It handles installing the base dependencies, views / controllers folder generation and main application file generation.
-
-```
-curl https://raw.githubusercontent.com/Sdogruyol/amethyst-bin/master/amethyst > amethyst && chmod +x amethyst
-./amethyst sample
-```
-
-Voila! Your app is ready now you can run it
-
-```cd sample && crystal run src/sample.cr```
-
 ## Development
 
 Feel free to fork project and make pull-requests.
-
 
 ## Contributing
 
