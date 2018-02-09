@@ -1,11 +1,6 @@
 ![Amethyst-logo](http://s019.radikal.ru/i635/1506/28/bac4764b9e03.png)
-[![Pledgie](https://pledgie.com/campaigns/29689.png?skin_name=chrome)](https://pledgie.com/campaigns/29689)
-[![Build Status](https://travis-ci.org/crystal-community/amethyst.svg?branch=master)](https://travis-ci.org/crystal-community/amethyst)
-[![Join the chat at https://gitter.im/Codcore/Amethyst](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/Codcore/Amethyst?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
-:warning: Amethyst is not actively maintained and may have inconsistencies in documentation.
-If you are new to Crystal, please consider to use other well documented and up to date frameworks.
-If you are Crystal enthusiast and ready to help to maintain Amethyst, we are looking forward.
+:warning: Amethyst is currently undergoing a re-write from the ground up. We'll be releasing the public roadmap soon.
 
 **Changelog**
 * Updated to Crystal 0.22.0
@@ -31,7 +26,7 @@ For detailed information, see docs on our [wiki](https://github.com/Codcore/Amet
 
 For now, next things are implemented:
 * class-based controllers with method-based actions
-* views for actions (*.ecr)
+* views for actions (`*.ecr`)
 * filters for action
 * middleware support
 * simple REST routing
