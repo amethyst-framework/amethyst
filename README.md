@@ -2,24 +2,21 @@
 
 :warning: Amethyst is currently undergoing a re-write from the ground up. We'll be releasing the public roadmap soon.
 
-**Changelog**
-* Updated to Crystal 0.22.0
+Amethyst is a web framework written in the [Crystal](https://github.com/manastech/crystal) language. The goals of Amethyst are to be extremely fast and to provide agility in application development, much like Rails. 
 
-Amethyst is a web framework written in the [Crystal](https://github.com/manastech/crystal) language. The goals of Amethyst are to be extremely fast and to provide agility in application development, much like Rails. Why did I call it "Amethyst"? Because Github uses a light purple color for the Crystal language similar to the [amethyst gemstone](http://en.wikipedia.org/wiki/Amethyst).
-
-Latest version - [0.1.7](https://github.com/Codcore/Amethyst/releases/tag/v0.1.7)
+Latest version - [0.1.7](https://github.com/amethyst-framework/amethyst/releases/tag/v0.1.7)
 Note that Amethyst is at its early stages, so it lacks for whole bunch of things. But you can give a hand with contributing.
 * [Roadmap](https://github.com/Codcore/Amethyst/wiki/Roadmap)
 
-For detailed information, see docs on our [wiki](https://github.com/Codcore/Amethyst/wiki) below:
+For detailed information, see docs on our [wiki](https://github.com/amethyst-framework/amethyst/wiki) below:
 
-* [Installation](https://github.com/Codcore/Amethyst/wiki/Installation)
-* [Usage](https://github.com/Codcore/Amethyst/wiki/Usage)
-* [Controllers](https://github.com/Codcore/Amethyst/wiki/Controllers)
-* [Routing](https://github.com/Codcore/Amethyst/wiki/Routing)
-* [Middleware](https://github.com/Codcore/Amethyst/wiki/Middleware)
-* [Static files](https://github.com/Codcore/Amethyst/wiki/StaticFiles)
-* [Applications](https://github.com/Codcore/Amethyst/wiki/Applications)
+* [Installation](https://github.com/amethyst-framework/amethyst/wiki/Installation)
+* [Usage](https://github.com/amethyst-framework/amethyst/wiki/Usage)
+* [Controllers](https://github.com/amethyst-framework/amethyst/wiki/Controllers)
+* [Routing](https://github.com/amethyst-framework/amethyst/wiki/Routing)
+* [Middleware](https://github.com/amethyst-framework/amethyst/wiki/Middleware)
+* [Static files](https://github.com/amethyst-framework/amethyst/wiki/StaticFiles)
+* [Applications](https://github.com/amethyst-framework/amethyst/wiki/Applications)
 
 
 [Here are some benchmarking results](https://gist.github.com/Codcore/0c7a331b69eed542fb78)
@@ -87,7 +84,7 @@ Feel free to fork project and make pull-requests.
 
 I would be glad for any help with contributing.
 
-1. Fork it ( https://github.com/Codcore/amethyst/fork )
+1. Fork it ( https://github.com/amethyst-framework/amethyst/fork )
 2. Create your feature branch (git checkout -b my-new-feature)
 3. Commit your changes (git commit -am 'Add some feature')
 4. Push to the branch (git push origin my-new-feature)
@@ -96,9 +93,6 @@ I would be glad for any help with contributing.
 
 ## Contributors
 
-- [Andrew Yaroshuk](https://github.com/Codcore) Codcore - creator, maintainer
+- [Sean Nieuwoudt](https://github.com/SeanNieuwoudt) BDFL
+- [Andrew Yaroshuk](https://github.com/Codcore)
 
-[//] # ## Support
-[//] # Amethyst is not a commercial project,it is developed on pure enthusiasm, so if you want to support Amethyst developing, you can help with donating.
-
-[//] # [![Pledgie](https://pledgie.com/campaigns/29689.png?skin_name=chrome)](https://pledgie.com/campaigns/29689)

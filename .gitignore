@@ -18,3 +18,4 @@
 *.swn
 *.swo
 session.vis
+.DS_Store

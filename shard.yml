@@ -1,5 +1,5 @@
-name: crystal-on-rails
-version: 0.1.7
+name: amethyst
+version: 0.2.0
 
 dependencies:
   html_builder:
