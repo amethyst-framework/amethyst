@@ -74,14 +74,9 @@ module Amethyst
 
       # Sets default middleware for app
       private def set_default_middleware
-        # TODO: Middleware will be configured via the modern Application builder
-        # self.class.use Middleware::ShowExceptions
-        # if self.class.settings.environment == "development"
-        #   self.class.use Middleware::HttpLogger
-        #   self.class.use Middleware::TimeLogger
-        # end
-        # self.class.use Middleware::Session
-        # self.class.use Middleware::Static
+        # Middleware is now configured via the modern Application builder
+        # in src/amethyst/application.cr - no default middleware needed here
+        # The modern approach provides better control and configuration
       end
     end
   end

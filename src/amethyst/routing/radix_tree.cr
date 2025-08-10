@@ -3,14 +3,15 @@ module Amethyst
     class RadixNode
       property path : String
       property full_path : String
-      property handler : Hash(String, Routing::Route | String | Symbol)?
+      property handler : Hash(String, Routing::BaseRoute | String | Symbol)?
       property children : Hash(String, RadixNode)
       property param_names : Array(String)
+      property param_name : String?  # Individual parameter name for this node
       property wildcard_child : RadixNode?
       property param_child : RadixNode?
       property is_leaf : Bool
       
-      def initialize(@path : String = "")
+      def initialize(@path : String = "", @param_name : String? = nil)
         @full_path = ""
         @handler = nil
         @children = {} of String => RadixNode
@@ -28,61 +29,75 @@ module Amethyst
         @root = RadixNode.new
       end
       
-      def insert(path : String, handler, method : String)
+      def insert(path : String, handler : Routing::BaseRoute, method : String)
         node = @root
         param_names = [] of String
-        i = 0
         
-        while i < path.size
-          char = path[i]
-          
-          if char == ':'
-            # Parameter segment
-            param_start = i + 1
-            param_end = path.index('/', param_start) || path.size
-            param_name = path[param_start...param_end]
+        # Handle root path as special case
+        if path == "/"
+          node.is_leaf = true
+          node.full_path = path
+          node.param_names = param_names
+          node.handler = {method => handler.as(Routing::BaseRoute | String | Symbol)}
+          return
+        end
+        
+        # Split path into segments by '/'
+        segments = path.split('/').reject(&.empty?)
+        
+        segments.each do |segment|
+          if segment.starts_with?(':')
+            # Parameter segment like ":id"
+            param_name = segment[1..-1]  # Remove the ':'
             param_names << param_name
             
             if node.param_child.nil?
-              node.param_child = RadixNode.new(":param")
+              node.param_child = RadixNode.new(":param", param_name)
             end
             
             node = node.param_child.not_nil!
-            i = param_end
-          elsif char == '*'
-            # Wildcard segment
-            param_name = path[(i + 1)..-1]
+          elsif segment.starts_with?('*')
+            # Wildcard segment like "*path"
+            param_name = segment[1..-1]  # Remove the '*'
             param_names << param_name
             
             if node.wildcard_child.nil?
-              node.wildcard_child = RadixNode.new("*")
+              node.wildcard_child = RadixNode.new("*", param_name)
             end
             
             node = node.wildcard_child.not_nil!
-            break
+            break  # Wildcard consumes the rest
           else
-            # Regular segment
-            segment_end = path.index('/', i + 1) || path.size
-            segment = path[i...segment_end]
+            # Regular segment like "users" or "posts"
+            segment_with_slash = "/#{segment}"
             
-            if !node.children.has_key?(segment)
-              node.children[segment] = RadixNode.new(segment)
+            if !node.children.has_key?(segment_with_slash)
+              node.children[segment_with_slash] = RadixNode.new(segment_with_slash)
             end
             
-            node = node.children[segment]
-            i = segment_end
+            node = node.children[segment_with_slash]
           end
         end
         
         node.is_leaf = true
         node.full_path = path
         node.param_names = param_names
-        node.handler = {method => handler}
+        node.handler = {method => handler.as(Routing::BaseRoute | String | Symbol)}
       end
       
-      def find(path : String, method : String) : {handler: Routing::Route?, params: Hash(String, String)}
+      def find(path : String, method : String) : {route: Routing::BaseRoute?, params: Hash(String, String)}
         node = @root
         params = {} of String => String
+        
+        # Handle root path as special case
+        if path == "/"
+          if node.is_leaf && node.handler && node.handler.not_nil!.has_key?(method)
+            return {route: node.handler.not_nil![method].as(Routing::BaseRoute), params: params}
+          else
+            return {route: nil.as(Routing::BaseRoute?), params: params}
+          end
+        end
+        
         i = 0
         
         while i < path.size && node
@@ -96,28 +111,30 @@ module Amethyst
           elsif node.param_child
             # Parameter match
             param_value = segment.lstrip('/')
-            if node.param_child.not_nil!.param_names.size > 0
-              params[node.param_child.not_nil!.param_names[0]] = param_value
+            param_child = node.param_child.not_nil!
+            if param_name = param_child.param_name
+              params[param_name] = param_value
             end
-            node = node.param_child
+            node = param_child
             i = segment_end
           elsif node.wildcard_child
             # Wildcard match - consume rest of path
-            if node.wildcard_child.not_nil!.param_names.size > 0
-              params[node.wildcard_child.not_nil!.param_names[0]] = path[i..-1].lstrip('/')
+            wildcard_child = node.wildcard_child.not_nil!
+            if param_name = wildcard_child.param_name
+              params[param_name] = path[i..-1].lstrip('/')
             end
-            node = node.wildcard_child
+            node = wildcard_child
             break
           else
-            return {handler: nil, params: params}
+            return {route: nil.as(Routing::BaseRoute?), params: params}
           end
         end
         
         if node && node.is_leaf && node.handler && node.handler.not_nil!.has_key?(method)
-          return {handler: node.handler.not_nil![method], params: params}
+          return {route: node.handler.not_nil![method].as(Routing::BaseRoute), params: params}
         end
         
-        {handler: nil, params: params}
+        {route: nil.as(Routing::BaseRoute?), params: params}
       end
       
       def compile_routes : Hash(String, RadixNode)

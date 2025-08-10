@@ -7,7 +7,7 @@ module Amethyst
       
       @trees : Hash(String, RadixTree)
       @compiled : Bool
-      @route_cache : Hash(String, {route: Routing::Route?, params: Hash(String, String)})
+      @route_cache : Hash(String, {route: Routing::BaseRoute?, params: Hash(String, String)})
       @cache_size_limit : Int32
       
       def self.instance
@@ -17,14 +17,14 @@ module Amethyst
       def initialize(@cache_size_limit = 1000)
         @trees = Hash(String, RadixTree).new
         @compiled = false
-        @route_cache = Hash(String, {route: Routing::Route?, params: Hash(String, String)}).new
+        @route_cache = Hash(String, {route: Routing::BaseRoute?, params: Hash(String, String)}).new
         
         Http::METHODS.each do |method|
           @trees[method] = RadixTree.new
         end
       end
       
-      def add_route(method : String, path : String, route : Routing::Route)
+      def add_route(method : String, path : String, route : Routing::BaseRoute)
         tree = @trees[method]?
         return unless tree
         
@@ -33,7 +33,7 @@ module Amethyst
         clear_cache
       end
       
-      def find_route(method : String, path : String) : {route: Routing::Route?, params: Hash(String, String)}
+      def find_route(method : String, path : String) : {route: Routing::BaseRoute?, params: Hash(String, String)}
         cache_key = "#{method}:#{path}"
         
         if cached = @route_cache[cache_key]?
@@ -41,7 +41,7 @@ module Amethyst
         end
         
         tree = @trees[method]?
-        return {route: nil, params: {} of String => String} unless tree
+        return {route: nil.as(Routing::BaseRoute?), params: {} of String => String} unless tree
         
         result = tree.find(path, method)
         

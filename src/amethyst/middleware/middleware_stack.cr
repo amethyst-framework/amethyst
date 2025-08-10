@@ -50,6 +50,68 @@ module Amethyst
 
       def clear
         @middlewares.clear
+        @middleware_instances = nil
+      end
+      
+      # Insert middleware before another middleware
+      def insert_before(target : Middleware::Base.class, middleware : Middleware::Base.class)
+        index = @middlewares.index(target)
+        if index
+          @middlewares.insert(index, middleware)
+        else
+          # If target not found, add at the beginning
+          @middlewares.unshift(middleware)
+        end
+      end
+      
+      # Insert middleware after another middleware
+      def insert_after(target : Middleware::Base.class, middleware : Middleware::Base.class)
+        index = @middlewares.index(target)
+        if index
+          @middlewares.insert(index + 1, middleware)
+        else
+          # If target not found, add at the end
+          @middlewares << middleware
+        end
+      end
+      
+      # Delete middleware from the stack
+      def delete(middleware : Middleware::Base.class)
+        @middlewares.delete(middleware)
+        # Also remove from instances if it exists
+        if instances = @middleware_instances
+          instances.delete(middleware.name)
+        end
+      end
+      
+      # Replace middleware with another
+      def replace(target : Middleware::Base.class, replacement : Middleware::Base.class)
+        index = @middlewares.index(target)
+        if index
+          @middlewares[index] = replacement
+          # Remove old instance
+          if instances = @middleware_instances
+            instances.delete(target.name)
+          end
+        else
+          # If target not found, just add the replacement
+          @middlewares << replacement
+        end
+      end
+      
+      # Check if middleware exists in the stack
+      def has?(middleware : Middleware::Base.class) : Bool
+        @middlewares.includes?(middleware)
+      end
+      
+      # Get the current middleware stack order
+      def stack : Array(Middleware::Base.class)
+        @middlewares.dup
+      end
+      
+      # Get the size of the middleware stack
+      def size : Int32
+        @middlewares.size
       end
       
       private def instantiate(middleware_class : Middleware::Base.class)
@@ -91,4 +153,4 @@ module Amethyst
   end
 end
 
-# TODO: Implement insert_before, delete, etc.
+# Middleware stack functionality: insert_before, delete, replace, etc. - IMPLEMENTED

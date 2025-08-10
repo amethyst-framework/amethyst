@@ -4,39 +4,19 @@ A modern, user-friendly web framework for [Crystal](https://crystal-lang.org/) w
 
 ## Why Amethyst?
 
-Amethyst eliminates the complexity of traditional web frameworks by providing a **modern builder pattern** with **environment-aware defaults** and **fluent configuration**. No more constructor parameter explosions or complex setup - just clean, readable code.
+Amethyst provides a **modern builder pattern** with **environment-aware defaults** and **fluent configuration** for building web applications with clean, readable code.
 
 ### Modern Architecture
 
-**Before (Complex):**
 ```crystal
-# Old way - complex constructors with dozens of parameters
-csrf = Security::CSRFProtection.new(nil, 
-  secret_key: "secret", 
-  token_name: "authenticity_token",
-  header_name: "X-CSRF-Token", 
-  cookie_name: "_csrf_token",
-  session_key: "_csrf_token",
-  cookie_domain: nil,
-  cookie_path: "/",
-  cookie_secure: false,
-  cookie_http_only: true,
-  cookie_same_site: "Strict",
-  skip_routes: Set(String).new,
-  failure_callback: nil
-)
-```
-
-**After (Simple):**
-```crystal
-# New way - clean and readable
+# Clean and readable configuration
 app = Amethyst::Application.new("production")
   .security { |s| s.csrf(enabled: true, secret_key: "secret") }
 ```
 
 ### Key Benefits
 
-- **Simple & Clean**: No complex constructors with dozens of parameters
+- **Simple & Clean**: Fluent builder pattern with minimal configuration
 - **Environment-Aware**: Automatic configuration based on environment (development/production/test)
 - **Type-Safe**: All configuration options are compile-time validated
 - **Discoverable**: Clear method names organized by feature area
@@ -318,7 +298,7 @@ The tests validate:
 - **Environment Awareness**: Development, production, test presets
 - **Method Chaining**: Fluent interface across all areas
 - **Type Safety**: Compile-time validation
-- **Architecture Simplicity**: Modern vs old approach
+- **Architecture Design**: Builder pattern implementation
 
 ## Development
 
@@ -380,7 +360,7 @@ crystal spec  # Ensure everything works
 ## Why Choose Amethyst?
 
 ### **Developer Experience**
-- **Simple Configuration**: No complex constructors or parameter explosions
+- **Simple Configuration**: Fluent builder pattern with clear method names
 - **Environment Aware**: Sensible defaults for development, production, and testing
 - **Type Safe**: Compile-time validation with excellent IDE support
 - **Self-Documenting**: Clear method names organized by feature area

@@ -27,6 +27,14 @@ module Amethyst
         @cookies            = Http::Params.new
         @accept = ""
       end
+      
+      def self.from_http_context(context : HTTP::Context) : Http::Request
+        new(context.request)
+      end
+      
+      def to_http_request : ::HTTP::Request
+        ::HTTP::Request.new(@method, @path, @headers, @body, @version)
+      end
 
       # Allows you to know the request method (get? post?, etc.)
       {% for method in Http::METHODS %}
