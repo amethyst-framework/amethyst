@@ -1,9 +1,14 @@
 name: amethyst
-version: 0.2.0
+version: 0.8.5
+
+crystal: ">=1.0.0"
 
 dependencies:
   html_builder:
     github: crystal-lang/html_builder
-  mime:
-    github: spalger/crystal-mime
-    branch: master
+  jwt:
+    github: crystal-community/jwt
+  redis:
+    github: stefanwille/crystal-redis
+  db:
+    github: crystal-lang/crystal-db

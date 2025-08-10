@@ -6,15 +6,15 @@ module Amethyst
 
     class Request
       property method : String
-      getter   headers : HTTP::Headers
+      getter   headers : ::HTTP::Headers
       property body : IO | Nil | String
       getter   version : String
       setter   path : String
       getter   query_string : String | Nil
 
-      include Support::HeaderHelper
+      # Support::HeaderHelper removed - functionality integrated directly
 
-      def initialize(base_request : HTTP::Request)
+      def initialize(base_request : ::HTTP::Request)
         @method  = base_request.method
         @path    = base_request.path.to_s
         @headers = base_request.headers
@@ -112,8 +112,8 @@ module Amethyst
         cookies = cookies_string.split(";")
         cookies.each do |cookie|
           key, value = cookie.strip.split("=")
-          key   = URI.unescape(key)
-          value = URI.unescape(value)
+          key   = URI.decode(key)
+          value = URI.decode(value)
           cookies_hash[key.strip] = value.strip
         end
         cookies_hash
@@ -127,9 +127,9 @@ module Amethyst
           params.each do |param|
             next if param.blank?
             if match = /^(?<key>[^=]*)(=(?<value>.*))?$/.match(param)
-              key, value = param.split("=").map { |s| URI.unescape(s) }
-              key = URI.unescape(key)
-              value = value.nil? ? "" : URI.unescape(value)
+              key, value = param.split("=").map { |s| URI.decode(s) }
+              key = URI.decode(key)
+              value = value.nil? ? "" : URI.decode(value)
 
               hash[key] = value
             end

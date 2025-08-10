@@ -1,5 +1,0 @@
-# Dependencies
-
-# Amethyst dependencies
-require "./*"
-

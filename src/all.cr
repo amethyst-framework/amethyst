@@ -1,21 +1,13 @@
-require "./amethyst/base"
-require "./amethyst/dispatch"
-require "./amethyst/http"
-require "./amethyst/middleware"
-require "./amethyst/session"
-require "./amethyst/sugar"
-require "./amethyst/support"
-require "./amethyst/exceptions"
-require "./amethyst/version"
+# Amethyst Web Framework - All Modules
+# Includes all framework modules for convenience
 
-require "mime"
+require "./amethyst"
 
-# All modules classes and inner modules loads to global namespace
+# Include all modules for global namespace convenience
 include Amethyst
 include Amethyst::Base
-include Amethyst::Dispatch
 include Amethyst::Http
 include Amethyst::Middleware
-include Amethyst::Session
-include Amethyst::Support
 include Amethyst::Exceptions
+include Amethyst::Security
+include Amethyst::Observability

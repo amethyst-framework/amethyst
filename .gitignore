@@ -18,4 +18,12 @@
 *.swn
 *.swo
 session.vis
+
+# Others
 .DS_Store
+CLAUDE.md
+.cursor
+.vscode
+*.tmp
+*.log
+shard.lock

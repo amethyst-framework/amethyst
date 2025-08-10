@@ -1,9 +1,13 @@
-# Dependencies
-require "mime"
+# Modern Amethyst Middleware Module
 
-# Amethyst dependencies
-require "../base/"
-require "../sugar/"
+require "./base"
+require "./middleware_stack"
+require "./static"
+require "./zero_copy_static"
+require "./cache"
 
-require "./*"
-
+module Amethyst
+  module Middleware
+    # Middleware module provides the request processing pipeline
+  end
+end

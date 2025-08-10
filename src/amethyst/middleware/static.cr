@@ -3,7 +3,8 @@ module Amethyst
     class Static < Middleware::Base
       @static_dirs : Array(String)
 
-      def initialize(@app = self)
+      def initialize(@app : Middleware::Base | Routing::OptimizedRouter? = nil)
+        super(@app)
         @static_dirs = Amethyst::Base::App.settings.static_dirs
       end
 
@@ -35,8 +36,22 @@ module Amethyst
       end
 
       private def mime_type(path) : Array(String)
-        mime_type = "text/plain"
-        mime_type = [Mime.from_ext(File.extname(path).gsub(".", "")).as(String)]
+        ext = File.extname(path)
+        mime_type = case ext
+        when ".html", ".htm" then "text/html"
+        when ".css" then "text/css"
+        when ".js" then "application/javascript"
+        when ".json" then "application/json"
+        when ".png" then "image/png"
+        when ".jpg", ".jpeg" then "image/jpeg"
+        when ".gif" then "image/gif"
+        when ".svg" then "image/svg+xml"
+        when ".txt" then "text/plain"
+        when ".xml" then "application/xml"
+        when ".pdf" then "application/pdf"
+        else "application/octet-stream"
+        end
+        [mime_type]
        end
     end
   end

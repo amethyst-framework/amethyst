@@ -2,7 +2,6 @@
 require "uri"
 require "http"
 
-# Amethyst dependencies
-require "../support"
+# Amethyst dependencies removed - support module no longer exists
 
 require "./*"

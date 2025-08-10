@@ -1,5 +1,4 @@
 # Load files into module namespace
-require "../support"
-require "../sugar"
+# Legacy modules removed - support and sugar no longer exist
 require "./*"
 

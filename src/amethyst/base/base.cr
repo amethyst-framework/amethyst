@@ -1,17 +1,24 @@
-# Dependencies
-require "http"
-require "ecr"
-require "ecr/macros"
+# Modern Amethyst Base Module
+# Provides core application functionality
 
-# Amethyst dependencies
+require "http"
 require "../http"
 require "../middleware"
-require "../dispatch"
-require "../session"
-require "../sugar"
-require "../support"
-require "../exceptions"
+require "../routing/**"
+require "../websocket/**"
+require "../sse/**"
+require "../security/**"
+require "../observability/**"
 
-require "./*"
+require "./config"
+require "./logger"
+require "./app"
+require "./connection_pool"
+require "./optimized_app"
 
-
+module Amethyst
+  module Base
+    # Re-export modern app classes for backward compatibility
+    alias Controller = ::Amethyst::Controller
+  end
+end

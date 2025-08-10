@@ -1,17 +1,13 @@
 module Amethyst
   
-  def self.new(app, app_path=__FILE__)
-    app.new app_path, app.name
-  end
-  
   module Base
     class App
       property :port
       property name : String
       getter   :routes
 
-      @app : Middleware::Base | Dispatch::Router
-      @http_handler : Base::Handler
+      @app : Middleware::Base | Routing::OptimizedRouter
+      @http_handler : Proc(Http::Request, Http::Response) | Middleware::Base | Routing::OptimizedRouter
 
       def initialize(app_path, app_type={{@type.name.stringify}})
         @port = 8080
@@ -20,7 +16,7 @@ module Amethyst
         self.class.settings.namespace = get_app_namespace(app_type)
         set_default_middleware
         @app = Middleware::MiddlewareStack.instance.build_middleware
-        @http_handler  = Base::Handler.new(@app)
+        @http_handler = @app  # Handler is now just the middleware chain
       end
 
       # Shortcut for Config
@@ -30,7 +26,7 @@ module Amethyst
 
       # Shortcut for Router
       def self.routes
-        Dispatch::Router.instance
+        Routing::OptimizedRouter.instance
       end
 
       # Shortcut for Logger instance
@@ -57,7 +53,8 @@ module Amethyst
         @port = port.to_i
         run_string = "[Amethyst #{VERSION}] serving application \"#{@name}\" at http://#{host}:#{@port}" #TODO move to Logger class
         App.logger.log_string run_string
-        server = HTTP::Server.new host, port, @http_handler
+        server = ::HTTP::Server.new([@http_handler])
+        server.bind_tcp(host, port)
         server.listen
       end
 
@@ -77,13 +74,14 @@ module Amethyst
 
       # Sets default middleware for app
       private def set_default_middleware
-        self.class.use Middleware::ShowExceptions
-        if self.class.settings.environment == "development"
-          self.class.use Middleware::HttpLogger
-          self.class.use Middleware::TimeLogger
-        end
-        self.class.use Middleware::Session
-        self.class.use Middleware::Static
+        # TODO: Middleware will be configured via the modern Application builder
+        # self.class.use Middleware::ShowExceptions
+        # if self.class.settings.environment == "development"
+        #   self.class.use Middleware::HttpLogger
+        #   self.class.use Middleware::TimeLogger
+        # end
+        # self.class.use Middleware::Session
+        # self.class.use Middleware::Static
       end
     end
   end

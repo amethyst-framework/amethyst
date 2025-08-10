@@ -2,13 +2,18 @@
 module Amethyst
   module Middleware
     abstract class Base
-      @app : Middleware::Base | Dispatch::Router
+      @app : (Middleware::Base | Routing::OptimizedRouter)?
 
-      def initialize(@app = self)
+      def initialize(@app : Middleware::Base | Routing::OptimizedRouter? = nil)
+        @app = @app || self.as(Middleware::Base | Routing::OptimizedRouter)
       end
 
       def call(request : Http::Request) : Http::Response
-        @app.call(request)
+        if app = @app
+          app.call(request)
+        else
+          Http::Response.new(500, "Internal Server Error")
+        end
       end
 
       def build(app)

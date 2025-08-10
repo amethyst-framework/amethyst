@@ -6,9 +6,9 @@ module Amethyst
       property :cookies
       getter   :status
 
-      include Support::HeaderHelper
+      # Support::HeaderHelper removed - functionality integrated directly
 
-      def initialize(@status=501, @body : String = "", @headers=HTTP::Headers.new)
+      def initialize(@status=501, @body : String = "", @headers=::HTTP::Headers.new)
         @version = "HTTP/1.1" # set default or copy from the request?
       end
 
@@ -19,8 +19,8 @@ module Amethyst
         @status = status
       end
 
-      # writes self to the provided HTTP::Server::Response
-      def build(response : HTTP::Server::Response)
+      # writes self to the provided ::HTTP::Server::Response
+      def build(response : ::HTTP::Server::Response)
         response.status_code = @status
         response.headers.merge! @headers
         response.output << @body
